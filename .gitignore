@@ -1,0 +1,62 @@
+# Environment files
+.env
+.env.local
+.env.production
+.env.test
+
+# Strapi environment files
+strapi/.env
+strapi/.env.local
+strapi/.env.production
+strapi/.env.test
+
+# Docker volumes
+postgres_data/
+
+# Node modules
+node_modules/
+**/node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Docker
+.dockerignore
+
+# Build outputs
+dist/
+build/
+.next/
+out/
+
+# Temporary files
+tmp/
+temp/

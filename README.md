@@ -1,6 +1,8 @@
 # Gossamer
 
-A modern full-stack application template built with Next.js, Strapi CMS, and PostgreSQL.
+> A modern full-stack application template built with **Next.js**, **Strapi CMS**, and **PostgreSQL**.
+
+📋 **Tasks board**: [Notion](https://www.notion.so/2582151ec1d08047997ee940f83b90a2?v=2582151ec1aac1e000c57e30f39&source=copy_link)
 
 ## 🚀 Quick Start
 

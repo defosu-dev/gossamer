@@ -1,3 +1,4 @@
+import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
 import React from "react";
 
@@ -7,7 +8,6 @@ const page = () => {
       <Header />
       <p>Home Page</p>
       <p>Test</p>
-
       <p>Test</p>
       <p>Test</p>
       <p>Test</p>
@@ -36,6 +36,9 @@ const page = () => {
       <p>Test</p>
       <p>Test</p>
       <p>Test</p>
+      <div>
+        <Footer />
+      </div>
     </div>
   );
 };

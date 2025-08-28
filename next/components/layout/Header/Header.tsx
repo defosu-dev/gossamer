@@ -8,10 +8,7 @@ const Header = () => {
 
   return (
     <header className="w-full ">
-      <div
-        className="mx-auto flex max-w-6xl items-center justify-between bg-white px-8 py-4 shadow-sm rounded-b-2xl"
-        style={{ borderTopLeftRadius: 0, borderTopRightRadius: 0 }}
-      >
+      <div className="mx-auto flex max-w-6xl items-center justify-between bg-white px-8 py-4 shadow-sm rounded-b-2xl rounded-t-none">
         {/* Лого */}
         <Link href="/" className="flex items-center gap-2">
           <Gem className="h-6 w-6 text-black" />
@@ -20,19 +17,19 @@ const Header = () => {
 
         {/* Навигация */}
         <nav className="hidden md:flex">
-          <ul className="flex items-center gap-8 text-gray-600">
+          <ul className="flex items-center gap-8 text-zinc-500">
             <li>
-              <Link href="/beranda" className="hover:text-black">
+              <Link href="/beranda" className=" hover:text-black transition">
                 Beranda
               </Link>
             </li>
             <li>
-              <Link href="/shop" className="hover:text-black">
+              <Link href="/shop" className="hover:text-black transition">
                 Shop
               </Link>
             </li>
             <li>
-              <Link href="/blog" className="font-bold text-black">
+              <Link href="/blog" className="font-bold text-black transition">
                 Blog
               </Link>
             </li>

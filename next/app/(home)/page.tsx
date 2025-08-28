@@ -1,43 +1,7 @@
-import Header from "@/components/layout/Header";
-import React from "react";
+import HomePage from "@/components/pages/home";
 
 const page = () => {
-  return (
-    <div>
-      <Header />
-      <p>Home Page</p>
-      <p>Test</p>
-
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-    </div>
-  );
+  return <HomePage />;
 };
 
 export default page;

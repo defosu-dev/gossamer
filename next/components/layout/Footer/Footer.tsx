@@ -1,9 +1,4 @@
 import React from "react";
-<<<<<<< Updated upstream
-
-const Footer = () => {
-  return <div>Footer</div>;
-=======
 import Link from "next/link";
 import { BadgeInfo } from "lucide-react";
 
@@ -161,7 +156,6 @@ const Footer = () => {
       </div>
     </footer>
   );
->>>>>>> Stashed changes
 };
 
 export default Footer;

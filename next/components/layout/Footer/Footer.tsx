@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { BadgeInfo } from "lucide-react";
+import Form from "./Form";
 
 const Footer = () => {
   return (
@@ -11,19 +12,6 @@ const Footer = () => {
           <h2 className="text-white text-3xl font-bold mb-4">
             Ready to Get Our New Stuff?
           </h2>
-
-          <div className="bg-white rounded-2xl max-w-82 py-0.4">
-            <form className="flex items-center gap-1">
-              <input
-                type="email"
-                placeholder="Your Email"
-                className="rounded-full px-4 py-2 text-black"
-              />
-              <button className="bg-zinc-800 text-white rounded-full px-6 py-1 font-semibold hover:bg-zinc-900 transition-colors">
-                Send
-              </button>
-            </form>
-          </div>
         </div>
         <div className="mt-6 md:mt-0 md:ml-8 max-w-xs">
           <span className="block text-white font-semibold mb-2">
@@ -34,6 +22,7 @@ const Footer = () => {
             create a bespoke smart EV charging solution that is right for you.
           </span>
         </div>
+        <Form />
       </div>
 
       {/* Навигационные ссылки и соцсети */}

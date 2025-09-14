@@ -4,7 +4,7 @@ import { BadgeInfo } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="bg-white mt-8 border-t max-w-6xl mx-auto items-center shadows-sm px-8 rounded-2xl rounded-b-none">
+    <footer className="bg-white mt-8 border border-zinc-300 max-w-6xl mx-auto items-center shadows-sm px-8 rounded-2xl rounded-b-none">
       {/* Верхний блок */}
       <div className="bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-700 rounded-2xl p-8 flex flex-col md:flex-row justify-between items-start md:items-center mb-8 mx-4 md:mx-16 mt-3">
         <div className="flex-1">
@@ -19,7 +19,7 @@ const Footer = () => {
                 placeholder="Your Email"
                 className="rounded-full px-4 py-2 text-black"
               />
-              <button className="bg-black text-white rounded-full px-6 py-1 font-semibold hover:bg-zinc-700 transition-colors">
+              <button className="bg-zinc-800 text-white rounded-full px-6 py-1 font-semibold hover:bg-zinc-900 transition-colors">
                 Send
               </button>
             </form>

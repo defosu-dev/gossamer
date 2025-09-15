@@ -9,7 +9,7 @@ const Form = () => {
           placeholder="Your Email"
           className="rounded-full px-4 py-2 text-black"
         />
-        <button className="bg-zinc-800 text-white rounded-full px-6 py-1 font-semibold hover:bg-zinc-900 transition-colors">
+        <button className="bg-zinc-800 text-white rounded-full px-7 py-1 font-semibold hover:bg-zinc-900 transition-colors">
           Send
         </button>
       </form>

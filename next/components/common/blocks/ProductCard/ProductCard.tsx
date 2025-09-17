@@ -23,7 +23,7 @@ type ProductCardProps = {
 
 const ProductCard = ({ product }: ProductCardProps) => {
   return (
-    <div className="bg-white rounded-lg shadow-xl                overflow-hidden w-full max-w-sm mx-auto my-8 transform transition-transform duration-300 hover:scale-105">
+    <div className="bg-white rounded-lg overflow-hidden w-full max-w-sm mx-auto my-8 border">
       <div className="relative">
         <ProductImage /> {/*доработать путь к фото*/}
         <ProductCategoryBadge category={product.category} />
@@ -32,7 +32,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
         <ProductTitle title={product.name} />
         <div>Rating 55</div> {/*доработать рейтинги */}
         <ProductPrice price={product.price} />
-        <ProductActions />
+        <div className="border">
+          <ProductActions />
+        </div>
       </div>
     </div>
   );

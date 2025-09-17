@@ -12,11 +12,7 @@ const ProductPrice = ({ price }: ProductPriceProps) => {
     maximumFractionDigits: 2,
   }).format(price);
 
-  return (
-    <p className="text-2xl font-bold text-gray-900 mt-2 mb-4">
-      {formattedPrice}
-    </p>
-  );
+  return <p className="text-xl font-bold text-gray-900">{formattedPrice}</p>;
 };
 
 export default ProductPrice;

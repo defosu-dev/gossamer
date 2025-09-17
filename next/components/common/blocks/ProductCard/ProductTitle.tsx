@@ -6,7 +6,9 @@ type ProductTitleProps = {
 
 const ProductTitle = ({ title }: ProductTitleProps) => {
   return (
-    <h3 className="text-xl font-bold text-gray-900 leading-tight">{title}</h3>
+    <h3 className="text-lg font-semibold text-gray-900 leading-tight">
+      {title}
+    </h3>
   );
 };
 

@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function ImageBlock() {
+const ImageBlock = () => {
   return (
     <div className="rounded-2xl overflow-hidden shadow-lg">
       <img
@@ -10,4 +10,6 @@ export default function ImageBlock() {
       />
     </div>
   );
-}
+};
+
+export default ImageBlock;

@@ -4,7 +4,7 @@ import Description from "./Description";
 import FeatureList from "./FeatureList";
 import ImageBlock from "./ImageBlock";
 
-export default function NewArrival() {
+const NewArrival = () => {
   return (
     <section className="flex flex-col md:flex-row justify-between gap-12 py-16 px-8 max-w-7xl mx-auto">
       <div className="flex flex-col max-w-lg">
@@ -23,4 +23,6 @@ export default function NewArrival() {
       <ImageBlock />
     </section>
   );
-}
+};
+
+export default NewArrival;

@@ -5,6 +5,8 @@ type TitleProps = {
   children: ReactNode;
 };
 
-export default function Title({ children }: TitleProps) {
+const Title = ({ children }: TitleProps) => {
   return <h1 className="text-5xl font-bold mb-4">{children}</h1>;
-}
+};
+
+export default Title;

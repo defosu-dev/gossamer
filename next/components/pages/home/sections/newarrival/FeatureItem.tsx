@@ -7,7 +7,7 @@ type FeatureItemProps = {
   text: string;
 };
 
-export default function FeatureItem({ icon, title, text }: FeatureItemProps) {
+const FeatureItem = ({ icon, title, text }: FeatureItemProps) => {
   return (
     <div className="flex items-start gap-4">
       <div className="bg-gray-100 rounded-full p-4">{icon}</div>
@@ -17,4 +17,6 @@ export default function FeatureItem({ icon, title, text }: FeatureItemProps) {
       </div>
     </div>
   );
-}
+};
+
+export default FeatureItem;

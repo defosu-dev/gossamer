@@ -1,7 +1,7 @@
 import { Volume2, BatteryCharging, ThumbsUp } from "lucide-react";
 import FeatureItem from "./FeatureItem";
 
-export default function FeatureList() {
+const FeatureList = () => {
   return (
     <div className="flex flex-col gap-6">
       <FeatureItem
@@ -21,4 +21,6 @@ export default function FeatureList() {
       />
     </div>
   );
-}
+};
+
+export default FeatureList;

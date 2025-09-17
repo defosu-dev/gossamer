@@ -5,7 +5,7 @@ type DescriptionProps = {
   children: ReactNode;
 };
 
-const Description = ({ children }: DescriptionProps) => {
+const DescriptionProduct = ({ children }: DescriptionProps) => {
   return <p className="text-gray-500 leading-relaxed mb-8">{children}</p>;
 };
-export default Description;
+export default DescriptionProduct;

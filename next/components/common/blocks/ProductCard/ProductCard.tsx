@@ -22,16 +22,14 @@ type ProductCardProps = {
 
 const ProductCard = ({ product }: ProductCardProps) => {
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden max-w-sm flex flex-col">
-      {/* Верхний блок с бейджем категории */}
-      <div className="relative p-2 flex justify-end">
+    <div className="bg-white rounded-lg shadow-md overflow-hidden max-w-sm flex flex-col border">
+      {/* Фото товара с бейджем категории поверх */}
+      <div className="relative flex justify-center">
+        <ProductImage src={product.imageSrc} alt={product.imageAlt} />
         <ProductCategoryBadge category={product.category} />
       </div>
-      {/* Фото товара */}
-      <div className="flex justify-center">
-        <ProductImage src={product.imageSrc} alt={product.imageAlt} />
-      </div>
-      {/* Контент */}{" "}
+
+      {/* Контент */}
       <div className="p-4 flex flex-col flex-grow h-full">
         {/* Название */}
         <div className="mb-2 min-h-[48px]">

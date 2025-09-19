@@ -9,7 +9,7 @@ const ProductListData = [
     name: "Ergonomic Phone Stand",
     imageSrc:
       "https://images.unsplash.com/photo-1620248232876-b631f414e27f?q=80&w=1974&auto=format&fit=crop",
-    imageAlt: "Black metal phone stand",
+    imageAlt: "Black metal phone stande",
     category: "Accessories",
     rating: 4.8,
     reviewCount: 1200,

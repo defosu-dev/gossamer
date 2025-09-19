@@ -44,8 +44,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
           </span>
           <ProductPrice price={product.price} />
         </div>
-
-        {/* Кнопки прижаты к низу */}
         <div className="mt-auto">
           <ProductActions />
         </div>

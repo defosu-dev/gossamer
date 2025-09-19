@@ -1,7 +1,7 @@
-import React from "react";
-import { ReactNode } from "react";
+// FeatureItem.tsx
+import React, { ReactNode } from "react";
 
-type FeatureItemProps = {
+export type FeatureItemProps = {
   icon: ReactNode;
   title: string;
   text: string;

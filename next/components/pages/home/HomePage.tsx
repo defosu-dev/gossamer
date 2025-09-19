@@ -1,6 +1,7 @@
 import React from "react";
-import NewArrival from "./sections/newarrival/NewArrival";
+import NewArrival from "../../common/blocks/NewArrival/NewArrival";
 import ProductCard from "@/components/common/blocks/ProductCard/ProductCard";
+import { Volume2, BatteryCharging, ThumbsUp } from "lucide-react";
 
 const mockProductData = [
   {
@@ -53,54 +54,62 @@ const mockProductData = [
     imageSrc:
       "https://images.unsplash.com/photo-1627885474341-3d71249b6574?q=80&w=1770&auto=format&fit=crop",
     imageAlt: "Зарядное устройство для телефона",
-    category: "Аксессуары",
+    category: "qdER",
     rating: 4.9,
     reviewCount: 560,
     price: 35.75,
   },
 ];
 
+const newArrival = [
+  {
+    title: "Marshall",
+    description:
+      "Discover audio excellence with Marshall – a revolutionary speaker merging cutting-edge tech and captivating design.",
+    features: [
+      {
+        icon: <Volume2 size={28} />,
+        title: "Super Sound",
+        text: "The sound will reach your neighbourhood house",
+      },
+      {
+        icon: <BatteryCharging size={28} />,
+        title: "Samson Battery",
+        text: "3124124 mAh, can sound you 214 hours",
+      },
+      {
+        icon: <ThumbsUp size={28} />,
+        title: "Clean Design",
+        text: "With clean design it will be seamless",
+      },
+    ],
+    image: {
+      src: "/your-image-path.jpg",
+      alt: "Marshall Photo",
+    },
+  },
+];
+
 const HomePage = () => {
   return (
     <div>
-      <p>Home Page</p>
       <p>Test</p>
       <p>Test</p>
       <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <div className="container mx-auto p-4 max-w-7xl">
-        <h1 className="text-3xl font-bold mb-6 text-center">Наши товары</h1>
+      {/*Секция товаров */}
+      <div className="container mx-auto p-1 max-w-7xl border">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {mockProductData.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
       </div>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <div className="border">
-        <NewArrival />
-      </div>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
+      {/*Секция товаров */}
+      <>
+        {newArrival.map((section, idx) => (
+          <NewArrival key={idx} {...section} />
+        ))}
+      </>
       <p>Test</p>
       <p>Test</p>
       <p>Test</p>

@@ -20,7 +20,9 @@ export default function NewArrival() {
         </Description>
         <FeatureList />
       </div>
-      <ImageBlock />
+      <div className="border">
+        <ImageBlock />{" "}
+      </div>
     </section>
   );
 }

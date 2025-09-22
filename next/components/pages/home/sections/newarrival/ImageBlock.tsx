@@ -6,7 +6,7 @@ export default function ImageBlock() {
       <img
         src="/your-image-path.jpg"
         alt="Marshhall Photo"
-        className="object-cover w-[800px] h-[440px]"
+        className="object-cover w-[800px] h-[500px]"
       />
     </div>
   );

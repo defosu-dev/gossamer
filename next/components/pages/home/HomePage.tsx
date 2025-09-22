@@ -1,5 +1,6 @@
 import React from "react";
 import NewArrival from "./sections/newarrival/NewArrival";
+import ExploreSection from "./sections/explorecurated/ExploreSection";
 
 const HomePage = () => {
   return (
@@ -20,23 +21,10 @@ const HomePage = () => {
       <p>Test</p>
       <p>Test</p>
       <p>Test</p>
-      <div className="border">
-        <NewArrival />
-      </div>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
+
+      <NewArrival />
+
+      <ExploreSection />
     </div>
   );
 };

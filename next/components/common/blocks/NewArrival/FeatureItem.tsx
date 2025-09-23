@@ -1,13 +1,13 @@
-import React from "react";
-import { ReactNode } from "react";
+// FeatureItem.tsx
+import React, { ReactNode } from "react";
 
-type FeatureItemProps = {
+export type FeatureItemProps = {
   icon: ReactNode;
   title: string;
   text: string;
 };
 
-export default function FeatureItem({ icon, title, text }: FeatureItemProps) {
+const FeatureItem = ({ icon, title, text }: FeatureItemProps) => {
   return (
     <div className="flex items-start gap-4">
       <div className="bg-gray-100 rounded-full p-4">{icon}</div>
@@ -17,4 +17,6 @@ export default function FeatureItem({ icon, title, text }: FeatureItemProps) {
       </div>
     </div>
   );
-}
+};
+
+export default FeatureItem;

@@ -1,6 +1,7 @@
 import React from "react";
 import NewArrival from "../../common/blocks/NewArrival/NewArrival";
 import ProductCard from "@/components/common/blocks/ProductCard/ProductCard";
+import ExploreSection from "./sections/explorecurated/ExploreSection";
 import { Volume2, BatteryCharging, ThumbsUp } from "lucide-react";
 
 const ProductListData = [
@@ -149,9 +150,6 @@ const newArrival = [
 const HomePage = () => {
   return (
     <div>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
       {/*Секция товаров */}
       <div className="container mx-auto p-1 max-w-7xl border">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -166,9 +164,8 @@ const HomePage = () => {
           <NewArrival key={idx} {...section} />
         ))}
       </>
-      <p>Test</p>
-      <p>Test</p>
-      <p>Test</p>
+
+      <ExploreSection />
     </div>
   );
 };

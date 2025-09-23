@@ -1,4 +1,3 @@
-// Description.tsx
 import React, { ReactNode } from "react";
 
 type DescriptionProps = {

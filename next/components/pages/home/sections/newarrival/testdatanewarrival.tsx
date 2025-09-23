@@ -1,22 +1,22 @@
-import { FeatureItemProps } from "./FeatureItem";
+import { FeatureItemProps } from "./FeatureItem"; // любые иконки
 
 export const testdatanewarrival = {
-  label: "НОВИНКА",
+  label: "NEW ON ASSORTIMENT",
   title: "Marshall Major IV",
   description:
-    "Легендарные беспроводные наушники с мощным звуком, 80+ часов автономности и быстрой зарядкой.",
+    "Legendary wireless headphones with powerful sound, 80+ hours of playtime and fast charging.",
   features: [
     {
       icon: "Volume2",
-      text: "Мощный звук",
+      text: "Strong Sound",
     },
     {
       icon: "BatteryCharging",
-      text: "80+ часов работы",
+      text: "80+ Work Time",
     },
     {
       icon: "ThumbsUp",
-      text: "Удобная посадка",
+      text: "Comfortable Fit",
     },
   ] as FeatureItemProps[],
   image: {

@@ -13,8 +13,8 @@ import {
   Archive,
 } from "lucide-react";
 import { FaqCard } from "./FaqCard";
-import { Category } from "./Category";
-import { Accordion } from "./Accordion";
+import { Category } from "../../common/Category";
+import { Accordion } from "../../common/Accordion";
 
 const FaqPage = () => {
   return (

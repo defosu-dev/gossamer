@@ -1,4 +1,3 @@
-// FeatureList.tsx
 import React from "react";
 import FeatureItem, { FeatureItemProps } from "./FeatureItem";
 
@@ -10,12 +9,7 @@ const FeatureList = ({ items }: FeatureListProps) => {
   return (
     <div className="flex flex-col gap-6">
       {items.map((feature, idx) => (
-        <FeatureItem
-          key={idx}
-          icon={feature.icon}
-          title={feature.title}
-          text={feature.text}
-        />
+        <FeatureItem key={idx} icon={feature.icon} text={feature.text} />
       ))}
     </div>
   );

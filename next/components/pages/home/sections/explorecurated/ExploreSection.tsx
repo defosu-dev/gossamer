@@ -1,5 +1,5 @@
 import React from "react";
-import Slider from "../../../../common/blocks/Slider";
+import Slider from "../../../../common/Slider";
 import { categories } from "./testdataexplore";
 
 const ExploreSection = () => {

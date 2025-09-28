@@ -1,13 +1,17 @@
 import React from "react";
+import Image from "next/image";
 
-export default function ImageBlock() {
+type ImageBlockProps = {
+  src: string;
+  alt: string;
+};
+
+const ImageBlock = ({ src, alt }: ImageBlockProps) => {
   return (
-    <div className="rounded-2xl overflow-hidden shadow-lg">
-      <img
-        src="/your-image-path.jpg"
-        alt="Marshhall Photo"
-        className="object-cover w-[800px] h-[500px]"
-      />
+    <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-lg bg-zinc-200">
+      <Image src={src} alt={alt} fill className="object-cover" sizes="100vw" />
     </div>
   );
-}
+};
+
+export default ImageBlock;

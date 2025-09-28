@@ -2,7 +2,9 @@
 
 import React, { useRef } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import CategoryCard, { Category } from "./CategoryCard";
+import CategoryCard, {
+  Category,
+} from "../pages/home/sections/explorecurated/CategoryCard";
 
 type CategorySliderProps = {
   categories: Category[];

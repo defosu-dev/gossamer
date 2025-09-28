@@ -1,10 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import React, { ReactNode, useState } from "react";
 import { ChevronDown } from "lucide-react";
 
 type AccordionProps = {
   title: string;
-  answer: string;
+  answer: ReactNode;
 };
 
 export const Accordion = ({ title, answer }: AccordionProps) => {

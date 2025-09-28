@@ -1,28 +1,50 @@
 import React from "react";
-import Title from "./Title";
-import Description from "./Description";
+import Title from "./NewArrivalTitle";
+import Description from "./NewArrivalDescription";
 import FeatureList from "./FeatureList";
 import ImageBlock from "./ImageBlock";
+import { FeatureItemProps } from "./FeatureItem";
+import Button from "@/components/common/Button";
 
-export default function NewArrival() {
+type NewArrivalProps = {
+  label?: string;
+  title: string;
+  description: string;
+  features: FeatureItemProps[];
+  image: {
+    src: string;
+    alt: string;
+  };
+};
+
+const NewArrival = ({
+  label = "NEW ARRIVAL",
+  title,
+  description,
+  features,
+  image,
+}: NewArrivalProps) => {
   return (
-    <section className="flex flex-col md:flex-row justify-between gap-12 py-16 px-8 max-w-7xl mx-auto">
-      <div className="flex flex-col max-w-lg">
+    <section className="container mx-auto p-1 max-w-7xl flex items-center justify-between gap-8">
+      {/* Контент слева */}
+      <div className="flex flex-col max-w-lg px-6 mx-auto">
         <span className="text-xs font-semibold text-zinc-600 mb-2">
-          NEW ARRIVAL
+          {label}
         </span>
-        <Title>Marshall</Title>
-        <Description>
-          Discover audio excellence with Marshall – a revolutionary speaker
-          merging cutting-edge tech and captivating design. Immerse yourself in
-          rich soundscapes, elevating your listening experience to unparalleled
-          heights.
-        </Description>
-        <FeatureList />
+        <Title>{title}</Title>
+        <Description>{description}</Description>
+        <FeatureList items={features} />
+        <div className="flex justify-end">
+          <Button variant="primary">Details</Button>
+        </div>
       </div>
-      <div className="border">
-        <ImageBlock />{" "}
+
+      {/* Изображение справа */}
+      <div className="flex-1 h-[460px]">
+        <ImageBlock src={image.src} alt={image.alt} />
       </div>
     </section>
   );
-}
+};
+
+export default NewArrival;

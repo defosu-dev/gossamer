@@ -3,15 +3,13 @@ import React from "react";
 
 const Form = () => {
   return (
-    <div className="bg-white rounded-2xl max-w-75 ">
-      <form className="flex items-center gap-1">
-        <input
-          type="email"
-          placeholder="Your Email"
-          className="rounded-full px-4 py-2 text-black"
-        />
-        <Button variant="primary">Send</Button>
-      </form>
+    <div className="flex items-center w-full md:w-[360px] h-12 rounded-full border border-neutral-300 shadow-sm overflow-hidden bg-white">
+      <input
+        type="text"
+        placeholder="Enter your email"
+        className="flex-1 px-3 outline-none text-sm "
+      />
+      <Button variant="primary">Search</Button>
     </div>
   );
 };

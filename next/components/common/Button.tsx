@@ -3,10 +3,11 @@ import React, { ReactNode } from "react";
 type ButtonProps = {
   children: ReactNode;
   variant?: "primary" | "secondary";
+  onClick?: () => void; // ← добавляем поддержку клика
 };
 
-const Button = ({ children, variant = "primary" }: ButtonProps) => {
-  const baseStyles = "py-2 px-4 rounded-full font-medium ";
+const Button = ({ children, variant = "primary", onClick }: ButtonProps) => {
+  const baseStyles = "py-2 px-4 rounded-full font-medium transition";
 
   const variantStyles =
     variant === "primary"
@@ -14,7 +15,9 @@ const Button = ({ children, variant = "primary" }: ButtonProps) => {
       : "bg-white text-neutral-900 border border-neutral-300 hover:bg-neutral-50";
 
   return (
-    <button className={`${baseStyles} ${variantStyles}`}>{children}</button>
+    <button onClick={onClick} className={`${baseStyles} ${variantStyles}`}>
+      {children}
+    </button>
   );
 };
 

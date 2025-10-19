@@ -1,4 +1,5 @@
 import React from "react";
+import { ImageWithFallback } from "@/components/common/ImageWithFallback";
 
 type ProductImageProps = {
   src: string;
@@ -8,7 +9,7 @@ type ProductImageProps = {
 const ProductImage = ({ src, alt }: ProductImageProps) => {
   return (
     <div className="relative w-full aspect-square bg-zinc-200 rounded-t-lg">
-      {/* Здесь можно разместить placeholder или иконку, если нужно */}
+      <ImageWithFallback src={src} alt={alt} iconSize={6}  />
     </div>
   );
 };

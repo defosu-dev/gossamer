@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "next/image";
+import { ImageWithFallback } from "@/components/common/ImageWithFallback";
 
 export type Category = {
   label: string;
@@ -9,12 +9,7 @@ export type Category = {
 const CategoryCard = ({ image, label }: Category) => {
   return (
     <div className="relative flex-shrink-0 w-120 h-110 rounded-xl overflow-hidden shadow-md group border">
-      <Image
-        src={image}
-        alt={label}
-        fill
-        className="object-cover transition-transform duration-300 group-hover:scale-105"
-      />
+      <ImageWithFallback src={image} alt={label} />
       <div className="absolute bottom-3 left-3">
         <span className="bg-white px-3 py-1 rounded-full text-sm font-medium shadow">
           {label}

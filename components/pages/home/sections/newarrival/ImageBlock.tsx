@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "next/image";
+import { ImageWithFallback } from "@/components/common/ImageWithFallback";
 
 type ImageBlockProps = {
   src: string;
@@ -9,7 +9,7 @@ type ImageBlockProps = {
 const ImageBlock = ({ src, alt }: ImageBlockProps) => {
   return (
     <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-lg bg-zinc-200">
-      <Image src={src} alt={alt} fill className="object-cover" sizes="100vw" />
+      <ImageWithFallback src={src} alt={alt} />
     </div>
   );
 };

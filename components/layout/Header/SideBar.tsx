@@ -1,8 +1,6 @@
 import React from "react";
-import Image from "next/image";
-import { Search, ShoppingCart, Gem } from "lucide-react";
-import Logo from "./Logo";
-import NavBar from "./NavBar";
+import { Search, ShoppingCart } from "lucide-react";
+import { ImageWithFallback } from "@/components/common/ImageWithFallback";
 
 const SideBar = () => {
   const cartItemCount = 1;
@@ -22,13 +20,7 @@ const SideBar = () => {
       </button>
 
       <div className="h-9 w-9 overflow-hidden rounded-full">
-        <Image
-          src="https://via.placeholder.com/36"
-          alt="User Avatar"
-          width={36}
-          height={36}
-          className="h-full w-full object-cover"
-        />
+        <ImageWithFallback src="https://via.placeholder.com/36" alt="User Avatar" />
       </div>
     </div>
   );

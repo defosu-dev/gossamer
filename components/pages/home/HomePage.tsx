@@ -1,9 +1,9 @@
 import React from "react";
-import NewArrival from "./sections/NewArrival/NewArrival";
+import NewArrival from "./sections/newarrival/NewArrival";
 import ProductCard from "@/components/common/blocks/ProductCard/ProductCard";
 import ExploreSection from "./sections/explorecurated/ExploreSection";
 import { ProductListData } from "../../common/blocks/ProductCard/testproductlistdata";
-import { testdatanewarrival } from "./sections/NewArrival/testdatanewarrival";
+import { testdatanewarrival } from "./sections/newarrival/testdatanewarrival";
 
 const HomePage = () => {
   return (

@@ -4,6 +4,7 @@ import "./globals.css";
 import { ILayout } from "@/types/ILayout";
 import Header from "@/components/layout/Header"; // путь поправь
 import Footer from "@/components/layout/Footer"; // путь тоже поправь
+import { QueryProvider } from "@/components/providers/QueryProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,9 +27,11 @@ export default function RootLayout({ children }: ILayout) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Header />
-        <main className="min-h-screen">{children}</main> {/* Контент страниц */}
-        <Footer />
+        <QueryProvider>
+          <Header />
+          <main className="min-h-screen">{children}</main> {/* Контент страниц */}
+          <Footer />
+        </QueryProvider>
       </body>
     </html>
   );

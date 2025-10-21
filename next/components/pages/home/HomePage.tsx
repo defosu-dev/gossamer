@@ -4,10 +4,12 @@ import ProductCard from "@/components/common/blocks/ProductCard/ProductCard";
 import ExploreSection from "./sections/explorecurated/ExploreSection";
 import { ProductListData } from "../../common/blocks/ProductCard/testproductlistdata";
 import { testdatanewarrival } from "./sections/NewArrival/testdatanewarrival";
+import SearchBar from "./sections/searchbar/SearchBar";
 
 const HomePage = () => {
   return (
     <div>
+      <SearchBar />
       {/* Секция товаров */}
       <div className="container mx-auto p-1 max-w-7xl px-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">

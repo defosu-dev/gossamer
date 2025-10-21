@@ -1,104 +1,85 @@
 import { NextResponse } from "next/server";
+import { shopifyClient } from "@/lib/shopify-clients";
+import { GET_CART } from "@/lib/graphql/queries/cart";
+import { ADD_CART_LINES } from "@/lib/graphql/mutations/cart";
 
 export const dynamic = "force-dynamic";
 
+type Price = {
+  amount: string;
+  currencyCode: string;
+}
+
+type ProductVariant = {
+  id: string;
+  title: string;
+  price: Price;
+  product: { id: string; title: string; handle: string };
+}
+
+type CartLine = {
+  id: string;
+  quantity: number;
+  merchandise: ProductVariant;
+}
+
+type Cart = {
+  id: string;
+  webUrl: string;
+  totalQuantity: number;
+  lines?: { edges: { node: CartLine }[] };
+}
+
+type UserError = {
+  code: string;
+  field: string[];
+  message: string;
+}
+
+type CartResponse = {
+  cart: Cart | null;
+}
+
+type CartLinesAddResponse = {
+  cartLinesAdd: {
+    cart: Cart | null;
+    userErrors: UserError[];
+  };
+}
+
+type CartLineInput = {
+  merchandiseId: string;
+  quantity: number;
+}
+
+
+
 export async function GET(request: Request) {
-    const { searchParams } = new URL(request.url);
-    const cartId = searchParams.get("cartId");
+  const { searchParams } = new URL(request.url);
+  const cartId = searchParams.get("cartId");
+  if (!cartId) return NextResponse.json({ error: "Cart ID is required" }, { status: 400 });
 
-    if (!cartId) {
-        return NextResponse.json({ error: "Cart ID is required" }, { status: 400 });
-    }
-
-    const shop = process.env.SHOPIFY_STORE_DOMAIN;
-    const token = process.env.SHOPIFY_STOREFRONT_TOKEN;
-
-    if (!shop || !token) {
-        return NextResponse.json({ error: "Missing Shopify configuration" }, { status: 500 });
-    }
-
-    try {
-        const res = await fetch(`https://${shop}/api/2025-10/graphql.json`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-Shopify-Storefront-Access-Token": token,
-            },
-            body: JSON.stringify({
-                query: `query Cart($id: ID!) {
-          cart(id: $id) {
-            id webUrl totalQuantity
-            lines(first: 100) {
-              edges {
-                node {
-                  id quantity
-                  merchandise {
-                    ... on ProductVariant {
-                      id title price { amount currencyCode }
-                      product { id title handle }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }`,
-                variables: { id: cartId }
-            }),
-        });
-
-        const data = await res.json();
-        return NextResponse.json(data.data?.cart || null);
-    } catch (error: any) {
-        return NextResponse.json({ error: error.message || "Failed to fetch cart" }, { status: 500 });
-    }
+  try {
+    const data = await shopifyClient.request<CartResponse>(GET_CART, { id: cartId });
+    return NextResponse.json(data.cart || null);
+  } catch (err) {
+    return NextResponse.json({ error: err instanceof Error ? err.message : "Failed to fetch cart" }, { status: 500 });
+  }
 }
 
 export async function POST(request: Request) {
-    try {
-        const { cartId, items } = await request.json();
+  try {
+    const { cartId, items } = await request.json();
+    if (!cartId || !items) return NextResponse.json({ error: "Cart ID and items are required" }, { status: 400 });
 
-        if (!cartId || !items) {
-            return NextResponse.json({ error: "Cart ID and items are required" }, { status: 400 });
-        }
+    const lines: CartLineInput[] = items.map((item: { variant: { id: string }; quantity: number }) => ({
+      merchandiseId: item.variant.id,
+      quantity: item.quantity,
+    }));
 
-        const shop = process.env.SHOPIFY_STORE_DOMAIN;
-        const token = process.env.SHOPIFY_STOREFRONT_TOKEN;
-
-        if (!shop || !token) {
-            return NextResponse.json({ error: "Missing Shopify configuration" }, { status: 500 });
-        }
-
-        // Convert items to Shopify format
-        const lines = items.map((item: any) => ({
-            merchandiseId: item.variant.id,
-            quantity: item.quantity,
-        }));
-
-        const mutation = `#graphql
-      mutation CartLinesAdd($cartId: ID!, $lines: [CartLineInput!]!) {
-        cartLinesAdd(cartId: $cartId, lines: $lines) {
-          cart { id webUrl totalQuantity }
-          userErrors { code field message }
-        }
-      }
-    `;
-
-        const res = await fetch(`https://${shop}/api/2025-10/graphql.json`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-Shopify-Storefront-Access-Token": token,
-            },
-            body: JSON.stringify({
-                query: mutation,
-                variables: { cartId, lines },
-            }),
-        });
-
-        const data = await res.json();
-        return NextResponse.json(data.data?.cartLinesAdd?.cart);
-    } catch (error: any) {
-        return NextResponse.json({ error: error.message || "Failed to sync cart" }, { status: 500 });
-    }
+    const data = await shopifyClient.request<CartLinesAddResponse>(ADD_CART_LINES, { cartId, lines });
+    return NextResponse.json(data.cartLinesAdd.cart);
+  } catch (err) {
+    return NextResponse.json({ error: err instanceof Error ? err.message : "Failed to sync cart" }, { status: 500 });
+  }
 }

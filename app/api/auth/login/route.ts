@@ -1,80 +1,55 @@
 import { NextResponse } from "next/server";
+import { shopifyClient } from "@/lib/shopify-clients";
+import { CREATE_CUSTOMER_ACCESS_TOKEN } from "@/lib/graphql/mutations/auth";
+import { GET_CUSTOMER } from "@/lib/graphql/queries/auth";
 
 export const dynamic = "force-dynamic";
 
+type CustomerAccessToken = {
+  accessToken: string;
+  expiresAt: string;
+}
+
+type CustomerUserError = {
+  code: string;
+  field: string[];
+  message: string;
+}
+
+type Customer = {
+  id: string;
+  email: string;
+  firstName: string | null;
+  lastName: string | null;
+}
+
+type AccessTokenResponse = {
+  customerAccessTokenCreate: {
+    customerAccessToken: CustomerAccessToken | null;
+    customerUserErrors: CustomerUserError[];
+  };
+}
+
+type CustomerResponse = {
+  customer: Customer | null;
+}
+
 export async function POST(request: Request) {
-    try {
-        const { email, password } = await request.json();
+  try {
+    const { email, password } = await request.json();
+    if (!email || !password) return NextResponse.json({ error: "Email and password are required" }, { status: 400 });
 
-        if (!email || !password) {
-            return NextResponse.json({ error: "Email and password are required" }, { status: 400 });
-        }
 
-        const shop = process.env.SHOPIFY_STORE_DOMAIN;
-        const token = process.env.SHOPIFY_STOREFRONT_TOKEN;
+    const tokenData = await shopifyClient.request<AccessTokenResponse>(CREATE_CUSTOMER_ACCESS_TOKEN, { input: { email, password } });
+    const accessToken = tokenData.customerAccessTokenCreate.customerAccessToken;
+    if (!accessToken) return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
 
-        if (!shop || !token) {
-            return NextResponse.json({ error: "Missing Shopify configuration" }, { status: 500 });
-        }
 
-        // Create customer access token
-        const mutation = `#graphql
-      mutation CustomerAccessTokenCreate($input: CustomerAccessTokenCreateInput!) {
-        customerAccessTokenCreate(input: $input) {
-          customerAccessToken { accessToken expiresAt }
-          customerUserErrors { code field message }
-        }
-      }
-    `;
+    const customerData = await shopifyClient.request<CustomerResponse>(GET_CUSTOMER, { token: accessToken.accessToken });
+    const customer = customerData.customer;
 
-        const tokenRes = await fetch(`https://${shop}/api/2025-10/graphql.json`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-Shopify-Storefront-Access-Token": token,
-            },
-            body: JSON.stringify({
-                query: mutation,
-                variables: { input: { email, password } },
-            }),
-        });
-
-        const tokenData = await tokenRes.json();
-        const accessToken = tokenData.data?.customerAccessTokenCreate?.customerAccessToken;
-
-        if (!accessToken) {
-            return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
-        }
-
-        // Get customer data
-        const customerQuery = `#graphql
-      query Customer($token: String!) {
-        customer(customerAccessToken: $token) {
-          id email firstName lastName
-        }
-      }
-    `;
-
-        const customerRes = await fetch(`https://${shop}/api/2025-10/graphql.json`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-Shopify-Storefront-Access-Token": token,
-            },
-            body: JSON.stringify({
-                query: customerQuery,
-                variables: { token: accessToken.accessToken }
-            }),
-        });
-
-        const customerData = await customerRes.json();
-        const customer = customerData.data?.customer;
-
-        return NextResponse.json({
-            customer,
-            accessToken: accessToken.accessToken,
-        });
-    } catch (error: any) {
-        return NextResponse.json({ error: error.message || "Login failed" }, { status: 500 });
-    }
+    return NextResponse.json({ customer, accessToken: accessToken.accessToken });
+  } catch (err) {
+    return NextResponse.json({ error: err instanceof Error ? err.message : "Login failed" }, { status: 500 });
+  }
 }

@@ -1,14 +1,14 @@
 import React from "react";
+import { Badge } from "@/components/common/Badge";
+import { IChildren } from "@/types/IChildren";
 
-type ProductCategoryBadgeProps = {
-  category: string;
-};
+type ProductCategoryBadgeProps = IChildren;
 
-const ProductCategoryBadge = ({ category }: ProductCategoryBadgeProps) => {
+const ProductCategoryBadge = ({ children }: ProductCategoryBadgeProps) => {
   return (
-    <div className="absolute top-2 right-2 px-2 py-1 bg-white rounded-full text-xs font-semibold text-gray-700 shadow-md">
-      {category}
-    </div>
+    <Badge as={"link"} href={"#"} className="absolute top-2 right-2">
+      {children}
+    </Badge>
   );
 };
 

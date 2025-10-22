@@ -26,7 +26,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       {/* Фото товара с бейджем категории поверх */}
       <div className="relative flex justify-center">
         <ProductImage src={product.imageSrc} alt={product.imageAlt} />
-        <ProductCategoryBadge category={product.category} />
+        <ProductCategoryBadge children={product.category} />
       </div>
 
       {/* Контент */}

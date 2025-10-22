@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Search } from "lucide-react";
 import Button from "@/components/common/Button";
 import { useRouter } from "next/navigation";
+import Container from "@/components/common/Container";
 
 const categories = ["All", "Home", "Music", "Phone", "Storage", "Other"];
 
@@ -12,9 +13,10 @@ const SearchBar = () => {
   const [query, setQuery] = useState("");
   const router = useRouter();
 
+
   return (
-    <section className="max-w-7xl mx-auto px-4 py-10">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+    <Container className="flex flex-col">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 w-full pt-10">
         <h2 className="text-3xl font-bold tracking-tight">Give All You Need</h2>
 
         <div className="flex items-center w-full md:w-[360px] h-12 rounded-full border border-neutral-300 shadow-sm overflow-hidden">
@@ -42,7 +44,7 @@ const SearchBar = () => {
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center justify-between mt-8 gap-4">
+      <div className="flex flex-wrap items-center justify-between mt-8 gap-4 w-full">
         <div className="flex flex-wrap gap-3">
           {categories.map((cat) => (
             <Button
@@ -60,7 +62,7 @@ const SearchBar = () => {
           See All Products
         </Button>
       </div>
-    </section>
+    </Container>
   );
 };
 

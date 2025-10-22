@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ILayout } from "@/types/ILayout";
-import Header from "@/components/layout/Header"; // путь поправь
-import Footer from "@/components/layout/Footer"; // путь тоже поправь
 import { QueryProvider } from "@/components/providers/QueryProvider";
+import Footer from "@/components/layout/Footer";
+import Header from "@/components/layout/Header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,13 +23,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: ILayout) {
   return (
-    <html lang="en">
+    <html lang="en" className="overflow-x-hidden">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col bg-white text-gray-900 overflow-x-hidden`}
       >
         <QueryProvider>
           <Header />
-          <main className="min-h-screen">{children}</main> {/* Контент страниц */}
+          <main className="flex flex-1">{children}</main>
           <Footer />
         </QueryProvider>
       </body>

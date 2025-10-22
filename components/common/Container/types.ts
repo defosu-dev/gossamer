@@ -1,3 +1,3 @@
 import { IChildren } from "@/types/IChildren";
 
-export interface IContainer extends IChildren {}
+export type IContainer = IChildren;

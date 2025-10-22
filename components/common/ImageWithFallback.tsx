@@ -1,5 +1,5 @@
 'use client'
-import { FC, useState, useEffect, CSSProperties } from 'react'
+import { useState, useEffect, CSSProperties } from 'react'
 import Image from 'next/image'
 import { Image as ImageIcon, Loader2 } from 'lucide-react'
 import { cn } from '@/utils/cn'

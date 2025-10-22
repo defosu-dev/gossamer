@@ -1,5 +1,5 @@
 import { IChildren } from "@/types/IChildren";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
 export interface IPortal extends IChildren {

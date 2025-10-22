@@ -2,11 +2,10 @@ import React from "react";
 import NewArrival from "./sections/newarrival/NewArrival";
 import ProductCard from "@/components/common/blocks/ProductCard/ProductCard";
 import ExploreSection from "./sections/explorecurated/ExploreSection";
-import { ProductListData } from "../../common/blocks/ProductCard/testproductlistdata";
 
-
-import SearchBar from "@/next/components/pages/home/sections/searchbar/SearchBar";
 import { testdatanewarrival } from "./sections/newarrival/testdatanewarrival";
+import { ProductListData } from "@/components/common/blocks/ProductCard/testproductlistdata";
+import SearchBar from "@/components/common/SearchBar/SearchBar";
 
 const HomePage = () => {
   return (

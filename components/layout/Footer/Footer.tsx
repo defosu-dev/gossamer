@@ -1,5 +1,4 @@
 import React from "react";
-import Form from "./Form";
 import List from "./List";
 import SocialMediaList from "./SocialMediaList";
 import Copyright from "./Copyright";

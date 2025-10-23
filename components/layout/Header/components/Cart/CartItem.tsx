@@ -32,7 +32,7 @@ export default function CartItem({ item }: { item: CartItemType }) {
       </div>
       <div className="col-span-1 flex flex-col items-end">
         <CartItemPrice currentPrice={item.price.currentPrice} className="text-end"/>
-        <InputQuantity quantity={item.quantity} onChange={(newQuantity) => { }} className="mt-2" />
+        <InputQuantity quantity={item.quantity} onChange={() => { }} className="mt-2" />
         
       </div>
     </li>

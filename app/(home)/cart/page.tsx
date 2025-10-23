@@ -89,7 +89,7 @@ const CartPage = () => {
 export default CartPage;
 
 
-export const EmptyCart = () => { 
+const EmptyCart = () => { 
     return (
         <div className="flex gap-4 p-4 border border-neutral-200 rounded-lg items-center py-20 justify-center">
             <h3 className="text-2xl font-bold text-neutral-500">Your cart is empty</h3>
@@ -100,7 +100,7 @@ export const EmptyCart = () => {
 
 
 
-export const SummaryOrder = () => { 
+const SummaryOrder = () => { 
     return (
         <div className="flex flex-col p-4 border border-neutral-200 rounded-lg h-fit sticky top-20 min-w-xs w-full md:w-fit gap-2">
         <h3 className="text-xl font-bold text-neutral-900">Summary Order</h3>
@@ -114,7 +114,7 @@ export const SummaryOrder = () => {
 }
 
 
-export const Breadcrumbs = ({ items }: { items: { label: string; href: string }[] }) => {
+const Breadcrumbs = ({ items }: { items: { label: string; href: string }[] }) => {
     return (
         <nav aria-label="breadcrumb" className="mt-4">
                     <ol className="flex gap-1 items-center">
@@ -129,7 +129,7 @@ export const Breadcrumbs = ({ items }: { items: { label: string; href: string }[
 }
 
 
-export const CartItem = ({ isSelected = false, onSelect, imageUrl = "", badge, title, handle, descriptionItems, price, quantity = 1, onQuantityChange, onDelete  }: CartItemProps) => {
+const CartItem = ({ isSelected = false, onSelect, imageUrl = "", badge, title, handle, descriptionItems, price, quantity = 1, onQuantityChange, onDelete  }: CartItemProps) => {
     return (
         <div className="flex gap-4 p-4 border border-neutral-200 rounded-lg items-center">
             <input type="checkbox" name={`select-item-${handle}`} id={`select-item-${handle}`} className="self-start" />

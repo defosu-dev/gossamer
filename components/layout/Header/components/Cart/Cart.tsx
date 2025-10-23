@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import CartDropdown from './CartDropdown'
 import { CartItemType } from './CartItem'
 import CartButton from './CartButton'

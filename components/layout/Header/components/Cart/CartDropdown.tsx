@@ -1,6 +1,7 @@
 'use client'
 import { cn } from '@/utils/cn'
 import CartItem, { CartItemType } from './CartItem'
+import Link from 'next/link'
 
 type Props = {
   open: boolean
@@ -9,7 +10,7 @@ type Props = {
 }
 
 export default function CartDropdown({ open, onClose, items }: Props) {
-  const total = items.reduce((s, i) => s + i.price * i.quantity, 0).toFixed(2)
+  const total = items.reduce((s, i) => s + i.price.currentPrice * i.quantity, 0).toFixed(2)
 
   return (
     <div
@@ -28,9 +29,12 @@ export default function CartDropdown({ open, onClose, items }: Props) {
         ))}
       </ul>
 
-      <div className="border-t border-gray-200 px-3 py-2 text-sm font-semibold text-right">
-        Total: ${total}
+      <div className="border-t border-gray-200 px-3 py-2 flex justify-between items-center gap-4">
+        <Link href="/cart" onClick={onClose} className='text font-semibold underline'>All products</Link>
+       <span className='font-semibold'> Total: ${total}</span>
       </div>
     </div>
   )
 }
+
+

@@ -9,7 +9,7 @@ import SearchBar from "@/components/common/SearchBar/SearchBar";
 
 const HomePage = () => {
   return (
-    <div>
+    <div className="flex flex-col w-full gap-10 pb-16">
       <SearchBar />
       {/* Секция товаров */}
       <div className="container mx-auto p-1 max-w-7xl px-6">

@@ -1,7 +1,7 @@
 import React from "react";
-import Logo from "./Logo";
-import NavBar from "./NavBar";
-import SideBar from "./SideBar";
+import Logo from "./components/Logo";
+import NavBar from "./components/NavBar";
+import SideBar from "./components/SideBar";
 
 const Header = () => {
   return (

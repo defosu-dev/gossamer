@@ -27,7 +27,7 @@ const page = () => {
       <EmailInput />
       <InputPassword />
       <div className="flex justify-between items-center w-full mt-4">
-        <div className="w-full flex items-center flex-nowrap">
+        <div className="w-full flex items-baseline flex-nowrap">
           <input type="checkbox" name="Remember me" id="" className="cursor-pointer"/>
           <label htmlFor="Remember me" className="ml-2 text-sm text-neutral-600 font-medium">Remember me</label>
         </div>
@@ -41,13 +41,13 @@ const page = () => {
       </div>
       <GoogleAuthButton className="mt-6" />
       <p className={cn(
-        "text-sm text-neutral-600 font-medium",
+        "text-sm text-neutral-500",
         "mt-4"
       )}>Don&apos;t have an account? <Link href="/auth/sign-up" className="text-sm text-neutral-800 font-semibold text-nowrap">Sign Up</Link></p>
     </div>
     <div className={cn(
       "hidden md:block md:col-span-5",
-      "p-4 bg-neutral-800 rounded-2xl",
+      "p-4 bg-neutral-800 rounded-2xl shadow",
     )}></div>
 
   </form>;

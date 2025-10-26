@@ -1,8 +1,13 @@
-import { create } from 'zustand';
-import { createAuthSlice, AuthSlice } from './slices/authSlice';
-import { createCartSlice, CartSlice } from './slices/cartSlice';
+import { create } from 'zustand'
+import { devtools } from 'zustand/middleware'
+import { CartSlice, createCartSlice } from './slices/cartSlice'
+import { WishlistSlice, createWishlistSlice } from './slices/wishlistSlice'
 
-export const useStore = create<AuthSlice & CartSlice>()((set, get) => ({
-    ...createAuthSlice(set, get),
-    ...createCartSlice(set, get),
-}));
+export type Store = CartSlice & WishlistSlice
+
+export const useStore = create<Store>()(
+  devtools((set, get, api) => ({
+    ...createCartSlice(set, get, api),
+    ...createWishlistSlice(set, get, api),
+  }))
+)

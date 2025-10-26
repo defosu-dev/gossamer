@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
-import { createSupabaseServerClient } from '@/utils/supabase/supabaseBrowser';
+import { supabaseServer } from '@/utils/supabase/supabaseServer';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2025-09-30.clover' });
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!;
@@ -17,7 +17,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: `Webhook Error: ${err.message}` }, { status: 400 });
   }
 
-  const supabase = createSupabaseServerClient();
+  const supabase = await supabaseServer();
 
   if (event.type === 'payment_intent.succeeded') {
     const pi = event.data.object as Stripe.PaymentIntent;

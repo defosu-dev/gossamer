@@ -1,9 +1,7 @@
 import React from "react";
-import { Search, UserRound } from "lucide-react";
-import { ImageWithFallback } from "@/components/common/ImageWithFallback";
-import Cart from "./Cart/Cart";
-import { cn } from "@/utils/cn";
-import Link from "next/link";
+import { Search } from "lucide-react";
+import Cart from "./Cart";
+import User from "./User";
 
 const SideBar = () => {
   const isAuth = false;
@@ -15,21 +13,7 @@ const SideBar = () => {
 
       <Cart />
 
-      <div className={cn(
-        "w-9 h-9 overflow-hidden rounded-full border border-neutral-300",
-        "flex justify-center items-center",
-      )}>
-        {isAuth ?
-          <ImageWithFallback src="https://via.placeholder.com/36" alt="User Avatar" />
-          :
-          <Link href="/auth/sign-in" className={cn(
-            "h-full w-full",
-            "flex justify-center items-center",
-          )}>
-            <UserRound className="size-4.5 text-gray-700" />
-          </Link>
-        }
-      </div>
+      <User />
     </div>
   );
 };

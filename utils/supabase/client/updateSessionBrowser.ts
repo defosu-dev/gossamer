@@ -1,4 +1,3 @@
-import { supabaseBrowser } from "./supabaseBrowser"
 
 /**
  * updateSessionBrowser
@@ -8,7 +7,9 @@ import { supabaseBrowser } from "./supabaseBrowser"
  * without a full page reload.
  */
 
+import { supabaseBrowser } from "../supabaseBrowser"
+
 export async function updateSessionBrowser() {
-  const supabase = supabaseBrowser()
+  const supabase = supabaseBrowser
   await supabase.auth.getUser()
 }

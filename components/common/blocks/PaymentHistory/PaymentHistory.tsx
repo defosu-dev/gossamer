@@ -1,6 +1,6 @@
 // app/components/PaymentHistory.tsx
 import { supabaseServer } from '@/utils/supabase/supabaseServer';
-import type { Database } from '@/lib/supabase';
+import type { Database } from '@/types/supabase';
 
 type Payment = Database['public']['Tables']['payments']['Row'];
 

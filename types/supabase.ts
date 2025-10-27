@@ -39,6 +39,24 @@ export type Database = {
   }
   public: {
     Tables: {
+      carts: {
+        Row: {
+          items: Json | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          items?: Json | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          items?: Json | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       payments: {
         Row: {
           amount: number
@@ -66,6 +84,87 @@ export type Database = {
           status?: string | null
           stripe_payment_intent_id?: string | null
           user_id?: string | null
+        }
+        Relationships: []
+      }
+      products: {
+        Row: {
+          created_at: string | null
+          currency: string | null
+          description: string | null
+          id: string
+          image_url: string | null
+          name: string
+          price: number
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          currency?: string | null
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name: string
+          price: number
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          currency?: string | null
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          price?: number
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      users: {
+        Row: {
+          address: Json | null
+          avatar_url: string | null
+          created_at: string | null
+          full_name: string | null
+          id: string
+          phone: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          address?: Json | null
+          avatar_url?: string | null
+          created_at?: string | null
+          full_name?: string | null
+          id: string
+          phone?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          address?: Json | null
+          avatar_url?: string | null
+          created_at?: string | null
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      wishlists: {
+        Row: {
+          items: Json | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          items?: Json | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          items?: Json | null
+          updated_at?: string | null
+          user_id?: string
         }
         Relationships: []
       }

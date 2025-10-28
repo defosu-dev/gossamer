@@ -1,21 +1,66 @@
-// app/api/create-payment-intent/route.ts
-import { supabaseBrowser } from '@/utils/supabase/supabaseBrowser';
-import type { Database } from '@/types/supabase';
+import { stripe } from "@/utils/stripe";
+import { createPayment } from "@/utils/supabase/server/payments";
+import { createOrder } from "@/utils/supabase/server/orders";
+import { NextResponse } from "next/server";
+import { v4 as uuidv4 } from "uuid";
 
 export async function POST(req: Request) {
-  const { amount, userId } = await req.json();
-  const supabase = supabaseBrowser();
+  try {
+    const { amount, userId, email, name, phone, address } = await req.json();
 
-  const { error } = await supabase
-    .from('payments')
-    .insert<Database['public']['Tables']['payments']['Insert']>({
-      amount,
+    if (!amount || !userId || !email) {
+      return NextResponse.json(
+        { error: "Missing required fields: amount, userId, or email" },
+        { status: 400 }
+      );
+    }
+
+    // 1️⃣ Створюємо order (ще без оплати)
+    const orderId = uuidv4();
+    const { data: order, error: orderError } = await createOrder({
+      id: orderId,
       user_id: userId,
-      status: 'pending',
-      currency: 'usd',
+      email,
+      phone: phone || null,
+      name: name || null,
+      address: address || null,
+      total: amount,
+      status: "pending",
     });
 
-  if (error) throw error;
+    if (orderError || !order) {
+      throw orderError || new Error("Failed to create order");
+    }
 
-  // ... создай PaymentIntent в Stripe
+    // 2️⃣ Створюємо PaymentIntent у Stripe
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: Math.round(amount * 100),
+      currency: "usd",
+      metadata: {
+        user_id: userId,
+        order_id: orderId,
+      },
+    });
+
+    // 3️⃣ Зберігаємо запис у таблиці payments
+    const { data: payment, error: paymentError } = await createPayment({
+      amount: Math.round(amount * 100),
+      user_id: userId,
+      status: "pending",
+      currency: "usd",
+      order_id: orderId,
+      stripe_payment_intent_id: paymentIntent.id,
+    });
+
+    if (paymentError || !payment) {
+      throw paymentError || new Error("Failed to create payment record");
+    }
+
+    // 4️⃣ Повертаємо client secret для Stripe
+    return NextResponse.json({ clientSecret: paymentIntent.client_secret });
+  } catch (error) {
+    const err = error as Error;
+    console.error("Create PaymentIntent error:", err);
+    return NextResponse.json({ error: err.message }, { status: 500 });
+  }
 }

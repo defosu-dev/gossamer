@@ -1,17 +1,45 @@
-import { StateCreator } from 'zustand';
+import { StateCreator } from "zustand";
+
+export type CartItem = {
+  variant_id: string;
+  quantity: number;
+};
 
 export type CartSlice = {
-  cart: string[];
-  addToCart: (item: string) => void;
-  removeFromCart: (item: string) => void;
+  cart: CartItem[];
+  addToCart: (variantId: string, quantity?: number) => void;
+  removeFromCart: (variantId: string) => void;
+  updateQuantity: (variantId: string, quantity: number) => void;
   clearCart: () => void;
-  setCart: (items: string[]) => void;
+  setCart: (items: CartItem[]) => void;
 };
 
 export const createCartSlice: StateCreator<CartSlice> = (set) => ({
   cart: [],
-  addToCart: (item) => set((state) => ({ cart: [...state.cart, item] })),
-  removeFromCart: (item) => set((state) => ({ cart: state.cart.filter((i) => i !== item) })),
+  addToCart: (variantId, quantity = 1) =>
+    set((state) => {
+      const existing = state.cart.find((item) => item.variant_id === variantId);
+      if (existing) {
+        return {
+          cart: state.cart.map((item) =>
+            item.variant_id === variantId
+              ? { ...item, quantity: item.quantity + quantity }
+              : item
+          ),
+        };
+      }
+      return { cart: [...state.cart, { variant_id: variantId, quantity }] };
+    }),
+  removeFromCart: (variantId) =>
+    set((state) => ({
+      cart: state.cart.filter((item) => item.variant_id !== variantId),
+    })),
+  updateQuantity: (variantId, quantity) =>
+    set((state) => ({
+      cart: state.cart.map((item) =>
+        item.variant_id === variantId ? { ...item, quantity } : item
+      ),
+    })),
   clearCart: () => set({ cart: [] }),
   setCart: (items) => set({ cart: items }),
 });

@@ -1,42 +1,45 @@
-import { NextResponse } from 'next/server';
-import Stripe from 'stripe';
-import { supabaseServer } from '@/utils/supabase/supabaseServer';
+// app/api/stripe/webhook/route.ts
+import { stripe } from "@/utils/stripe";
+import { updatePaymentStatusByOrderId } from "@/utils/supabase/server/payments";
+import { NextResponse } from "next/server";
+import type { Stripe } from "stripe";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2025-09-30.clover' });
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
 export async function POST(req: Request) {
-  const sig = req.headers.get('stripe-signature')!;
+  const sig = req.headers.get("stripe-signature")!;
   const body = await req.text();
 
   let event: Stripe.Event;
 
   try {
     event = stripe.webhooks.constructEvent(body, sig, endpointSecret);
-  } catch (err: any) {
-    return NextResponse.json({ error: `Webhook Error: ${err.message}` }, { status: 400 });
+  } catch (err) {
+    const error = err as Error;
+    console.error("Webhook signature error:", error.message);
+    return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
   }
 
-  const supabase = await supabaseServer();
+  if (event.type === "payment_intent.succeeded") {
+    const paymentIntent = event.data.object as Stripe.PaymentIntent;
 
-  if (event.type === 'payment_intent.succeeded') {
-    const pi = event.data.object as Stripe.PaymentIntent;
-    const { error } = await supabase
-      .from('payments')
-      .update({ status: 'succeeded' })
-      .eq('stripe_payment_intent_id', pi.id);
+    const { error } = await updatePaymentStatusByOrderId(
+      paymentIntent.metadata.order_id,
+      "succeeded"
+    );
 
-    if (error) console.error('Supabase update error:', error);
+    if (error) console.error("Update succeeded error:", error);
   }
 
-  if (event.type === 'payment_intent.payment_failed') {
-    const pi = event.data.object as Stripe.PaymentIntent;
-    const { error } = await supabase
-      .from('payments')
-      .update({ status: 'failed' })
-      .eq('stripe_payment_intent_id', pi.id);
+  if (event.type === "payment_intent.payment_failed") {
+    const paymentIntent = event.data.object as Stripe.PaymentIntent;
 
-    if (error) console.error('Supabase update error:', error);
+    const { error } = await updatePaymentStatusByOrderId(
+      paymentIntent.metadata.order_id,
+      "failed"
+    );
+
+    if (error) console.error("Update failed error:", error);
   }
 
   return NextResponse.json({ received: true });

@@ -1,34 +1,24 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { fetchCart, updateCart } from '@/utils/supabase/client/cart';
-import { useAuth } from './useAuth';
-import { useStore } from '@/store';
-import { useEffect } from 'react';
-
-/**
- * Custom hook for managing the user's shopping cart.
- * 
- * - Returns data from Zustand store (prevents UI flickering).
- * - Synchronizes cart with Supabase via React Query.
- * - Automatically loads cart on user authentication.
- * - Local mutations (add/remove) are instant in UI.
- * - Changes are persisted to Supabase in the background.
- * 
- * @returns {Object} Cart state and actions
- * @returns {string[]} .cart - Current cart items (from Zustand)
- * @returns {(item: string) => void} .addToCart - Add item to cart
- * @returns {(item: string) => void} .removeFromCart - Remove item from cart
- * @returns {boolean} .isLoading - True if auth or data is loading
- * @returns {boolean} .isAuthenticated - True if user is logged in
- */
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { fetchCart, updateCart } from "@/utils/supabase/client/cart";
+import { useAuth } from "./useAuth";
+import { useStore } from "@/store";
+import { useEffect } from "react";
+import { CartItem } from "@/store/slices/cartSlice";
 
 export const useCart = () => {
   const { user, loading: authLoading } = useAuth();
   const userId = user?.id;
   const queryClient = useQueryClient();
-  const { cart, setCart, addToCart: addLocal, removeFromCart: removeLocal } = useStore();
+  const {
+    cart,
+    setCart,
+    addToCart: addLocal,
+    removeFromCart: removeLocal,
+    updateQuantity,
+  } = useStore();
 
   const { data, isLoading: queryLoading } = useQuery({
-    queryKey: ['cart', userId],
+    queryKey: ["cart", userId],
     queryFn: () => fetchCart(userId!),
     enabled: !!userId && !authLoading,
     staleTime: 1000 * 60 * 5,
@@ -36,26 +26,37 @@ export const useCart = () => {
 
   useEffect(() => {
     if (data !== undefined) {
-      setCart(data);
+      setCart(data); // data should now be CartItem[]
     }
   }, [data, setCart]);
 
   const { mutate: syncCart } = useMutation({
-    mutationFn: (items: string[]) => updateCart(userId!, items),
+    mutationFn: (items: CartItem[]) => updateCart(userId!, items),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['cart', userId] });
+      queryClient.invalidateQueries({ queryKey: ["cart", userId] });
     },
   });
 
-  const addToCart = (item: string) => {
-    const newCart = [...cart, item];
-    addLocal(item);
-    syncCart(newCart);
+  const addToCart = (variantId: string, quantity = 1) => {
+    addLocal(variantId, quantity);
+    // Optimistically update, then sync
+    const optimisticCart = (() => {
+      const existing = cart.find((i) => i.variant_id === variantId);
+      if (existing) {
+        return cart.map((i) =>
+          i.variant_id === variantId
+            ? { ...i, quantity: i.quantity + quantity }
+            : i
+        );
+      }
+      return [...cart, { variant_id: variantId, quantity }];
+    })();
+    syncCart(optimisticCart);
   };
 
-  const removeFromCart = (item: string) => {
-    const newCart = cart.filter((i) => i !== item);
-    removeLocal(item);
+  const removeFromCart = (variantId: string) => {
+    removeLocal(variantId);
+    const newCart = cart.filter((i) => i.variant_id !== variantId);
     syncCart(newCart);
   };
 
@@ -63,6 +64,13 @@ export const useCart = () => {
     cart,
     addToCart,
     removeFromCart,
+    updateQuantity: (variantId: string, quantity: number) => {
+      updateQuantity(variantId, quantity);
+      const newCart = cart.map((i) =>
+        i.variant_id === variantId ? { ...i, quantity } : i
+      );
+      syncCart(newCart);
+    },
     isLoading: queryLoading || authLoading,
     isAuthenticated: !!user,
   };

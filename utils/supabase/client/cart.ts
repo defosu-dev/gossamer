@@ -1,43 +1,53 @@
+import { CartItem } from "@/store/slices/cartSlice";
 import { supabaseBrowser } from "../supabaseBrowser";
 
-/**
- * Fetches the user's shopping cart from Supabase.
- * 
- * @param userId - The authenticated user's ID
- * @returns Promise resolving to an array of cart item IDs
- * @throws Error if fetch fails (except when cart doesn't exist - PGRST116)
- */
-export const fetchCart = async (userId: string): Promise<string[]> => {
-  const { data, error } = await supabaseBrowser
-    .from('carts')
-    .select('items')
-    .eq('user_id', userId)
+/** Fetch cart items */
+export const fetchCart = async (userId: string): Promise<CartItem[]> => {
+  const { data: cart, error: cartError } = await supabaseBrowser
+    .from("carts")
+    .select("id")
+    .eq("user_id", userId)
     .single();
 
-  if (error && error.code !== 'PGRST116') throw error; 
-  return (data?.items as string[]) || [];
+  if (cartError && cartError.code !== "PGRST116") throw cartError;
+  if (!cart) return [];
+
+  const { data: items, error: itemsError } = await supabaseBrowser
+    .from("cart_items")
+    .select("variant_id, quantity")
+    .eq("cart_id", cart.id);
+
+  if (itemsError) throw itemsError;
+  return items as CartItem[];
 };
 
-/**
- * Updates the user's shopping cart in Supabase.
- * 
- * Uses upsert to create the cart if it doesn't exist.
- * 
- * @param userId - The authenticated user's ID
- * @param items - Array of product IDs in the cart
- * @throws Error if update fails
- */
-export const updateCart = async (userId: string, items: string[]) => {
-  const { error } = await supabaseBrowser
-    .from('carts')
+/** Replace the whole cart */
+export const updateCart = async (userId: string, items: CartItem[]) => {
+  // 1. Upsert the cart row
+  const { data: cart, error: cartError } = await supabaseBrowser
+    .from("carts")
     .upsert(
-      {
-        user_id: userId,
-        items,
-        updated_at: new Date().toISOString(),
-      },
-      { onConflict: 'user_id' }
-    );
+      { user_id: userId, updated_at: new Date().toISOString() },
+      { onConflict: "user_id" }
+    )
+    .select()
+    .single();
 
-  if (error) throw error;
+  if (cartError || !cart) throw cartError ?? new Error("Cart upsert failed");
+
+  // 2. Delete old items
+  const { error: delError } = await supabaseBrowser
+    .from("cart_items")
+    .delete()
+    .eq("cart_id", cart.id);
+  if (delError) throw delError;
+
+  // 3. Insert new items (if any)
+  if (items.length === 0) return;
+
+  const { error: insError } = await supabaseBrowser
+    .from("cart_items")
+    .insert(items.map((i) => ({ cart_id: cart.id, ...i })));
+
+  if (insError) throw insError;
 };

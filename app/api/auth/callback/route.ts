@@ -1,14 +1,14 @@
-import { NextResponse } from 'next/server';
-import { supabaseBrowser } from '@/utils/supabase/supabaseBrowser';
+import { NextResponse } from "next/server";
+import { supabaseServer } from "@/utils/supabase/supabaseServer";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
-  const code = searchParams.get('code');
+  const code = searchParams.get("code");
 
   if (code) {
-    const supabase = supabaseBrowser();
+    const supabase = await supabaseServer();
     await supabase.auth.exchangeCodeForSession(code);
   }
 
-  return NextResponse.redirect(new URL('/dashboard', req.url));
+  return NextResponse.redirect(new URL("/dashboard", req.url));
 }

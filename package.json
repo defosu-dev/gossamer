@@ -9,7 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@stripe/stripe-js": "^8.1.0",
+    "@stripe/react-stripe-js": "^5.3.0",
+    "@stripe/stripe-js": "^8.2.0",
     "@supabase/ssr": "^0.7.0",
     "@supabase/supabase-js": "^2.76.1",
     "@tanstack/react-form": "^1.23.8",
@@ -23,6 +24,7 @@
     "stripe": "^19.1.0",
     "swiper": "^12.0.2",
     "tailwind-merge": "^3.3.1",
+    "uuid": "^13.0.0",
     "zod": "^4.1.12",
     "zustand": "^5.0.8"
   },

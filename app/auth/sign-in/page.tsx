@@ -259,7 +259,7 @@ const SignInPage = () => {
 
         {/* Sign Up Link */}
         <p className={cn("text-sm text-neutral-500", "mt-4")}>
-          Don't have an account?{" "}
+          Don&apos;t have an account?{" "}
           <Link
             href="/auth/sign-up"
             className="text-sm text-neutral-800 font-semibold text-nowrap"

@@ -4,7 +4,6 @@ import Cart from "./Cart";
 import User from "./User";
 
 const SideBar = () => {
-  const isAuth = false;
   return (
     <div className="flex items-center gap-6">
       <button className="w-9 h-9 flex justify-center items-center rounded-full border border-neutral-300">

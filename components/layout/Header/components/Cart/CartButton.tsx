@@ -1,14 +1,27 @@
 import React from "react";
 import { ShoppingCart } from "lucide-react";
+import { cn } from "@/utils/cn";
 
-export default function CartButton({ open, count, onClick }: { open: boolean; count: number; onClick: () => void }) {
+export default function CartButton({
+  open,
+  count,
+  onClick,
+}: {
+  open: boolean;
+  count: number;
+  onClick: () => void;
+}) {
   return (
     <button
       aria-haspopup="menu"
       aria-expanded={open}
       onClick={onClick}
       type="button"
-      className="relative w-9 h-9 flex justify-center items-center rounded-full border border-neutral-300 bg-white focus:outline-none"
+      className={cn(
+        "relative w-9 h-9 flex justify-center items-center rounded-full",
+        "border border-neutral-300 bg-white shadow",
+        "transition-all hover:bg-neutral-50 active:scale-95 active:shadow-inner "
+      )}
     >
       <ShoppingCart className="size-4.5 text-gray-700" />
       {count > 0 && (

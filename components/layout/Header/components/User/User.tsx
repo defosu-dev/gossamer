@@ -1,48 +1,38 @@
 "use client";
 
-import { ImageWithFallback } from "@/components/common/ImageWithFallback";
 import { useAuth } from "@/hooks";
-import { cn } from "@/utils/cn";
-import { Loader2, UserRound } from "lucide-react";
-import Link from "next/link";
+import { useState } from "react";
+import UserButton from "./UserButton";
+import DarkBackground from "@/components/common/DarkBackground";
+import { useRouter } from "next/navigation";
+import UserDropdown from "./UserDropdown";
 
-const UserAvatar = () => {
-  const { user, loading } = useAuth();
+const User = () => {
+  const router = useRouter();
+  const { user, loading, signOut } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleClick = () => {
+    if (!user) return router.push("/auth/sign-in");
+    setIsOpen((s) => !s);
+  };
 
   return (
-    <div
-      className={cn(
-        "w-9 h-9 overflow-hidden rounded-full border border-neutral-300",
-        "flex justify-center items-center"
-      )}
-    >
-      {loading ? (
-        <div className="flex size-full items-center justify-center bg-neutral-200/40">
-          <Loader2 className="size-4 animate-spin text-gray-500" />
-        </div>
-      ) : user ? (
-        <ImageWithFallback
-          src={
-            user.user_metadata?.avatar_url ?? "https://via.placeholder.com/36"
-          }
-          alt="User avatar"
-          className="size-full object-cover"
-        />
-      ) : (
-        <Link
-          href="/auth/sign-in"
-          className={cn(
-            "flex size-full items-center justify-center",
-            "transition-colors hover:bg-neutral-50 focus:outline-none focus:ring-2 focus:ring-neutral-500",
-            "rounded-full"
-          )}
-          aria-label="Sign in"
-        >
-          <UserRound className="size-4.5 text-gray-700" />
-        </Link>
-      )}
+    <div className="relative">
+      <UserButton
+        isLoading={loading}
+        onClick={() => handleClick()}
+        user={user}
+      />
+      <DarkBackground open={isOpen} setOpen={() => setIsOpen(false)} />
+      <UserDropdown
+        user={user}
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
+        onSignOut={() => signOut()}
+      />
     </div>
   );
 };
 
-export default UserAvatar;
+export default User;

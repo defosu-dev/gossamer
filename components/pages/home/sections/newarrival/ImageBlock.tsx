@@ -8,7 +8,7 @@ type ImageBlockProps = {
 
 const ImageBlock = ({ src, alt }: ImageBlockProps) => {
   return (
-    <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-lg bg-zinc-200">
+    <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-lg bg-zinc-200 cursor-pointer">
       <ImageWithFallback src={src} alt={alt} />
     </div>
   );

@@ -2,13 +2,20 @@
 import React from "react";
 import ExploreSection from "../home/sections/explorecurated/ExploreSection";
 import SearchBar from "@/components/common/SearchBar/SearchBar";
+import OrderBar from "./OrderBar";
 
 const DetailsPage = () => {
   return (
-    // 1. Контейнер с максимальной шириной 7xl, центрированный
-    <div className="max-w-7xl mx-auto px-4 items-center py-12">
+    <div className="flex flex-col gap-10 pb-16">
       <SearchBar />
-      <div></div>
+      {/* Секция товаров */}
+      <div className="container p-1 px-6">
+        <div className="max-w-80 gap-6 border">
+          <OrderBar />
+        </div>
+      </div>
+
+      {/* Секция Explore */}
       <ExploreSection />
     </div>
   );

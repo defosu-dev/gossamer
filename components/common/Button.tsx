@@ -12,8 +12,8 @@ const Button = ({ children, variant = "primary", onClick }: ButtonProps) => {
 
   const variantStyles =
     variant === "primary"
-      ? "bg-gray-700 text-white hover:bg-gray-900"
-      : "bg-gray-50 text-black border border-neutral-300 hover:bg-gray-200";
+      ? "bg-neutral-700 text-neutral-50 hover:bg-neutral -900"
+      : "bg-neutral-50 text-neutal-900 border border-neutral-300 hover:bg-neutral-200";
 
   return (
     <button onClick={onClick} className={`${baseStyles} ${variantStyles}`}>

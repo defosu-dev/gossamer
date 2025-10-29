@@ -1,31 +1,29 @@
 "use client";
 import { useState } from "react";
 import Button from "@/components/common/Button";
-import { ImageWithFallback } from "@/components/common/ImageWithFallback";
+import {
+  ImageWithFallback,
+  ImageWithFallbackProps,
+} from "@/components/common/ImageWithFallback";
 
-type ImageBlockProps = {
-  src: string;
-  alt: string;
-};
-
-export default function OrderBar({ src, alt }: ImageBlockProps) {
+export default function OrderBar({ src, alt }: ImageWithFallbackProps) {
   const [quantity, setQuantity] = useState(1);
   const price = 59.99;
   const oldPrice = 100;
   const stock = 14;
 
   const handleDecrease = () => setQuantity((q) => Math.max(1, q - 1));
-  const handleIncrease = () => setQuantity((q) => q + 1);
+  const handleIncrease = () => setQuantity((q) => q + 1); // для теста
 
   return (
     <div className="max-w-sm w-full rounded-2xl border border-gray-200 p-5 shadow-sm bg-white">
       <h2 className="text-lg font-semibold mb-3">Organize adding to cart</h2>
 
-      <div className="flex items-center gap-4">
-        <ImageWithFallback src={src} alt={alt} />
-        <div>
-          <p className="font-medium text-sm">HEADSOUND XIAMI Hitam</p>
+      <div className="flex items-center gap-4 p-2">
+        <div className=" flex min-w-10 h-10 rounded-lg overflow-hidden aspect-square ">
+          <ImageWithFallback src={src} alt={alt} />
         </div>
+        <p className="font-medium text-sm text-gray-800 w-full">Marshall</p>
       </div>
 
       {/* Quantity controls */}

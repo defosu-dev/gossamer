@@ -12,14 +12,14 @@ export default function Cart() {
     {
       handle: "p1",
       title: "Product 1",
-      image: "https://via.placeholder.com/150",
+      image: "/",
       price: { currentPrice: 29.99 },
       quantity: 1,
     },
     {
       handle: "p2",
       title: "Product 2",
-      image: "https://via.placeholder.com/150",
+      image: "/",
       price: { currentPrice: 19.99 },
       quantity: 2,
     },

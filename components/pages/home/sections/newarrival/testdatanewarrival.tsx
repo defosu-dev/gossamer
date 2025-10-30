@@ -20,7 +20,7 @@ export const testdatanewarrival = {
     },
   ] as FeatureItemProps[],
   image: {
-    src: "https://images.unsplash.com/photo-1585386959984-a4155223f7f9?q=80&w=800&auto=format&fit=crop",
+    src: "/",
     alt: "Marshall Major IV",
   },
 };

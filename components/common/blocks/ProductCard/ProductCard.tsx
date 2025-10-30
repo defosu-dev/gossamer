@@ -1,46 +1,58 @@
+"use client";
 import React from "react";
 import ProductImage from "./ProductImage";
 import ProductCategoryBadge from "./ProductCategoryBadge";
 import ProductTitle from "./ProductTitle";
 import ProductPrice from "./ProductPrice";
 import ProductActions from "./ProductActions";
+import { getMinPrice, getMaxOldPrice, hasDiscount } from "@/utils/price";
+import { getPrimaryImage } from "@/utils/image";
+import type { ProductWithRelations } from "@/types/IProductsWithRelations";
 
-type Product = {
-  id: string;
-  name: string;
-  imageSrc: string;
-  imageAlt: string;
-  category: string;
-  rating: number;
-  reviewCount: number;
-  price: number;
-};
+/**
+ * Product card with primary image, price (min + discount), category badge, and actions.
+ *
+ * @param product  - Full product with variants, images, and category.
+ * @param priority - Set `true` for LCP images (first 3–6 cards). Improves Lighthouse score.
+ */
+const ProductCard = ({
+  product,
+  priority = false,
+}: {
+  product: ProductWithRelations;
+  priority?: boolean;
+}) => {
+  const variants = product.product_variants ?? [];
 
-type ProductCardProps = {
-  product: Product;
-};
+  // 1. Primary image (sorted by position)
+  const img = getPrimaryImage(variants);
+  const src = img?.url ?? "/";
+  const alt = img?.alt ?? product.title;
 
-const ProductCard = ({ product }: ProductCardProps) => {
+  // 2. Price logic
+  const min = getMinPrice(variants);
+  const old = getMaxOldPrice(variants);
+  const discount = hasDiscount(min, old);
+
+  // 3. Category
+  const category = product.category?.name ?? "Uncategorized";
+
   return (
-    <div className="bg-white rounded-lg overflow-hidden max-w-sm flex flex-col">
-      {/* Фото товара с бейджем категории поверх */}
-      <div className="relative flex justify-center">
-        <ProductImage src={product.imageSrc} alt={product.imageAlt} />
-        <ProductCategoryBadge>{product.category}</ProductCategoryBadge>
+    <div className="bg-white rounded-lg overflow-hidden max-w-sm flex flex-col hover:shadow-md transition-shadow">
+      <div className="relative p-1">
+        <ProductImage src={src} alt={alt} priority={priority} />
+        <ProductCategoryBadge>{category}</ProductCategoryBadge>
       </div>
 
-      {/* Контент */}
-      <div className="p-4 flex flex-col flex-grow h-full">
-        {/* Название */}
-        <div className="mb-2 min-h-[48px]">
-          <ProductTitle title={product.name} />
-        </div>
-        {/* Рейтинг и цена */}
-        <div className="flex items-center justify-between text-gray-600 text-sm mb-4">
-          <span>
-            ⭐ {product.rating.toFixed(1)} ({product.reviewCount} Reviews)
-          </span>
-          <ProductPrice price={product.price} />
+      <div className="p-4 flex flex-col flex-grow">
+        <ProductTitle title={product.title} />
+        <div className="flex h-full items-end justify-between text-gray-600 text-sm mb-4 mt-auto">
+          <span>⭐ 4.8 (18 Reviews)</span>
+          <ProductPrice
+            minPrice={min}
+            maxOldPrice={old}
+            showDiscount={discount}
+          />
         </div>
         <div className="mt-auto">
           <ProductActions />

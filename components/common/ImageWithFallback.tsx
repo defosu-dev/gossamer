@@ -1,19 +1,22 @@
-'use client'
-import { useState, useEffect, CSSProperties } from 'react'
-import Image from 'next/image'
-import { Image as ImageIcon, Loader2 } from 'lucide-react'
-import { cn } from '@/utils/cn'
+"use client";
+import { useState, useEffect, CSSProperties } from "react";
+import Image from "next/image";
+import { Image as ImageIcon, Loader2 } from "lucide-react";
+import { cn } from "@/utils/cn";
 
 type ImageWithFallbackProps = {
-  src: string
-  alt: string
-  width?: number
-  height?: number
-  timeout?: number
-  className?: string
-  style?: CSSProperties
-  iconSize?: number
-}
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  timeout?: number;
+  className?: string;
+  style?: CSSProperties;
+  iconSize?: number;
+  sizes?: string;
+  priority?: boolean;
+};
+
 /**
  * ImageWithFallback
  *
@@ -31,71 +34,87 @@ type ImageWithFallbackProps = {
  * @param className - Optional extra classes for the container
  * @param style     - Optional inline styles for the container
  * @param iconSize  - Optional Tailwind size units for the loader/fallback icon (default: 4)
+ * @param sizes     - Optional responsive sizes for Next.js Image (default: adaptive)
+ * @param priority  - Optional: set true for LCP images (above the fold)
  */
 export function ImageWithFallback({
-    src,
-    alt,
-    width,
-    height,
-    timeout = 5000,
-    className,
-    style,
-    iconSize = 4
-  }: ImageWithFallbackProps) {
-    const [status, setStatus] = useState<'loading' | 'error' | 'loaded'>('loading')
-  
-    useEffect(() => {
-      if (status === 'loading') {
-        const timer = setTimeout(() => setStatus('error'), timeout)
-        return () => clearTimeout(timer)
-      }
-    }, [status, timeout])
-  
-    const containerStyle: CSSProperties = {
-      width: width ?? '100%',
-      height: height ?? '100%',
-      position: 'relative',
-      ...style
+  src,
+  alt,
+  width,
+  height,
+  timeout = 5000,
+  className,
+  style,
+  iconSize = 4,
+  sizes = "(max-width: 768px) 100vw, 33vw",
+  priority = false,
+}: ImageWithFallbackProps) {
+  const [status, setStatus] = useState<"loading" | "error" | "loaded">(
+    "loading"
+  );
+
+  useEffect(() => {
+    if (status === "loading" && src) {
+      const timer = setTimeout(() => setStatus("error"), timeout);
+      return () => clearTimeout(timer);
     }
-  
-    const baseContainerClasses = 'flex items-center justify-center bg-neutral-200/40 rounded-lg'
-  
-    if (status === 'error') {
-      return (
+  }, [status, src, timeout]);
+
+  const containerStyle: CSSProperties = {
+    width: width ?? "100%",
+    height: height ?? "100%",
+    position: "relative",
+    overflow: "hidden",
+    ...style,
+  };
+
+  const baseContainerClasses =
+    "flex items-center justify-center bg-neutral-200/40";
+
+  return (
+    <div style={containerStyle} className={className}>
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes={sizes}
+        priority={priority}
+        className="object-cover"
+        onLoad={() => setStatus("loaded")}
+        onError={() => setStatus("error")}
+      />
+
+      {/* Overlay: Spinner */}
+      {status === "loading" && (
         <div
-          style={containerStyle}
-          className={cn(baseContainerClasses, className)}
-          aria-label={`Failed to load: ${alt}`}
-        >
-          <ImageIcon className={cn(`w-${iconSize} h-${iconSize} text-gray-500`)} />
-        </div>
-      )
-    }
-  
-    if (status === 'loading') {
-      return (
-        <div
-          style={containerStyle}
-          className={cn(baseContainerClasses, className)}
+          className={cn(
+            baseContainerClasses,
+            "absolute inset-0 backdrop-blur-sm"
+          )}
           aria-label={`Loading image: ${alt}`}
         >
-          <Loader2 className={cn(`w-${iconSize} h-${iconSize} animate-spin text-gray-500`)} />
+          <Loader2
+            className={cn(
+              `w-${iconSize} h-${iconSize} animate-spin text-gray-500`
+            )}
+          />
         </div>
-      )
-    }
-  
-    return (
-      <div style={containerStyle} className={className}>
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          className="object-cover rounded-lg"
-          sizes="100vw"
-          onLoad={() => setStatus('loaded')}
-          onError={() => setStatus('error')}
-        />
-      </div>
-    )
-  }
-  
+      )}
+
+      {/* Overlay: Error */}
+      {status === "error" && (
+        <div
+          className={cn(
+            baseContainerClasses,
+            "absolute inset-0 backdrop-blur-sm"
+          )}
+          aria-label={`Failed to load: ${alt}`}
+        >
+          <ImageIcon
+            className={cn(`w-${iconSize} h-${iconSize} text-gray-500`)}
+          />
+        </div>
+      )}
+    </div>
+  );
+}

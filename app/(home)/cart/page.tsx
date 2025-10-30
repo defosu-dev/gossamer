@@ -32,7 +32,7 @@ type CartItemProps = {
 const CartPage = () => {
   const [cartItems] = useState<CartItemProps[]>([
     {
-      imageUrl: "https://via.placeholder.com/150",
+      imageUrl: "/",
       badge: "New",
       title: "Sample Product 1",
       handle: "sample-product-1",
@@ -50,7 +50,7 @@ const CartPage = () => {
       },
     },
     {
-      imageUrl: "https://via.placeholder.com/150",
+      imageUrl: "/",
       badge: "Sale",
       title: "Sample Product 2",
       handle: "sample-product-2",

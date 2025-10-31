@@ -36,3 +36,18 @@ export const hasDiscount = (
 ): boolean => {
   return minPrice !== null && maxOldPrice !== null && maxOldPrice > minPrice;
 };
+
+/**
+ * Returns the product variant with the lowest `current_price`.
+ * @returns `ProductVariant` object if any exists, otherwise `null`.
+ */
+export const getMinPriceVariant = (
+  variants: ProductWithRelations["product_variants"]
+): ProductWithRelations["product_variants"][number] | null => {
+  const filtered = variants.filter((v) => v.current_price !== null);
+  if (filtered.length === 0) return null;
+
+  return filtered.reduce((minVariant, v) =>
+    v.current_price! < minVariant.current_price! ? v : minVariant
+  );
+};

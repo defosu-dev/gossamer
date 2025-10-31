@@ -36,6 +36,8 @@ export default function HomePage() {
       {/* Product Grid */}
       <section className="container mx-auto p-1 max-w-7xl px-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {isLoading &&
+            [...Array(8)].map((_, i) => <ProductCard key={i} isLoading />)}
           {products?.data.slice(0, 6).map((product) => (
             <ProductCard key={product.id} product={product} priority={true} />
           ))}

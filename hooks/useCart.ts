@@ -39,6 +39,8 @@ export const useCart = () => {
 
   const addToCart = (variantId: string, quantity = 1) => {
     addLocal(variantId, quantity);
+
+    if (!userId) return;
     // Optimistically update, then sync
     const optimisticCart = (() => {
       const existing = cart.find((i) => i.variant_id === variantId);

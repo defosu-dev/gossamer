@@ -12,7 +12,7 @@ const ProductImage = ({ src, alt, priority = false }: ProductImageProps) => {
       <ImageWithFallback
         src={src}
         alt={alt}
-        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        sizes="(max-width: 400px) 100vw, (max-width: 700px) 50vw, 282px"
         priority={priority}
         iconSize={6}
       />

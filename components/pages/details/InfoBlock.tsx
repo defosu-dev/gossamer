@@ -1,15 +1,19 @@
 import React from "react";
 import { Star, Heart } from "lucide-react";
-import Image from "next/image";
 import Button from "@/components/common/Button";
+import { ImageWithFallback } from "@/components/common/ImageWithFallback";
+type ImageBlockProps = {
+  src: string;
+  alt: string;
+};
 
-const InfoBlock = () => {
+const InfoBlock = ({ src, alt }: ImageBlockProps) => {
   return (
     <div className="max-w-md mx-auto bg-white rounded-2xl p-6 shadow-sm">
       {/* Title */}
       <h1 className="text-2xl font-bold mb-2">Marshall</h1>
 
-      {/* Brand and Rating */}
+      {/* Brand and Rating test*/}
       <div className="flex items-center text-sm text-gray-500 mb-4 gap-3">
         <span className="text-nowrap">
           Brand: <span className="text-gray-800 font-medium">Marshall</span>
@@ -24,7 +28,7 @@ const InfoBlock = () => {
         </div>
       </div>
 
-      {/* Price */}
+      {/* Price test*/}
       <div className="mb-4">
         <p className="text-3xl font-semibold text-gray-900">$ 59.99</p>
         <p className="text-gray-400 line-through">100.00 USD</p>
@@ -35,18 +39,18 @@ const InfoBlock = () => {
         <h2 className="font-semibold text-lg mb-3">Choose Variant</h2>
         <div className="flex gap-4">
           <div className="border-2 border-gray-800 rounded-xl p-2 cursor-pointer">
-            <Image
-              src="/black-headphones.png"
-              alt="Black Headphones"
+            <ImageWithFallback
+              src={src}
+              alt={alt}
               width={60}
               height={60}
               className="rounded-md"
             />
           </div>
           <div className="border rounded-xl p-2 cursor-pointer hover:border-gray-800">
-            <Image
-              src="/white-headphones.png"
-              alt="White Headphones"
+            <ImageWithFallback
+              src={src}
+              alt={alt}
               width={60}
               height={60}
               className="rounded-md"

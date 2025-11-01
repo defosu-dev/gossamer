@@ -9,10 +9,10 @@ import Container from "@/components/common/Container";
 
 const DetailsPage = () => {
   return (
-    <Container xCenter className="flex flex-col">
+    <Container xCenter className="flex flex-col w-full">
       <SearchBar />
       {/* Секция товаров */}
-      <div className="p-1 px-6 flex gap-5 items-start w-full">
+      <div className="p-1 px-6 flex gap-5 items-start w-full mt-5">
         <div className="max-w-120 border">
           <ProductGallery />
         </div>

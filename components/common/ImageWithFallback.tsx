@@ -65,11 +65,12 @@ export function ImageWithFallback({
     height: height ?? "100%",
     position: "relative",
     overflow: "hidden",
+    borderRadius: "inherit",
     ...style,
   };
 
   const baseContainerClasses =
-    "flex items-center justify-center bg-neutral-200/40";
+    "flex items-center justify-center bg-neutral-100 absolute inset-0 rounded-[inherit]";
 
   return (
     <div style={containerStyle} className={className}>
@@ -79,24 +80,18 @@ export function ImageWithFallback({
         fill
         sizes={sizes}
         priority={priority}
-        className="object-cover"
         onLoad={() => setStatus("loaded")}
         onError={() => setStatus("error")}
+        className="object-cover rounded-[inherit]"
       />
-
       {/* Overlay: Spinner */}
       {status === "loading" && (
         <div
-          className={cn(
-            baseContainerClasses,
-            "absolute inset-0 backdrop-blur-sm"
-          )}
+          className={cn(baseContainerClasses)}
           aria-label={`Loading image: ${alt}`}
         >
           <Loader2
-            className={cn(
-              `w-${iconSize} h-${iconSize} animate-spin text-gray-500`
-            )}
+            className={cn(`size-${iconSize} animate-spin text-gray-500`)}
           />
         </div>
       )}
@@ -104,10 +99,7 @@ export function ImageWithFallback({
       {/* Overlay: Error */}
       {status === "error" && (
         <div
-          className={cn(
-            baseContainerClasses,
-            "absolute inset-0 backdrop-blur-sm"
-          )}
+          className={cn(baseContainerClasses)}
           aria-label={`Failed to load: ${alt}`}
         >
           <ImageIcon

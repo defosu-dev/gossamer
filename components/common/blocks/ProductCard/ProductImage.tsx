@@ -8,7 +8,7 @@ type ProductImageProps = {
 
 const ProductImage = ({ src, alt, priority = false }: ProductImageProps) => {
   return (
-    <div className="relative w-full aspect-square bg-zinc-200 rounded-lg overflow-hidden">
+    <div className="relative w-full aspect-square rounded-lg overflow-hidden">
       <ImageWithFallback
         src={src}
         alt={alt}

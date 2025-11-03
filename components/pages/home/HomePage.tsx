@@ -1,11 +1,11 @@
-"use client";
-import React from "react";
+"use server";
+import React, { Suspense } from "react";
 import NewArrival from "./sections/newarrival/NewArrival";
 import ProductCard from "@/components/common/blocks/ProductCard/ProductCard";
 import ExploreSection from "./sections/explorecurated/ExploreSection";
 import SearchBar from "@/components/common/SearchBar/SearchBar";
-import { useProducts } from "@/hooks/useProducts";
 import { testdatanewarrival } from "./sections/newarrival/testdatanewarrival";
+import { fetchProducts } from "@/utils/supabase/server/products";
 
 /**
  * Home page with:
@@ -16,19 +16,7 @@ import { testdatanewarrival } from "./sections/newarrival/testdatanewarrival";
  *
  * Products are fetched via `useProducts` hook with price ascending sort.
  */
-export default function HomePage() {
-  const {
-    data: products,
-    isLoading,
-    isError,
-  } = useProducts({
-    sort: { field: "price", order: "asc" },
-  });
-
-  // Debug logs (remove in prod)
-  if (isLoading) console.log("Loading");
-  if (isError) console.error("Error fetching products");
-
+export default async function HomePage() {
   return (
     <div className="flex flex-col w-full gap-10 pb-16">
       <SearchBar />
@@ -36,14 +24,9 @@ export default function HomePage() {
       {/* Product Grid */}
       <section className="container mx-auto p-1 max-w-7xl px-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {isLoading &&
-            [...Array(8)].map((_, i) => <ProductCard key={i} isLoading />)}
-          {products?.data.slice(0, 6).map((product) => (
-            <ProductCard key={product.id} product={product} priority={true} />
-          ))}
-          {products?.data.slice(6).map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
+          <Suspense fallback={<ProductGridLoading />}>
+            <ProductGridServer />
+          </Suspense>
         </div>
       </section>
 
@@ -55,3 +38,30 @@ export default function HomePage() {
     </div>
   );
 }
+
+const ProductGridServer = async () => {
+  const { data: products } = await fetchProducts({
+    sort: { field: "current_price", order: "asc" },
+  });
+
+  return (
+    <>
+      {products?.slice(0, 6).map((product) => (
+        <ProductCard key={product.id} product={product} priority={true} />
+      ))}
+      {products?.slice(6).map((product) => (
+        <ProductCard key={product.id} product={product} />
+      ))}
+    </>
+  );
+};
+
+const ProductGridLoading = () => {
+  return (
+    <>
+      {[...Array(8)].map((_, i) => (
+        <ProductCard key={i} isLoading />
+      ))}
+    </>
+  );
+};

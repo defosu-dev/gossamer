@@ -20,8 +20,8 @@ const Button = ({
 
   const variantStyles =
     variant === "primary"
-      ? "bg-neutral-900 text-white hover:bg-neutral-800"
-      : "bg-white text-neutral-900 border border-neutral-300 hover:bg-neutral-50";
+      ? "bg-neutral-700 text-neutral-50 hover:bg-neutral-900"
+      : "bg-neutral-50 text-neutal-900 border border-neutral-300 hover:bg-neutral-200";
 
   return (
     <button

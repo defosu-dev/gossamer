@@ -39,3 +39,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Supabase — НЕ коммитим локальные артефакты
+supabase/.temp/
+supabase/.branches/
+supabase/config.toml
+supabase/*.lock
+
+# Supabase — КОММИТИМ только миграции!
+!supabase/migrations/
+!supabase/migrations/**/*

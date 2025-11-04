@@ -11,9 +11,7 @@ const Header = () => {
         style={{ borderTopLeftRadius: 0, borderTopRightRadius: 0 }}
       >
         <Logo />
-
         <NavBar />
-
         <SideBar />
       </div>
     </header>

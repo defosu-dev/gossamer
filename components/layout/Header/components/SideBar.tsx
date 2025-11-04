@@ -1,7 +1,7 @@
 import React from "react";
 import { Search } from "lucide-react";
-import { ImageWithFallback } from "@/components/common/ImageWithFallback";
-import Cart from "./Cart/Cart";
+import Cart from "./Cart";
+import User from "./User";
 
 const SideBar = () => {
   return (
@@ -12,9 +12,7 @@ const SideBar = () => {
 
       <Cart />
 
-      <div className="w-9 h-9 overflow-hidden rounded-full border border-neutral-300">
-        <ImageWithFallback src="https://via.placeholder.com/36" alt="User Avatar" />
-      </div>
+      <User />
     </div>
   );
 };

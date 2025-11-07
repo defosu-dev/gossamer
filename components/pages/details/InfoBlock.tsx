@@ -19,11 +19,11 @@ const InfoBlock = ({ src, alt }: ImageBlockProps) => {
           Brand: <span className="text-gray-800 font-medium">Marshall</span>
         </span>
         <div className="flex items-center text-nowrap">
-          <Star className="w-4 h-4 text-yellow-400 mr-1" />
+          <Star className="size-4 text-yellow-400 mr-1" />
           <span>4.9 (346 rating)</span>
         </div>
         <div className="flex items-center ml-auto text-gray-700 cursor-pointer hover:text-red-500 text-nowrap">
-          <Heart className="w-4 h-4 mr-1" />
+          <Heart className="size-4 mr-1" />
           Add to my wish list
         </div>
       </div>
@@ -39,22 +39,10 @@ const InfoBlock = ({ src, alt }: ImageBlockProps) => {
         <h2 className="font-semibold text-lg mb-3">Choose Variant</h2>
         <div className="flex gap-4">
           <div className="border-2 border-gray-800 rounded-xl p-2 cursor-pointer">
-            <ImageWithFallback
-              src={src}
-              alt={alt}
-              width={60}
-              height={60}
-              className="rounded-md"
-            />
+            <ImageWithFallback src={src} alt={alt} width={60} height={60} />
           </div>
           <div className="border rounded-xl p-2 cursor-pointer hover:border-gray-800">
-            <ImageWithFallback
-              src={src}
-              alt={alt}
-              width={60}
-              height={60}
-              className="rounded-md"
-            />
+            <ImageWithFallback src={src} alt={alt} width={60} height={60} />
           </div>
         </div>
       </div>

@@ -19,7 +19,7 @@ const SearchBar = () => {
         <h2 className="text-3xl font-bold tracking-tight">Give All You Need</h2>
 
         <div className="flex items-center w-full md:w-[360px] h-10 rounded-full border border-neutral-300 shadow-sm overflow-hidden">
-          <Search className="w-5 h-5 text-neutral-500 ml-4 " />
+          <Search className="size-5 text-neutral-500 ml-4 " />
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}

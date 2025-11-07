@@ -34,13 +34,13 @@ const Slider = ({ categories }: CategorySliderProps) => {
             onClick={() => scroll("left")}
             className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition"
           >
-            <ArrowLeft className="w-5 h-5" />
+            <ArrowLeft className="size-5" />
           </button>
           <button
             onClick={() => scroll("right")}
             className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition"
           >
-            <ArrowRight className="w-5 h-5" />
+            <ArrowRight className="size-5" />
           </button>
         </div>
       </div>

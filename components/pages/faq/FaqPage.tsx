@@ -36,17 +36,17 @@ const FaqPage = () => {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <FaqCard
-              icon={<User className="w-6 h-6 text-gray-700" />}
+              icon={<User className="size-6 text-gray-700" />}
               title="How to Register & Login"
               text="Registering for a Stuffus account is even easier with a choice of various ways..."
             />
             <FaqCard
-              icon={<Lock className="w-6 h-6 text-gray-700" />}
+              icon={<Lock className="size-6 text-gray-700" />}
               title="Login Constraints"
               text="Registering for a Stuffus account is even easier with a choice of various ways..."
             />
             <FaqCard
-              icon={<Settings className="w-6 h-6 text-gray-700" />}
+              icon={<Settings className="size-6 text-gray-700" />}
               title="Set Up Account"
               text="Registering for a Stuffus account is even easier with a choice of various ways..."
             />
@@ -60,17 +60,17 @@ const FaqPage = () => {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <FaqCard
-              icon={<Users className="w-6 h-6 text-gray-700" />}
+              icon={<Users className="size-6 text-gray-700" />}
               title="How to Manage My Employee"
               text="Registering for a Stuffus account is even easier with a choice of various ways..."
             />
             <FaqCard
-              icon={<DollarSign className="w-6 h-6 text-gray-700" />}
+              icon={<DollarSign className="size-6 text-gray-700" />}
               title="How does back pricing work?"
               text="Registering for a Stuffus account is even easier with a choice of various ways..."
             />
             <FaqCard
-              icon={<Bell className="w-6 h-6 text-gray-700" />}
+              icon={<Bell className="size-6 text-gray-700" />}
               title="Notify Stuffus Admin"
               text="Registering for a Stuffus account is even easier with a choice of various ways..."
             />
@@ -84,10 +84,10 @@ const FaqPage = () => {
             <Category
               title="Shipping"
               sub={[
-                { label: "For Home", icon: <Home className="w-4 h-4" /> },
-                { label: "For Music", icon: <Music className="w-4 h-4" /> },
-                { label: "For Phone", icon: <Phone className="w-4 h-4" /> },
-                { label: "For Storage", icon: <Archive className="w-4 h-4" /> },
+                { label: "For Home", icon: <Home className="size-4" /> },
+                { label: "For Music", icon: <Music className="size-4" /> },
+                { label: "For Phone", icon: <Phone className="size-4" /> },
+                { label: "For Storage", icon: <Archive className="size-4" /> },
               ]}
             />
             <Category

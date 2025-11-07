@@ -24,7 +24,7 @@ export const Category = ({ title, sub = [] }: CategoryProps) => {
         {title}
         {sub.length > 0 && (
           <ChevronDown
-            className={`w-5 h-5 text-gray-500 transition-transform ${
+            className={`size-5 text-gray-500 transition-transform ${
               isOpen ? "rotate-180" : ""
             }`}
           />

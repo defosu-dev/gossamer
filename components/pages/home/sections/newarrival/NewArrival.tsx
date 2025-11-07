@@ -5,6 +5,7 @@ import FeatureList from "./FeatureList";
 import ImageBlock from "./ImageBlock";
 import { FeatureItemProps } from "./FeatureItem";
 import Button from "@/components/common/Button";
+import Link from "next/link";
 
 type NewArrivalProps = {
   label?: string;

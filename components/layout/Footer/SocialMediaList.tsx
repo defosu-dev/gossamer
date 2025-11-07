@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 
-import { BadgeInfo } from "lucide-react";
+import { BadgeInfo, InstagramIcon, Youtube, YoutubeIcon } from "lucide-react";
 const SocialMediaList = () => {
   return (
     <div>
@@ -19,6 +19,8 @@ const SocialMediaList = () => {
             className="text-black hover:text-zinc-600 transition-colors"
           />
         </Link>
+        <YoutubeIcon />
+        <InstagramIcon />
         <Link href="#">
           <BadgeInfo
             size={28}

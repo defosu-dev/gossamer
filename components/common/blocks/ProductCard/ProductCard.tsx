@@ -40,7 +40,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
         {/* Рейтинг и цена */}
         <div className="flex items-center justify-between text-gray-600 text-sm mb-4">
           <span className="flex items-center">
-            <Star className="text-amber-300 w-5 h-5 mr-1" />
+            <Star className="text-amber-300 size-5 mr-1" />
             {product.rating.toFixed(1)} ({product.reviewCount} Reviews)
           </span>
           <ProductPrice price={product.price} />

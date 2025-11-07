@@ -18,7 +18,7 @@ export const Accordion = ({ title, answer }: AccordionProps) => {
       >
         <span>{title}</span>
         <ChevronDown
-          className={`w-5 h-5 text-gray-500 transition-transform ${
+          className={`size-5 text-gray-500 transition-transform ${
             open ? "rotate-180" : ""
           }`}
         />

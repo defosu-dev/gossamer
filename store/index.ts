@@ -18,6 +18,11 @@ export const useStore = create<Store>()(
           cart: state.cart,
           wishlist: state.wishlist,
         }),
+        onRehydrateStorage: () => (state, error) => {
+          if (error) {
+            console.error("Failed to rehydrate Zustand store:", error);
+          }
+        },
       }
     )
   )

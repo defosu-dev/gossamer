@@ -51,6 +51,7 @@ const ProductCard = ({
   }
 
   const minPriceVariant = getMinPriceVariant(product.product_variants ?? []);
+  const defaultVariant = product.product_variants[0];
 
   return (
     <div className="bg-white rounded-lg overflow-hidden max-w-sm flex flex-col hover:shadow-md transition-shadow">
@@ -77,7 +78,9 @@ const ProductCard = ({
           />
         </div>
         <div className="mt-auto">
-          <ProductActions variantId={minPriceVariant?.id ?? ""} />
+          <ProductActions
+            variantId={minPriceVariant?.id ?? defaultVariant.id}
+          />
         </div>
       </div>
     </div>

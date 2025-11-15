@@ -1,3 +1,4 @@
+"use server";
 import type { ProductWithRelations } from "@/types/IProductsWithRelations";
 import { supabaseServer } from "../supabaseServer";
 
@@ -85,3 +86,133 @@ export const fetchProducts = async ({
 
   return { data: finalData ?? [], count };
 };
+
+export type ProductWithVariant = ProductWithRelations & {
+  variant: {
+    id: string;
+    name: string | null;
+    price: number | null;
+    stock: number | null;
+    images: { id: string; url: string | null; alt: string | null }[];
+  };
+};
+
+export async function getProductsByVariants(
+  variantIds: string[]
+): Promise<ProductWithVariant[]> {
+  if (!variantIds?.length) return [];
+
+  const supabase = await supabaseServer();
+
+  const { data, error } = await supabase
+    .from("product_variants")
+    .select(
+      `
+      id,
+      name,
+      current_price,
+      stock,
+      product:
+        product_id (
+          id,
+          title,
+          description,
+          created_at,
+          category:
+            category_id (
+              name,
+              slug
+            ),
+            product_variants (
+              id,
+              name,
+              sku,
+              current_price,
+              old_price,
+              stock,
+              product_images (
+                id,
+                url,
+                alt,
+                position
+              )
+            )
+        ),
+        product_images (
+          id,
+          url,
+          alt
+        )
+    `
+    )
+    .in("id", variantIds);
+
+  if (error) throw error;
+
+  // Перетворюємо варіанти у формат продукт + variant
+  const products: ProductWithVariant[] = (data || [])
+    .filter((v) => v.product)
+    .map((v) => ({
+      ...(v.product as ProductWithRelations),
+      variant: {
+        id: v.id,
+        name: v.name,
+        price: v.current_price,
+        stock: v.stock,
+        images:
+          v.product_images?.map((img) => ({
+            id: img.id,
+            url: img.url,
+            alt: img.alt || null,
+          })) || [],
+      },
+    }));
+
+  return products;
+}
+
+export async function getCartEnrichedProducts(variantIds: string[]) {
+  if (!variantIds?.length) return [];
+  const orFilter = variantIds.map((id) => `id.eq.${id}`).join(",");
+  const supabase = await supabaseServer();
+
+  const { data, error } = await supabase
+    .from("product_variants")
+    .select(
+      `
+      id,
+      name,
+      sku,
+      current_price,
+      old_price,
+      stock,
+      product_id,
+      product_images!variant_id (
+        id,
+        url,
+        alt,
+        position
+      ),
+      product:products (
+        id,
+        title,
+        description,
+        created_at,
+        category:category_id (name, slug),
+        product_variants!product_id (
+          id,
+          name,
+          sku,
+          current_price,
+          old_price,
+          stock
+        )
+      )
+    `
+    )
+    .or(orFilter);
+  console.log("Supabase fetch cart products:", data);
+  if (error) throw error;
+
+  return data;
+}

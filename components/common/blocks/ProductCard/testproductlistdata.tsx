@@ -2,7 +2,7 @@ export const ProductListData = [
   {
     id: "1",
     name: "Ergonomic Phone Stand",
-    imageSrc: "/",
+    imageSrc: "/placeholder.jpg",
     imageAlt: "Black metal phone stande",
     category: "Accessories",
     rating: 4.8,
@@ -12,7 +12,7 @@ export const ProductListData = [
   {
     id: "2",
     name: "Wireless Headphones Pro X",
-    imageSrc: "/",
+    imageSrc: "/placeholder.jpg",
     imageAlt: "White wireless headphones",
     category: "Electronics",
     rating: 5.0,
@@ -22,7 +22,7 @@ export const ProductListData = [
   {
     id: "3",
     name: "Smartwatch FitPulse",
-    imageSrc: "/",
+    imageSrc: "/placeholder.jpg",
     imageAlt: "Smartwatch on wrist",
     category: "Gadgets",
     rating: 4.5,
@@ -32,7 +32,7 @@ export const ProductListData = [
   {
     id: "4",
     name: "Portable Speaker Soundwave",
-    imageSrc: "/",
+    imageSrc: "/placeholder.jpg",
     imageAlt: "Soundwave speaker",
     category: "Audio",
     rating: 4.2,
@@ -42,7 +42,7 @@ export const ProductListData = [
   {
     id: "5",
     name: "PowerFlow Charger",
-    imageSrc: "/",
+    imageSrc: "/placeholder.jpg",
     imageAlt: "Phone charger",
     category: "Accessories",
     rating: 4.9,
@@ -53,7 +53,7 @@ export const ProductListData = [
   {
     id: "6",
     name: "Laptop Cooling Pad",
-    imageSrc: "/",
+    imageSrc: "/placeholder.jpg",
     imageAlt: "Laptop cooling pad with fan",
     category: "Accessories",
     rating: 4.3,
@@ -63,7 +63,7 @@ export const ProductListData = [
   {
     id: "7",
     name: "Noise Cancelling Earbuds",
-    imageSrc: "/",
+    imageSrc: "/placeholder.jpg",
     imageAlt: "Black noise cancelling earbuds",
     category: "Electronics",
     rating: 4.7,
@@ -73,7 +73,7 @@ export const ProductListData = [
   {
     id: "8",
     name: "Fitness Tracker Band",
-    imageSrc: "/",
+    imageSrc: "/placeholder.jpg",
     imageAlt: "Fitness tracker on wrist",
     category: "Gadgets",
     rating: 4.1,
@@ -83,7 +83,7 @@ export const ProductListData = [
   {
     id: "9",
     name: "Bluetooth Portable Speaker",
-    imageSrc: "/",
+    imageSrc: "/placeholder.jpg",
     imageAlt: "Compact bluetooth speaker",
     category: "Audio",
     rating: 4.6,
@@ -93,7 +93,7 @@ export const ProductListData = [
   {
     id: "10",
     name: "Fast Wireless Charger",
-    imageSrc: "/",
+    imageSrc: "/placeholder.jpg",
     imageAlt: "Fast wireless charger for phone",
     category: "Accessories",
     rating: 4.8,

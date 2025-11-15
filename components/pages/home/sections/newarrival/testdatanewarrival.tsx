@@ -20,7 +20,7 @@ export const testdatanewarrival = {
     },
   ] as FeatureItemProps[],
   image: {
-    src: "/",
+    src: "/placeholder.jpg",
     alt: "Marshall Major IV",
   },
 };

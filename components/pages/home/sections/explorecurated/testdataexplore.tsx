@@ -1,22 +1,22 @@
 export const categories = [
   {
     label: "Music",
-    image: "/",
+    image: "/placeholder.jpg",
   },
   {
     label: "Home",
-    image: "/",
+    image: "/placeholder.jpg",
   },
   {
     label: "Storage",
-    image: "/",
+    image: "/placeholder.jpg",
   },
   {
     label: "Decor",
-    image: "/",
+    image: "/placeholder.jpg",
   },
   {
     label: "Workspace",
-    image: "/",
+    image: "/placeholder.jpg",
   },
 ];

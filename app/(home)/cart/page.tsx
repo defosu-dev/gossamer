@@ -5,15 +5,15 @@ import Container from "@/components/common/Container";
 import { cn } from "@/utils/cn";
 import Link from "next/link";
 import { ImageWithFallback } from "../../../components/common/ImageWithFallback";
-import {
-  CartItemDescription,
-  CartItemDescriptionProps,
-  CartItemPrice,
-  CartItemPriceProps,
-  InputQuantity,
-} from "../../../components/layout/Header/components/Cart/CartItem";
 import { Badge } from "../../../components/common/Badge";
 import { Trash } from "lucide-react";
+import CartItemDescription, {
+  CartItemDescriptionProps,
+} from "@/components/layout/Header/components/Cart/CartItemDescription";
+import CartItemPrice, {
+  CartItemPriceProps,
+} from "@/components/layout/Header/components/Cart/CartItemPrice";
+import InputQuantity from "@/components/layout/Header/components/Cart/InputQuantity";
 
 type CartItemProps = {
   isSelected?: boolean;
@@ -32,7 +32,7 @@ type CartItemProps = {
 const CartPage = () => {
   const [cartItems] = useState<CartItemProps[]>([
     {
-      imageUrl: "/",
+      imageUrl: "/placeholder.jpg",
       badge: "New",
       title: "Sample Product 1",
       handle: "sample-product-1",
@@ -50,7 +50,7 @@ const CartPage = () => {
       },
     },
     {
-      imageUrl: "/",
+      imageUrl: "/placeholder.jpg",
       badge: "Sale",
       title: "Sample Product 2",
       handle: "sample-product-2",

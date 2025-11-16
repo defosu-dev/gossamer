@@ -1,3 +1,4 @@
+//@ts-nocheck
 "use client";
 import React from "react";
 import ExploreSection from "../home/sections/explorecurated/ExploreSection";

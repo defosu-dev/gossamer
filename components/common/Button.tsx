@@ -16,7 +16,8 @@ const Button = ({
   disabled,
   className,
 }: ButtonProps) => {
-  const baseStyles = "py-2 px-4 rounded-full font-medium transition";
+  const baseStyles =
+    "py-2 px-4 rounded-full font-medium transition cursor-pointer";
 
   const variantStyles =
     variant === "primary"

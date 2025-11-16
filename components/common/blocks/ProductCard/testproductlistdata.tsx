@@ -2,8 +2,7 @@ export const ProductListData = [
   {
     id: "1",
     name: "Ergonomic Phone Stand",
-    imageSrc:
-      "https://images.unsplash.com/photo-1620248232876-b631f414e27f?q=80&w=1974&auto=format&fit=crop",
+    imageSrc: "/placeholder.jpg",
     imageAlt: "Black metal phone stande",
     category: "Accessories",
     rating: 4.8,
@@ -13,8 +12,7 @@ export const ProductListData = [
   {
     id: "2",
     name: "Wireless Headphones Pro X",
-    imageSrc:
-      "https://images.unsplash.com/photo-1546435770-a3e433b4fa90?q=80&w=1770&auto=format&fit=crop",
+    imageSrc: "/placeholder.jpg",
     imageAlt: "White wireless headphones",
     category: "Electronics",
     rating: 5.0,
@@ -24,8 +22,7 @@ export const ProductListData = [
   {
     id: "3",
     name: "Smartwatch FitPulse",
-    imageSrc:
-      "https://images.unsplash.com/photo-1579586337278-fca1d56788d1?q=80&w=1770&auto=format&fit=crop",
+    imageSrc: "/placeholder.jpg",
     imageAlt: "Smartwatch on wrist",
     category: "Gadgets",
     rating: 4.5,
@@ -35,8 +32,7 @@ export const ProductListData = [
   {
     id: "4",
     name: "Portable Speaker Soundwave",
-    imageSrc:
-      "https://images.unsplash.com/photo-1550993952-094d1253c072?q=80&w=1770&auto=format&fit=crop",
+    imageSrc: "/placeholder.jpg",
     imageAlt: "Soundwave speaker",
     category: "Audio",
     rating: 4.2,
@@ -46,8 +42,7 @@ export const ProductListData = [
   {
     id: "5",
     name: "PowerFlow Charger",
-    imageSrc:
-      "https://images.unsplash.com/photo-1627885474341-3d71249b6574?q=80&w=1770&auto=format&fit=crop",
+    imageSrc: "/placeholder.jpg",
     imageAlt: "Phone charger",
     category: "Accessories",
     rating: 4.9,
@@ -58,8 +53,7 @@ export const ProductListData = [
   {
     id: "6",
     name: "Laptop Cooling Pad",
-    imageSrc:
-      "https://images.unsplash.com/photo-1587825140708-3c8d7fc5b1b7?q=80&w=1770&auto=format&fit=crop",
+    imageSrc: "/placeholder.jpg",
     imageAlt: "Laptop cooling pad with fan",
     category: "Accessories",
     rating: 4.3,
@@ -69,8 +63,7 @@ export const ProductListData = [
   {
     id: "7",
     name: "Noise Cancelling Earbuds",
-    imageSrc:
-      "https://images.unsplash.com/photo-1598970434795-0c54fe7c0642?q=80&w=1770&auto=format&fit=crop",
+    imageSrc: "/placeholder.jpg",
     imageAlt: "Black noise cancelling earbuds",
     category: "Electronics",
     rating: 4.7,
@@ -80,8 +73,7 @@ export const ProductListData = [
   {
     id: "8",
     name: "Fitness Tracker Band",
-    imageSrc:
-      "https://images.unsplash.com/photo-1588776814546-ecf165f0b6a0?q=80&w=1770&auto=format&fit=crop",
+    imageSrc: "/placeholder.jpg",
     imageAlt: "Fitness tracker on wrist",
     category: "Gadgets",
     rating: 4.1,
@@ -91,8 +83,7 @@ export const ProductListData = [
   {
     id: "9",
     name: "Bluetooth Portable Speaker",
-    imageSrc:
-      "https://images.unsplash.com/photo-1598300050285-c3c2b88a8f36?q=80&w=1770&auto=format&fit=crop",
+    imageSrc: "/placeholder.jpg",
     imageAlt: "Compact bluetooth speaker",
     category: "Audio",
     rating: 4.6,
@@ -102,8 +93,7 @@ export const ProductListData = [
   {
     id: "10",
     name: "Fast Wireless Charger",
-    imageSrc:
-      "https://images.unsplash.com/photo-1612831661463-cd07f84e7f6a?q=80&w=1770&auto=format&fit=crop",
+    imageSrc: "/placeholder.jpg",
     imageAlt: "Fast wireless charger for phone",
     category: "Accessories",
     rating: 4.8,

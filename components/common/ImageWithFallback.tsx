@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Image as ImageIcon, Loader2 } from "lucide-react";
 import { cn } from "@/utils/cn";
 
-export type ImageWithFallbackProps = {
+type ImageWithFallbackProps = {
   src: string;
   alt: string;
   width?: number;
@@ -13,7 +13,10 @@ export type ImageWithFallbackProps = {
   className?: string;
   style?: CSSProperties;
   iconSize?: number;
+  sizes?: string;
+  priority?: boolean;
 };
+
 /**
  * ImageWithFallback
  *
@@ -31,6 +34,8 @@ export type ImageWithFallbackProps = {
  * @param className - Optional extra classes for the container
  * @param style     - Optional inline styles for the container
  * @param iconSize  - Optional Tailwind size units for the loader/fallback icon (default: 4)
+ * @param sizes     - Optional responsive sizes for Next.js Image (default: adaptive)
+ * @param priority  - Optional: set true for LCP images (above the fold)
  */
 export function ImageWithFallback({
   src,
@@ -41,57 +46,31 @@ export function ImageWithFallback({
   className,
   style,
   iconSize = 4,
+  sizes = "(max-width: 768px) 100vw, 33vw",
+  priority = false,
 }: ImageWithFallbackProps) {
   const [status, setStatus] = useState<"loading" | "error" | "loaded">(
     "loading"
   );
 
   useEffect(() => {
-    if (status === "loading") {
+    if (status === "loading" && src) {
       const timer = setTimeout(() => setStatus("error"), timeout);
       return () => clearTimeout(timer);
     }
-  }, [status, timeout]);
+  }, [status, src, timeout]);
 
   const containerStyle: CSSProperties = {
     width: width ?? "100%",
     height: height ?? "100%",
     position: "relative",
+    overflow: "hidden",
+    borderRadius: "inherit",
     ...style,
   };
 
   const baseContainerClasses =
-    "flex items-center justify-center bg-neutral-200/40 rounded-lg";
-
-  if (status === "error") {
-    return (
-      <div
-        style={containerStyle}
-        className={cn(baseContainerClasses, className)}
-        aria-label={`Failed to load: ${alt}`}
-      >
-        <ImageIcon
-          className={cn(`w-${iconSize} h-${iconSize} text-gray-500`)}
-        />
-      </div>
-    );
-  }
-
-  if (status === "loading") {
-    return (
-      <div
-        style={containerStyle}
-        className={cn(baseContainerClasses, className)}
-        aria-label={`Loading image: ${alt}`}
-      >
-        <Loader2
-          className={cn(
-            `w-${iconSize} h-${iconSize} animate-spin text-gray-500`
-          )}
-        />
-      </div>
-    );
-  }
+    "flex items-center justify-center bg-neutral-100 absolute inset-0 rounded-[inherit]";
 
   return (
     <div style={containerStyle} className={className}>
@@ -99,11 +78,35 @@ export function ImageWithFallback({
         src={src}
         alt={alt}
         fill
-        className="object-cover rounded-lg"
-        sizes="100vw"
+        sizes={sizes}
+        priority={priority}
         onLoad={() => setStatus("loaded")}
         onError={() => setStatus("error")}
+        className="object-cover rounded-[inherit]"
       />
+      {/* Overlay: Spinner */}
+      {status === "loading" && (
+        <div
+          className={cn(baseContainerClasses)}
+          aria-label={`Loading image: ${alt}`}
+        >
+          <Loader2
+            className={cn(`size-${iconSize} animate-spin text-gray-500`)}
+          />
+        </div>
+      )}
+
+      {/* Overlay: Error */}
+      {status === "error" && (
+        <div
+          className={cn(baseContainerClasses)}
+          aria-label={`Failed to load: ${alt}`}
+        >
+          <ImageIcon
+            className={cn(`w-${iconSize} h-${iconSize} text-gray-500`)}
+          />
+        </div>
+      )}
     </div>
   );
 }

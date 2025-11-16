@@ -13,14 +13,13 @@ const SearchBar = () => {
   const [query, setQuery] = useState("");
   const router = useRouter();
 
-
   return (
     <Container className="flex flex-col">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 w-full pt-10">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 w-full mt-5">
         <h2 className="text-3xl font-bold tracking-tight">Give All You Need</h2>
 
-        <div className="flex items-center w-full md:w-[360px] h-12 rounded-full border border-neutral-300 shadow-sm overflow-hidden">
-          <Search className="w-5 h-5 text-neutral-500 ml-4" />
+        <div className="flex items-center w-full md:w-[360px] h-10 rounded-full border border-neutral-300 shadow-sm overflow-hidden">
+          <Search className="w-5 h-5 text-neutral-500 ml-4 " />
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}

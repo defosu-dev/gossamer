@@ -1,0 +1,1127 @@
+[
+  {
+    "id": "ccb07570-bdf2-4d98-8246-9cb9d1982778",
+    "product_id": "7d185798-80a5-4824-9d33-f4124c9667d5",
+    "name": "Intelligent Bronze Pants",
+    "sku": "C3QTO9EEWQ",
+    "current_price": 1551.39,
+    "old_price": 1768.09,
+    "stock": 140
+  },
+  {
+    "id": "d1aa605e-658f-437e-97e2-d2804e9a10c8",
+    "product_id": "7d185798-80a5-4824-9d33-f4124c9667d5",
+    "name": "Intelligent Bronze Pants — Variant 2",
+    "sku": "ZQYMCUANIV",
+    "current_price": 146.25,
+    "old_price": 554.25,
+    "stock": 159
+  },
+  {
+    "id": "a75fb44e-edf6-4bbf-b31d-9574c571d6e8",
+    "product_id": "7d185798-80a5-4824-9d33-f4124c9667d5",
+    "name": "Intelligent Bronze Pants — Variant 3",
+    "sku": "B7ELK8NVIH",
+    "current_price": 300.95,
+    "old_price": null,
+    "stock": 96
+  },
+  {
+    "id": "69dd3ca1-429b-44ab-8aae-9d6c4765cdd6",
+    "product_id": "19684e3f-2530-4127-b41b-8e1ed72a2561",
+    "name": "Modern Bronze Hat",
+    "sku": "RMSRDIL64N",
+    "current_price": 1683.15,
+    "old_price": 2032.75,
+    "stock": 91
+  },
+  {
+    "id": "f0933f94-1dd7-45f2-9c4f-482351e24ba3",
+    "product_id": "19684e3f-2530-4127-b41b-8e1ed72a2561",
+    "name": "Modern Bronze Hat — Variant 2",
+    "sku": "UQHMHPKNRL",
+    "current_price": 653.99,
+    "old_price": null,
+    "stock": 14
+  },
+  {
+    "id": "15bfef7a-46f2-4c5f-9dd3-a02a5abdbea5",
+    "product_id": "19684e3f-2530-4127-b41b-8e1ed72a2561",
+    "name": "Modern Bronze Hat — Variant 3",
+    "sku": "6WM18F93E1",
+    "current_price": 1042.09,
+    "old_price": 1171.99,
+    "stock": 84
+  },
+  {
+    "id": "1863b057-d46b-496b-a843-0e38f38f6830",
+    "product_id": "e2ca7b05-e5c5-4920-8ef7-ed1cd8cd99b1",
+    "name": "Recycled Concrete Bacon",
+    "sku": "HI8COSH3JS",
+    "current_price": 930.89,
+    "old_price": 1088.69,
+    "stock": 164
+  },
+  {
+    "id": "616fc8a0-6936-43b8-a690-434abb889a12",
+    "product_id": "e2ca7b05-e5c5-4920-8ef7-ed1cd8cd99b1",
+    "name": "Recycled Concrete Bacon — Variant 2",
+    "sku": "FHH1MKMAZG",
+    "current_price": 1433.99,
+    "old_price": 1766.79,
+    "stock": 39
+  },
+  {
+    "id": "384f89d1-7acf-4bfb-8870-4e60d5b97fbe",
+    "product_id": "4ab60cb4-2c26-4204-a5d6-3353ebd01c58",
+    "name": "Sleek Bronze Hat",
+    "sku": "L7DENKVVKP",
+    "current_price": 424.39,
+    "old_price": 458.69,
+    "stock": 93
+  },
+  {
+    "id": "00e78c4f-d68e-404c-b285-7be28cb8b508",
+    "product_id": "4ab60cb4-2c26-4204-a5d6-3353ebd01c58",
+    "name": "Sleek Bronze Hat — Variant 2",
+    "sku": "ALQSXYM3RQ",
+    "current_price": 50.25,
+    "old_price": null,
+    "stock": 2
+  },
+  {
+    "id": "08b1b2cc-6d98-4ba1-9137-c05bb05fa006",
+    "product_id": "7af662db-215d-4270-afb9-ed1cae377497",
+    "name": "Luxurious Cotton Computer",
+    "sku": "MEVVV7R15A",
+    "current_price": 2081.89,
+    "old_price": 2305.05,
+    "stock": 51
+  },
+  {
+    "id": "a35f2cd7-81d1-4ef4-8722-d15089c7538c",
+    "product_id": "7af662db-215d-4270-afb9-ed1cae377497",
+    "name": "Luxurious Cotton Computer — Variant 2",
+    "sku": "IFLZYNJ7JW",
+    "current_price": 1973.86,
+    "old_price": 2153.33,
+    "stock": 37
+  },
+  {
+    "id": "999b2f57-5336-45fc-a417-5872defd41bb",
+    "product_id": "7af662db-215d-4270-afb9-ed1cae377497",
+    "name": "Luxurious Cotton Computer — Variant 3",
+    "sku": "IIAN3QYLIB",
+    "current_price": 92.49,
+    "old_price": 176.39,
+    "stock": 139
+  },
+  {
+    "id": "23250736-573b-4f0f-afa4-e6f9fc0772f9",
+    "product_id": "5f17ff50-93ff-4cda-8962-f342ae028a8d",
+    "name": "Frozen Bronze Pants",
+    "sku": "ADYIESFGJ3",
+    "current_price": 1290.7,
+    "old_price": null,
+    "stock": 146
+  },
+  {
+    "id": "1d8f1ada-0b5f-4fd0-880e-59a148f17953",
+    "product_id": "5f17ff50-93ff-4cda-8962-f342ae028a8d",
+    "name": "Frozen Bronze Pants — Variant 2",
+    "sku": "QF5LXSKD6V",
+    "current_price": 2426.2,
+    "old_price": null,
+    "stock": 91
+  },
+  {
+    "id": "f7fb6ee2-26e2-427e-8391-5d18b7c4c6fe",
+    "product_id": "5f17ff50-93ff-4cda-8962-f342ae028a8d",
+    "name": "Frozen Bronze Pants — Variant 3",
+    "sku": "NBV21PQRJF",
+    "current_price": 928.99,
+    "old_price": 1128.09,
+    "stock": 186
+  },
+  {
+    "id": "640f252d-0f45-4407-80d0-c5d92f5fdfc0",
+    "product_id": "626a02e9-7fbb-47bf-b85a-c8112e48a8d7",
+    "name": "Sleek Steel Towels",
+    "sku": "U3FALBD1EX",
+    "current_price": 467.22,
+    "old_price": null,
+    "stock": 148
+  },
+  {
+    "id": "43f725d0-824e-46c9-ae5f-0e15da68dc24",
+    "product_id": "626a02e9-7fbb-47bf-b85a-c8112e48a8d7",
+    "name": "Sleek Steel Towels — Variant 2",
+    "sku": "LBQI3MPQ1I",
+    "current_price": 834.25,
+    "old_price": null,
+    "stock": 17
+  },
+  {
+    "id": "c3b2da41-c047-4ee6-880e-0ffaa86fc7ee",
+    "product_id": "626a02e9-7fbb-47bf-b85a-c8112e48a8d7",
+    "name": "Sleek Steel Towels — Variant 3",
+    "sku": "QZRYSISC4R",
+    "current_price": 2116.35,
+    "old_price": null,
+    "stock": 15
+  },
+  {
+    "id": "1738a4dd-ea5a-4b0e-ab25-d3b5ede64dd4",
+    "product_id": "285c2a28-c62e-4064-9452-d7513a0b1c50",
+    "name": "Bespoke Wooden Tuna",
+    "sku": "X0M8ASBSDC",
+    "current_price": 147.29,
+    "old_price": null,
+    "stock": 32
+  },
+  {
+    "id": "de5f4715-43fa-4d0a-accf-1ea37adb420c",
+    "product_id": "285c2a28-c62e-4064-9452-d7513a0b1c50",
+    "name": "Bespoke Wooden Tuna — Variant 2",
+    "sku": "GCFMZ9JGTM",
+    "current_price": 2194.59,
+    "old_price": null,
+    "stock": 109
+  },
+  {
+    "id": "99a54b4d-4fca-4642-a14d-7a3a928db366",
+    "product_id": "c8d60b8a-54ac-4927-8804-b82db06f8e77",
+    "name": "Frozen Ceramic Salad",
+    "sku": "8IKGZNJSPT",
+    "current_price": 1748.65,
+    "old_price": null,
+    "stock": 195
+  },
+  {
+    "id": "36ef6ee8-cb48-45fa-8031-9bdf04085e06",
+    "product_id": "c8d60b8a-54ac-4927-8804-b82db06f8e77",
+    "name": "Frozen Ceramic Salad — Variant 2",
+    "sku": "Y2GNBXHXIA",
+    "current_price": 282.6,
+    "old_price": 379.55,
+    "stock": 66
+  },
+  {
+    "id": "d8b1c342-350f-4565-af4d-ee43199678c5",
+    "product_id": "e0eefdb4-81be-431b-8ea6-3580e2841b05",
+    "name": "Frozen Ceramic Sausages",
+    "sku": "28E0EYRNGF",
+    "current_price": 530.09,
+    "old_price": null,
+    "stock": 103
+  },
+  {
+    "id": "f405f0c7-5812-44c0-86bf-dd56b8c8687a",
+    "product_id": "e0eefdb4-81be-431b-8ea6-3580e2841b05",
+    "name": "Frozen Ceramic Sausages — Variant 2",
+    "sku": "KKGRKS8NQH",
+    "current_price": 1709.99,
+    "old_price": 1942.19,
+    "stock": 151
+  },
+  {
+    "id": "bb2cc292-5ecb-43a0-bf84-bb8b2bba363c",
+    "product_id": "e46464eb-dde6-4695-8575-59700310feec",
+    "name": "Oriental Wooden Pizza",
+    "sku": "ACUGAE8CFI",
+    "current_price": 389.72,
+    "old_price": null,
+    "stock": 186
+  },
+  {
+    "id": "f51efe64-0628-48f4-b4cc-b1f8ca3188c7",
+    "product_id": "e46464eb-dde6-4695-8575-59700310feec",
+    "name": "Oriental Wooden Pizza — Variant 2",
+    "sku": "X9BXE6XGU6",
+    "current_price": 2483.29,
+    "old_price": null,
+    "stock": 184
+  },
+  {
+    "id": "4e3cef32-3689-4e69-9310-01905316d118",
+    "product_id": "b3f9af8d-03f2-4fd6-b1dc-795adb2c29e6",
+    "name": "Licensed Wooden Cheese",
+    "sku": "0ZRX9NDBF5",
+    "current_price": 2077.19,
+    "old_price": 2309.19,
+    "stock": 159
+  },
+  {
+    "id": "f8f4be74-e356-4c33-8671-74d58896b0ff",
+    "product_id": "b3f9af8d-03f2-4fd6-b1dc-795adb2c29e6",
+    "name": "Licensed Wooden Cheese — Variant 2",
+    "sku": "WVN9PFGTIX",
+    "current_price": 2485.09,
+    "old_price": null,
+    "stock": 19
+  },
+  {
+    "id": "784a0932-df87-4426-9cb2-1765ee66fe5b",
+    "product_id": "fa23db76-b607-4ecc-91ad-2a5696d50e43",
+    "name": "Licensed Rubber Keyboard",
+    "sku": "XIMZOJ6AZP",
+    "current_price": 386.69,
+    "old_price": 701.59,
+    "stock": 109
+  },
+  {
+    "id": "5ef93f04-e9c9-447a-9c6c-994e3e832121",
+    "product_id": "fa23db76-b607-4ecc-91ad-2a5696d50e43",
+    "name": "Licensed Rubber Keyboard — Variant 2",
+    "sku": "8QIWWU2I1T",
+    "current_price": 1849.49,
+    "old_price": null,
+    "stock": 15
+  },
+  {
+    "id": "7a62e319-a1c5-47f7-9712-cf5018dae0d3",
+    "product_id": "fa23db76-b607-4ecc-91ad-2a5696d50e43",
+    "name": "Licensed Rubber Keyboard — Variant 3",
+    "sku": "BH6ECNGUSV",
+    "current_price": 1043.15,
+    "old_price": null,
+    "stock": 172
+  },
+  {
+    "id": "76830e15-ff1a-4f6b-a135-6e9e736a679a",
+    "product_id": "ad543846-2b60-4676-b1f1-531044509612",
+    "name": "Frozen Granite Chicken",
+    "sku": "54JWN5TO8V",
+    "current_price": 1086.09,
+    "old_price": null,
+    "stock": 99
+  },
+  {
+    "id": "2e5674c2-d496-4b8c-9939-e4512bee2c5c",
+    "product_id": "ad543846-2b60-4676-b1f1-531044509612",
+    "name": "Frozen Granite Chicken — Variant 2",
+    "sku": "M2K1CARPO4",
+    "current_price": 1924.73,
+    "old_price": null,
+    "stock": 184
+  },
+  {
+    "id": "28e4fb31-c644-4c01-ac5b-199093a87cda",
+    "product_id": "41767169-6d3d-4a70-aa4b-c77747c921eb",
+    "name": "Incredible Silk Bike",
+    "sku": "IQF4OZIX3Z",
+    "current_price": 1721.49,
+    "old_price": null,
+    "stock": 97
+  },
+  {
+    "id": "0f986eb2-8569-417c-8021-9716d55891d4",
+    "product_id": "41767169-6d3d-4a70-aa4b-c77747c921eb",
+    "name": "Incredible Silk Bike — Variant 2",
+    "sku": "NSJG2ZQ4QU",
+    "current_price": 111.79,
+    "old_price": 236.09,
+    "stock": 15
+  },
+  {
+    "id": "38c8fc3d-a558-486d-b21d-7c64f0c6c729",
+    "product_id": "41767169-6d3d-4a70-aa4b-c77747c921eb",
+    "name": "Incredible Silk Bike — Variant 3",
+    "sku": "3HOI0PMMJ7",
+    "current_price": 1524.29,
+    "old_price": null,
+    "stock": 129
+  },
+  {
+    "id": "3b670c31-dec6-4a66-8c63-6be544004403",
+    "product_id": "4892e319-20d6-4aa6-879d-e80c7ad56bc5",
+    "name": "Luxurious Silk Hat",
+    "sku": "OFEH36IB1S",
+    "current_price": 973.19,
+    "old_price": 1379.2,
+    "stock": 69
+  },
+  {
+    "id": "b314af8a-f9f9-4b7b-b604-9d9fd0f3a44b",
+    "product_id": "4892e319-20d6-4aa6-879d-e80c7ad56bc5",
+    "name": "Luxurious Silk Hat — Variant 2",
+    "sku": "ZRLWFI2TFZ",
+    "current_price": 1034.09,
+    "old_price": null,
+    "stock": 117
+  },
+  {
+    "id": "1faa9687-9c7d-4c2e-a591-c252518bd918",
+    "product_id": "909fead9-f1f1-402a-8643-052e0719f888",
+    "name": "Generic Rubber Fish",
+    "sku": "ZOHGIKO1AG",
+    "current_price": 1085.15,
+    "old_price": 1173.85,
+    "stock": 86
+  },
+  {
+    "id": "92d2357b-6b3d-4828-b898-6ba3c6b42680",
+    "product_id": "909fead9-f1f1-402a-8643-052e0719f888",
+    "name": "Generic Rubber Fish — Variant 2",
+    "sku": "EFNY1VFGJW",
+    "current_price": 1733.69,
+    "old_price": null,
+    "stock": 158
+  },
+  {
+    "id": "dd24dd99-0645-43aa-8242-b4ca2582f948",
+    "product_id": "909fead9-f1f1-402a-8643-052e0719f888",
+    "name": "Generic Rubber Fish — Variant 3",
+    "sku": "RJRLYTNDYP",
+    "current_price": 1837.49,
+    "old_price": 2084.99,
+    "stock": 27
+  },
+  {
+    "id": "86fb369a-b408-462c-a5e5-f8f5466de20d",
+    "product_id": "b6bc576d-7699-4294-8503-68f243d18284",
+    "name": "Small Steel Chair",
+    "sku": "GNYXGOJT1A",
+    "current_price": 2019.25,
+    "old_price": null,
+    "stock": 178
+  },
+  {
+    "id": "2f77bf27-f624-4150-9e80-73637da000bc",
+    "product_id": "b6bc576d-7699-4294-8503-68f243d18284",
+    "name": "Small Steel Chair — Variant 2",
+    "sku": "C50ZRLX1BW",
+    "current_price": 502.65,
+    "old_price": 713.45,
+    "stock": 148
+  },
+  {
+    "id": "a88d31b3-be17-4876-b719-09342b650432",
+    "product_id": "ae41298c-c0a7-43e8-ab3d-c3b3514d7a9a",
+    "name": "Sleek Wooden Computer",
+    "sku": "J8BRTBZHYR",
+    "current_price": 569.75,
+    "old_price": null,
+    "stock": 9
+  },
+  {
+    "id": "0c9d01fc-69bc-4f11-ae12-cd10a61aa18b",
+    "product_id": "ae41298c-c0a7-43e8-ab3d-c3b3514d7a9a",
+    "name": "Sleek Wooden Computer — Variant 2",
+    "sku": "JMCUHYKC0U",
+    "current_price": 2021.45,
+    "old_price": null,
+    "stock": 1
+  },
+  {
+    "id": "11e9b855-b9f0-4b1d-8ac6-6a07adc800e0",
+    "product_id": "9d5ef4e2-12a1-48eb-be6c-e349e1a219b3",
+    "name": "Small Steel Shirt",
+    "sku": "QIEZTK8BN5",
+    "current_price": 1381.59,
+    "old_price": 1501.18,
+    "stock": 183
+  },
+  {
+    "id": "dad25cee-ede2-4302-ad1e-bab16d4730c2",
+    "product_id": "9d5ef4e2-12a1-48eb-be6c-e349e1a219b3",
+    "name": "Small Steel Shirt — Variant 2",
+    "sku": "BLOUEIWJ8O",
+    "current_price": 1447.75,
+    "old_price": null,
+    "stock": 92
+  },
+  {
+    "id": "1b2b4ffe-695d-4264-b9be-bc5ef51e9ff5",
+    "product_id": "0572b31e-2603-454c-ab98-0d5757006a7d",
+    "name": "Ergonomic Granite Soap",
+    "sku": "MEN7YXOESO",
+    "current_price": 682.29,
+    "old_price": null,
+    "stock": 106
+  },
+  {
+    "id": "43bf7cc7-0748-4cc4-804e-bef920ff41bd",
+    "product_id": "0572b31e-2603-454c-ab98-0d5757006a7d",
+    "name": "Ergonomic Granite Soap — Variant 2",
+    "sku": "6ZTKI3PHQH",
+    "current_price": 880.29,
+    "old_price": 1068.29,
+    "stock": 90
+  },
+  {
+    "id": "52373fa0-f7ea-4eeb-8495-227215d6f8e3",
+    "product_id": "a511cf1f-6ccd-4886-bbee-c6bad2b40606",
+    "name": "Bespoke Rubber Chair",
+    "sku": "TEL9SLBA1V",
+    "current_price": 1845.75,
+    "old_price": null,
+    "stock": 110
+  },
+  {
+    "id": "705da512-f4f5-4d0e-bf65-a7fe1cbb8f21",
+    "product_id": "a511cf1f-6ccd-4886-bbee-c6bad2b40606",
+    "name": "Bespoke Rubber Chair — Variant 2",
+    "sku": "G8D33ITUXY",
+    "current_price": 817.56,
+    "old_price": null,
+    "stock": 99
+  },
+  {
+    "id": "e1f39540-0d96-402f-96f3-86cf9a5cac0f",
+    "product_id": "8662a6b7-5309-42b0-8ffe-657b2273b261",
+    "name": "Frozen Rubber Table",
+    "sku": "RNUIKQZWML",
+    "current_price": 2174.59,
+    "old_price": null,
+    "stock": 188
+  },
+  {
+    "id": "6cd11d57-df8f-4bfd-b7e1-900f87c47b44",
+    "product_id": "8662a6b7-5309-42b0-8ffe-657b2273b261",
+    "name": "Frozen Rubber Table — Variant 2",
+    "sku": "LS3Z14JFXB",
+    "current_price": 326.49,
+    "old_price": null,
+    "stock": 74
+  },
+  {
+    "id": "761f3fd3-9935-4675-830d-d059559d35ea",
+    "product_id": "49848f3f-8261-45f6-bf5b-2d5ab1181410",
+    "name": "Generic Rubber Gloves",
+    "sku": "SMK49TBLHN",
+    "current_price": 803.19,
+    "old_price": 1017.09,
+    "stock": 164
+  },
+  {
+    "id": "bf20ea2d-df2e-42ed-a0ce-250abd272ff6",
+    "product_id": "49848f3f-8261-45f6-bf5b-2d5ab1181410",
+    "name": "Generic Rubber Gloves — Variant 2",
+    "sku": "JXTY61EZCY",
+    "current_price": 2317.29,
+    "old_price": 2353.19,
+    "stock": 1
+  },
+  {
+    "id": "3907e227-1e8e-4f39-b079-dde981178494",
+    "product_id": "49848f3f-8261-45f6-bf5b-2d5ab1181410",
+    "name": "Generic Rubber Gloves — Variant 3",
+    "sku": "PF0LUTI17E",
+    "current_price": 698.55,
+    "old_price": null,
+    "stock": 103
+  },
+  {
+    "id": "97265afa-e8f5-4dd8-a30c-f943a992f377",
+    "product_id": "6ce1024e-74be-4c57-b044-bd107d6c61ad",
+    "name": "Sleek Wooden Hat",
+    "sku": "PZLVCIVDZT",
+    "current_price": 702.65,
+    "old_price": null,
+    "stock": 114
+  },
+  {
+    "id": "7687fae3-4d00-4984-8a0e-7a08aa05983b",
+    "product_id": "6ce1024e-74be-4c57-b044-bd107d6c61ad",
+    "name": "Sleek Wooden Hat — Variant 2",
+    "sku": "SLRFNMXUJU",
+    "current_price": 341.09,
+    "old_price": 648.49,
+    "stock": 1
+  },
+  {
+    "id": "de8dc155-44df-4f40-a57a-d244e7c56b45",
+    "product_id": "6ce1024e-74be-4c57-b044-bd107d6c61ad",
+    "name": "Sleek Wooden Hat — Variant 3",
+    "sku": "PLYWW4OYRH",
+    "current_price": 519.69,
+    "old_price": 676.69,
+    "stock": 109
+  },
+  {
+    "id": "eeda7215-1119-4a10-b483-1796c2df34af",
+    "product_id": "8645e604-ab3d-461c-ac2a-a1c5f11dbb3f",
+    "name": "Handcrafted Wooden Ball",
+    "sku": "0RHT8NDD7Z",
+    "current_price": 489.15,
+    "old_price": null,
+    "stock": 102
+  },
+  {
+    "id": "66f52c48-6634-4b50-bac8-93a75ddc929e",
+    "product_id": "8645e604-ab3d-461c-ac2a-a1c5f11dbb3f",
+    "name": "Handcrafted Wooden Ball — Variant 2",
+    "sku": "9OJMM06MV5",
+    "current_price": 2117.65,
+    "old_price": null,
+    "stock": 18
+  },
+  {
+    "id": "886743a7-4154-4c87-bad3-3bbbfd671c85",
+    "product_id": "8645e604-ab3d-461c-ac2a-a1c5f11dbb3f",
+    "name": "Handcrafted Wooden Ball — Variant 3",
+    "sku": "YHDTFUHFUK",
+    "current_price": 413.89,
+    "old_price": null,
+    "stock": 103
+  },
+  {
+    "id": "c67f88db-1674-4483-b3e6-ef4086ebf336",
+    "product_id": "f559a9cc-c517-41c3-b817-15572dc138a4",
+    "name": "Refined Cotton Shoes",
+    "sku": "JSY512155V",
+    "current_price": 353.75,
+    "old_price": 416.95,
+    "stock": 163
+  },
+  {
+    "id": "cf5dcd89-a4be-4222-aa95-40ec2524e6ac",
+    "product_id": "f559a9cc-c517-41c3-b817-15572dc138a4",
+    "name": "Refined Cotton Shoes — Variant 2",
+    "sku": "KMR3MTY9LW",
+    "current_price": 958.85,
+    "old_price": 1117.95,
+    "stock": 129
+  },
+  {
+    "id": "8fe8b2cd-8353-4e0c-8f06-a2b74e82d855",
+    "product_id": "f559a9cc-c517-41c3-b817-15572dc138a4",
+    "name": "Refined Cotton Shoes — Variant 3",
+    "sku": "2IFRD4RAWS",
+    "current_price": 1395.09,
+    "old_price": 1586.99,
+    "stock": 195
+  },
+  {
+    "id": "845e809a-ba2b-4801-b904-172d21d33bc2",
+    "product_id": "da79f9d4-54c9-48b8-8534-bc2f0139399a",
+    "name": "Tasty Silk Chicken",
+    "sku": "DFWRGF9YJI",
+    "current_price": 822.19,
+    "old_price": null,
+    "stock": 189
+  },
+  {
+    "id": "b2f19004-dac9-48aa-bdd8-56d8dfa9216c",
+    "product_id": "da79f9d4-54c9-48b8-8534-bc2f0139399a",
+    "name": "Tasty Silk Chicken — Variant 2",
+    "sku": "ZISZWOFQ6A",
+    "current_price": 1614.25,
+    "old_price": null,
+    "stock": 101
+  },
+  {
+    "id": "c754ce4e-f1fa-4755-b6d9-47037b67ec81",
+    "product_id": "da79f9d4-54c9-48b8-8534-bc2f0139399a",
+    "name": "Tasty Silk Chicken — Variant 3",
+    "sku": "RU7LOWEMXE",
+    "current_price": 1367.35,
+    "old_price": null,
+    "stock": 130
+  },
+  {
+    "id": "794f41ff-06aa-47c6-8ca9-acc4136b9679",
+    "product_id": "4d7393ec-78bd-49f9-9ce4-92b910ad2a42",
+    "name": "Intelligent Aluminum Gloves",
+    "sku": "X1VTFSRDZW",
+    "current_price": 2405.52,
+    "old_price": null,
+    "stock": 112
+  },
+  {
+    "id": "53b7e3a2-5c36-4d75-8480-6894b381335e",
+    "product_id": "4d7393ec-78bd-49f9-9ce4-92b910ad2a42",
+    "name": "Intelligent Aluminum Gloves — Variant 2",
+    "sku": "IDNDWPL7OF",
+    "current_price": 2384.69,
+    "old_price": 2584.59,
+    "stock": 146
+  },
+  {
+    "id": "2e8cad18-220d-4207-ba8b-e65f317c253e",
+    "product_id": "4d7393ec-78bd-49f9-9ce4-92b910ad2a42",
+    "name": "Intelligent Aluminum Gloves — Variant 3",
+    "sku": "GDT1RYNYXV",
+    "current_price": 1905.39,
+    "old_price": null,
+    "stock": 174
+  },
+  {
+    "id": "2f589c6f-3c3e-42c6-b680-23ae3cb69df2",
+    "product_id": "aa02b011-5914-4543-a9fd-51860ff3ceb3",
+    "name": "Modern Bronze Bacon",
+    "sku": "06B51YSPP3",
+    "current_price": 879.49,
+    "old_price": 1305.55,
+    "stock": 172
+  },
+  {
+    "id": "62974da3-ea9b-4da5-8880-48bebd9bac4a",
+    "product_id": "aa02b011-5914-4543-a9fd-51860ff3ceb3",
+    "name": "Modern Bronze Bacon — Variant 2",
+    "sku": "8PTD7LESXZ",
+    "current_price": 1603.49,
+    "old_price": null,
+    "stock": 100
+  },
+  {
+    "id": "aaf2ffa7-1b46-4222-86e3-fc7a84b20bab",
+    "product_id": "aa02b011-5914-4543-a9fd-51860ff3ceb3",
+    "name": "Modern Bronze Bacon — Variant 3",
+    "sku": "57YYEZT6LM",
+    "current_price": 1827.45,
+    "old_price": null,
+    "stock": 193
+  },
+  {
+    "id": "e80a4b50-63cf-4592-9972-ee914798e44f",
+    "product_id": "375f7570-25e4-48cf-b8ed-8851e122ba21",
+    "name": "Fresh Gold Gloves",
+    "sku": "FESXVSBHZU",
+    "current_price": 378.59,
+    "old_price": null,
+    "stock": 3
+  },
+  {
+    "id": "d61840cd-8553-4ec5-980e-0d0e22a61003",
+    "product_id": "375f7570-25e4-48cf-b8ed-8851e122ba21",
+    "name": "Fresh Gold Gloves — Variant 2",
+    "sku": "YEJGLI08GJ",
+    "current_price": 1337.89,
+    "old_price": 1836.09,
+    "stock": 182
+  },
+  {
+    "id": "33e9e38b-b9cc-41e5-ba00-795fb96f3b71",
+    "product_id": "0995976b-d829-4765-a8c0-89a6b0a6c87f",
+    "name": "Small Ceramic Mouse",
+    "sku": "PX9YIUG4ZB",
+    "current_price": 518.89,
+    "old_price": null,
+    "stock": 191
+  },
+  {
+    "id": "bb51b8ef-7093-4003-9a0c-7b784719ba1a",
+    "product_id": "0995976b-d829-4765-a8c0-89a6b0a6c87f",
+    "name": "Small Ceramic Mouse — Variant 2",
+    "sku": "ZUTBGNPZNR",
+    "current_price": 2453.05,
+    "old_price": null,
+    "stock": 129
+  },
+  {
+    "id": "0c6417bf-54fd-4d57-9536-c7a60afb9c26",
+    "product_id": "0995976b-d829-4765-a8c0-89a6b0a6c87f",
+    "name": "Small Ceramic Mouse — Variant 3",
+    "sku": "W2G9MGDZJS",
+    "current_price": 51.19,
+    "old_price": null,
+    "stock": 64
+  },
+  {
+    "id": "a221ebbf-26aa-48e6-9862-e9b388480aaf",
+    "product_id": "2f86298c-272c-4eca-a45a-a696cb0b4d7b",
+    "name": "Awesome Silk Hat",
+    "sku": "BDFTUKYKLA",
+    "current_price": 1526.35,
+    "old_price": 1900.95,
+    "stock": 35
+  },
+  {
+    "id": "60632d9a-585c-468b-8f57-ad9d92d5c4f2",
+    "product_id": "2f86298c-272c-4eca-a45a-a696cb0b4d7b",
+    "name": "Awesome Silk Hat — Variant 2",
+    "sku": "MHZCCD4CIR",
+    "current_price": 2310.99,
+    "old_price": 2496.1,
+    "stock": 180
+  },
+  {
+    "id": "7d936529-cd28-4291-a9af-fdca6546a555",
+    "product_id": "8e42ba77-8b1e-40e2-a1e4-d755204bcf0a",
+    "name": "Oriental Metal Soap",
+    "sku": "DBEQ1D3APA",
+    "current_price": 1297.69,
+    "old_price": null,
+    "stock": 53
+  },
+  {
+    "id": "6433315d-69a5-4d04-83d7-aebd861e0c5c",
+    "product_id": "8e42ba77-8b1e-40e2-a1e4-d755204bcf0a",
+    "name": "Oriental Metal Soap — Variant 2",
+    "sku": "NWOGS6W4DJ",
+    "current_price": 261.19,
+    "old_price": null,
+    "stock": 22
+  },
+  {
+    "id": "6d81cd58-d57a-40cc-a425-cb8745d19b3a",
+    "product_id": "3f4bdb33-4ad1-4acb-89f3-cc7148ecee6d",
+    "name": "Intelligent Metal Tuna",
+    "sku": "VRFZHWPENS",
+    "current_price": 1937.89,
+    "old_price": null,
+    "stock": 90
+  },
+  {
+    "id": "e475b1b8-e7f7-4c7a-80bd-a17f04810f60",
+    "product_id": "3f4bdb33-4ad1-4acb-89f3-cc7148ecee6d",
+    "name": "Intelligent Metal Tuna — Variant 2",
+    "sku": "MPRIKRWTA1",
+    "current_price": 207.79,
+    "old_price": null,
+    "stock": 193
+  },
+  {
+    "id": "33c2dc4d-df4e-4dc1-ad14-ae7f557361a9",
+    "product_id": "3f4bdb33-4ad1-4acb-89f3-cc7148ecee6d",
+    "name": "Intelligent Metal Tuna — Variant 3",
+    "sku": "QFVAKQUM0O",
+    "current_price": 1796.59,
+    "old_price": 2068.69,
+    "stock": 192
+  },
+  {
+    "id": "730ecda6-01e1-4f54-95fe-198e749a6c5c",
+    "product_id": "a8a1c9ac-df9e-42f3-a979-d1a1fdc51aa6",
+    "name": "Fresh Bronze Towels",
+    "sku": "YN5KJRAJQU",
+    "current_price": 559.45,
+    "old_price": 940.99,
+    "stock": 11
+  },
+  {
+    "id": "bdb9440b-a023-4232-966c-c233fefd420b",
+    "product_id": "a8a1c9ac-df9e-42f3-a979-d1a1fdc51aa6",
+    "name": "Fresh Bronze Towels — Variant 2",
+    "sku": "74XM0BLRP1",
+    "current_price": 483.69,
+    "old_price": 895.85,
+    "stock": 152
+  },
+  {
+    "id": "58d16882-1192-4464-97fb-91a05be89b3f",
+    "product_id": "b3caa636-90b6-4227-a8e2-0469f8b794b9",
+    "name": "Recycled Metal Shoes",
+    "sku": "ZTURKKW2XC",
+    "current_price": 2190.09,
+    "old_price": 2601.89,
+    "stock": 24
+  },
+  {
+    "id": "0cbd308f-b918-4354-9106-7cab5260ab9b",
+    "product_id": "b3caa636-90b6-4227-a8e2-0469f8b794b9",
+    "name": "Recycled Metal Shoes — Variant 2",
+    "sku": "2WMRUBHKSZ",
+    "current_price": 1818.34,
+    "old_price": null,
+    "stock": 110
+  },
+  {
+    "id": "b1ccc82b-926f-4e3d-8829-1cc6089c49a4",
+    "product_id": "3ad89778-9449-4b9d-bd84-f67fd1b4d292",
+    "name": "Practical Concrete Shirt",
+    "sku": "EDAEXQGVUR",
+    "current_price": 817.59,
+    "old_price": 1012.89,
+    "stock": 69
+  },
+  {
+    "id": "b7d71378-deda-4bb2-aa5d-198051fc57aa",
+    "product_id": "3ad89778-9449-4b9d-bd84-f67fd1b4d292",
+    "name": "Practical Concrete Shirt — Variant 2",
+    "sku": "SN9ADA1PIX",
+    "current_price": 313.39,
+    "old_price": 358.35,
+    "stock": 58
+  },
+  {
+    "id": "d274284d-6239-408e-83b0-7efe9686d20d",
+    "product_id": "5fceb3c3-60f6-450d-9554-d14bc382f14f",
+    "name": "Bespoke Wooden Cheese",
+    "sku": "R6VAJX8WDL",
+    "current_price": 600.39,
+    "old_price": null,
+    "stock": 101
+  },
+  {
+    "id": "86ee2935-c4ba-4968-8abd-9605d054dba8",
+    "product_id": "5fceb3c3-60f6-450d-9554-d14bc382f14f",
+    "name": "Bespoke Wooden Cheese — Variant 2",
+    "sku": "5BYAEOEPWM",
+    "current_price": 1624.79,
+    "old_price": null,
+    "stock": 119
+  },
+  {
+    "id": "b2c5c0b2-dc04-4d51-bd78-686f45ce8961",
+    "product_id": "5fceb3c3-60f6-450d-9554-d14bc382f14f",
+    "name": "Bespoke Wooden Cheese — Variant 3",
+    "sku": "YEXMHUAO3D",
+    "current_price": 1173.49,
+    "old_price": null,
+    "stock": 82
+  },
+  {
+    "id": "af659509-f762-4d2f-92d2-304c5ec94e20",
+    "product_id": "eb268d78-456d-4cad-8efd-b7d5751821df",
+    "name": "Elegant Metal Soap",
+    "sku": "RLGXJHLE06",
+    "current_price": 805.59,
+    "old_price": null,
+    "stock": 163
+  },
+  {
+    "id": "25076566-93de-4490-ab65-4ec366833ce7",
+    "product_id": "eb268d78-456d-4cad-8efd-b7d5751821df",
+    "name": "Elegant Metal Soap — Variant 2",
+    "sku": "ZE3OOHJBGV",
+    "current_price": 1713.55,
+    "old_price": 1952.95,
+    "stock": 29
+  },
+  {
+    "id": "f7a2a655-bab7-4112-a521-8a56903c7a3f",
+    "product_id": "200f5090-7cd6-45bf-bd58-f4af5fc1ed42",
+    "name": "Elegant Plastic Gloves",
+    "sku": "QFLRM8LJYD",
+    "current_price": 572.89,
+    "old_price": 996.69,
+    "stock": 75
+  },
+  {
+    "id": "05078e37-1ea7-483b-a6d6-87288f43966f",
+    "product_id": "200f5090-7cd6-45bf-bd58-f4af5fc1ed42",
+    "name": "Elegant Plastic Gloves — Variant 2",
+    "sku": "RLUVXMQZTD",
+    "current_price": 921.29,
+    "old_price": null,
+    "stock": 61
+  },
+  {
+    "id": "6433c4ff-d55c-4f2c-b51d-b2057db4ed31",
+    "product_id": "0590b00c-e989-4b78-b6f5-8c40fa130945",
+    "name": "Refined Bamboo Pizza",
+    "sku": "R5WR4QYQPN",
+    "current_price": 483.1,
+    "old_price": 911.15,
+    "stock": 95
+  },
+  {
+    "id": "d49c6c37-84c6-452c-bd99-98ab0a17f3ef",
+    "product_id": "0590b00c-e989-4b78-b6f5-8c40fa130945",
+    "name": "Refined Bamboo Pizza — Variant 2",
+    "sku": "XWLLWN4ZDJ",
+    "current_price": 1892.09,
+    "old_price": 2294.65,
+    "stock": 47
+  },
+  {
+    "id": "de58f004-b706-417b-a2e5-8c29d2767317",
+    "product_id": "0590b00c-e989-4b78-b6f5-8c40fa130945",
+    "name": "Refined Bamboo Pizza — Variant 3",
+    "sku": "LHFJK356IQ",
+    "current_price": 1520.49,
+    "old_price": null,
+    "stock": 111
+  },
+  {
+    "id": "5b8ff015-0aff-4741-946b-9a06f1706e05",
+    "product_id": "48c468e5-80d5-42f0-9855-9b9e48b8c81b",
+    "name": "Intelligent Plastic Shoes",
+    "sku": "G8L5S5FKRE",
+    "current_price": 429.65,
+    "old_price": null,
+    "stock": 190
+  },
+  {
+    "id": "43d73143-81aa-463d-8765-a0aa47901916",
+    "product_id": "48c468e5-80d5-42f0-9855-9b9e48b8c81b",
+    "name": "Intelligent Plastic Shoes — Variant 2",
+    "sku": "L0O52I3MGK",
+    "current_price": 1976.19,
+    "old_price": 2030.89,
+    "stock": 108
+  },
+  {
+    "id": "3191e107-e8d4-4e83-a89c-741820698fe6",
+    "product_id": "48c468e5-80d5-42f0-9855-9b9e48b8c81b",
+    "name": "Intelligent Plastic Shoes — Variant 3",
+    "sku": "HKXXF7Z6LP",
+    "current_price": 1603.88,
+    "old_price": null,
+    "stock": 74
+  },
+  {
+    "id": "ebee2f87-4278-4605-b271-ba65f2d6e726",
+    "product_id": "3878be2d-3ad3-4b8c-9a1e-e8e2df5f21ca",
+    "name": "Soft Granite Cheese",
+    "sku": "Y8NJAKG7FZ",
+    "current_price": 1692.89,
+    "old_price": 1796.35,
+    "stock": 121
+  },
+  {
+    "id": "0af73de9-e1db-4275-b95a-a4eb346aa1ca",
+    "product_id": "3878be2d-3ad3-4b8c-9a1e-e8e2df5f21ca",
+    "name": "Soft Granite Cheese — Variant 2",
+    "sku": "DH0L8RGVHI",
+    "current_price": 1713.15,
+    "old_price": 2112.09,
+    "stock": 180
+  },
+  {
+    "id": "12931582-336d-4907-8788-60687d553223",
+    "product_id": "9910c741-c274-4eca-8c2a-7ce92e10eee4",
+    "name": "Frozen Rubber Car",
+    "sku": "AZJW6UQ1M6",
+    "current_price": 1430.79,
+    "old_price": 1929.99,
+    "stock": 5
+  },
+  {
+    "id": "c7630431-0bcd-4c2a-8948-0eb2f9d90d96",
+    "product_id": "9910c741-c274-4eca-8c2a-7ce92e10eee4",
+    "name": "Frozen Rubber Car — Variant 2",
+    "sku": "JCHGDYULWB",
+    "current_price": 530.15,
+    "old_price": 741.79,
+    "stock": 24
+  },
+  {
+    "id": "aec2707c-df64-4be6-af3f-15530f6a3891",
+    "product_id": "9910c741-c274-4eca-8c2a-7ce92e10eee4",
+    "name": "Frozen Rubber Car — Variant 3",
+    "sku": "2QHBVBTJ2M",
+    "current_price": 2395.79,
+    "old_price": null,
+    "stock": 21
+  },
+  {
+    "id": "803896b3-61a4-4b9d-a793-9798aba90a7d",
+    "product_id": "ae968750-f28e-4233-abca-195c1566d8ca",
+    "name": "Oriental Bamboo Car",
+    "sku": "BN0PEI3VCJ",
+    "current_price": 606.25,
+    "old_price": null,
+    "stock": 4
+  },
+  {
+    "id": "1fd5a9a3-76f6-41bd-ad6d-968f15d9d9ef",
+    "product_id": "ae968750-f28e-4233-abca-195c1566d8ca",
+    "name": "Oriental Bamboo Car — Variant 2",
+    "sku": "Z5PEWV5EJ0",
+    "current_price": 1951.29,
+    "old_price": null,
+    "stock": 9
+  },
+  {
+    "id": "e2397944-9616-4f51-8150-ff3b69a0b293",
+    "product_id": "ae968750-f28e-4233-abca-195c1566d8ca",
+    "name": "Oriental Bamboo Car — Variant 3",
+    "sku": "LXHKFLAUMK",
+    "current_price": 1044.2,
+    "old_price": null,
+    "stock": 89
+  },
+  {
+    "id": "6e16f6de-9ce9-436c-b7c2-81f70a427ad7",
+    "product_id": "f67cdf30-4ba9-4f07-b830-ef03849034e7",
+    "name": "Unbranded Bronze Soap",
+    "sku": "X0KRE97INN",
+    "current_price": 200.37,
+    "old_price": 410.99,
+    "stock": 128
+  },
+  {
+    "id": "9cfb5a98-e521-4c83-b44a-e72235bd473e",
+    "product_id": "f67cdf30-4ba9-4f07-b830-ef03849034e7",
+    "name": "Unbranded Bronze Soap — Variant 2",
+    "sku": "EJDG6VDBYV",
+    "current_price": 1698.33,
+    "old_price": 1877.99,
+    "stock": 79
+  },
+  {
+    "id": "14219f09-6c7d-4cdb-9026-591ab9eebc60",
+    "product_id": "68c5eb07-26c5-4abb-8866-e9bb7128c495",
+    "name": "Practical Silk Car",
+    "sku": "I78MXTCOXO",
+    "current_price": 1286.16,
+    "old_price": 1352.59,
+    "stock": 112
+  },
+  {
+    "id": "6d02cd03-3946-4892-a560-76db54bbfb9e",
+    "product_id": "68c5eb07-26c5-4abb-8866-e9bb7128c495",
+    "name": "Practical Silk Car — Variant 2",
+    "sku": "TP9G5WHEEF",
+    "current_price": 490.65,
+    "old_price": null,
+    "stock": 2
+  },
+  {
+    "id": "5eacbf84-a308-4aa2-98ee-5ffdca1d2414",
+    "product_id": "68c5eb07-26c5-4abb-8866-e9bb7128c495",
+    "name": "Practical Silk Car — Variant 3",
+    "sku": "EYKQFW0PIF",
+    "current_price": 1228.49,
+    "old_price": null,
+    "stock": 88
+  },
+  {
+    "id": "e4aed499-4cbc-4dab-9c84-da7cdc2f2897",
+    "product_id": "26744f26-5fce-407c-a142-b85a4a207e96",
+    "name": "Handmade Metal Sausages",
+    "sku": "JL57NFGD7Y",
+    "current_price": 1850.05,
+    "old_price": null,
+    "stock": 89
+  },
+  {
+    "id": "52b165ec-4edf-4f5b-ae03-f6d520d6f8a5",
+    "product_id": "26744f26-5fce-407c-a142-b85a4a207e96",
+    "name": "Handmade Metal Sausages — Variant 2",
+    "sku": "XVKX3PHQPL",
+    "current_price": 898.97,
+    "old_price": null,
+    "stock": 80
+  },
+  {
+    "id": "7d1b12da-566d-4a10-93bf-8036826d95f7",
+    "product_id": "26744f26-5fce-407c-a142-b85a4a207e96",
+    "name": "Handmade Metal Sausages — Variant 3",
+    "sku": "WI4NI21N4J",
+    "current_price": 285.09,
+    "old_price": null,
+    "stock": 144
+  },
+  {
+    "id": "72d7f0ce-6b35-4312-9c7a-406b0843f3b4",
+    "product_id": "2b704fe0-63e0-47ec-ad30-e18870bc5d4f",
+    "name": "Fresh Cotton Shoes",
+    "sku": "UYTHVIPFAO",
+    "current_price": 67.2,
+    "old_price": 303.25,
+    "stock": 195
+  },
+  {
+    "id": "955c715c-7a5b-4910-9fe0-878cc41eed56",
+    "product_id": "2b704fe0-63e0-47ec-ad30-e18870bc5d4f",
+    "name": "Fresh Cotton Shoes — Variant 2",
+    "sku": "EPKTNSJZVC",
+    "current_price": 1135.09,
+    "old_price": null,
+    "stock": 7
+  },
+  {
+    "id": "8af84e8b-00ab-4211-8ef3-7ac415102586",
+    "product_id": "2b704fe0-63e0-47ec-ad30-e18870bc5d4f",
+    "name": "Fresh Cotton Shoes — Variant 3",
+    "sku": "VOVRDHMFEW",
+    "current_price": 1878.79,
+    "old_price": 2203.99,
+    "stock": 156
+  }
+]

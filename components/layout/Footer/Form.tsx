@@ -3,7 +3,7 @@ import React from "react";
 
 const Form = () => {
   return (
-    <div className="flex items-center w-full md:w-[360px] h-12 rounded-full border border-neutral-300 shadow-sm overflow-hidden bg-white">
+    <div className="flex items-center w-full md:w-[360px] h-10 rounded-full border border-neutral-300 shadow-sm overflow-hidden bg-white">
       <input
         type="text"
         placeholder="Enter your email"

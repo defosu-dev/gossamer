@@ -18,9 +18,7 @@ const UserImage = ({ isLoading = true, user: User }: IUserImage) => {
         </div>
       ) : User ? (
         <ImageWithFallback
-          src={
-            User.user_metadata?.avatar_url ?? "https://via.placeholder.com/36"
-          }
+          src={User.user_metadata?.avatar_url ?? "/placeholder.jpg"}
           alt="User avatar"
           className="size-full object-cover"
         />

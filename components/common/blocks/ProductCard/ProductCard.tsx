@@ -7,6 +7,8 @@ import ProductPrice from "./ProductPrice";
 import ProductActions from "./ProductActions";
 import { hasDiscount, getMinPriceVariant } from "@/utils/price";
 import type { ProductWithRelations } from "@/types/IProductsWithRelations";
+import { Star } from "lucide-react";
+
 
 /**
  * Product card with primary image, price (min + discount), category badge, and actions.
@@ -67,7 +69,7 @@ const ProductCard = ({
       <div className="p-4 flex flex-col flex-grow">
         <ProductTitle title={product.title} />
         <div className="flex h-full items-end justify-between text-gray-600 text-sm mb-4 mt-auto">
-          <span>⭐ 4.8 (18 Reviews)</span>
+          <span><Star className="text-amber-300 w-5 h-5 mr-1" /> 4.8 (18 Reviews)</span>
           <ProductPrice
             minPrice={minPriceVariant?.current_price ?? 0}
             maxOldPrice={minPriceVariant?.old_price}

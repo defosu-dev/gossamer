@@ -31,7 +31,9 @@ const NewArrival = ({
         <span className="text-xs font-semibold text-zinc-600 mb-2">
           {label}
         </span>
-        <Title>{title}</Title>
+        <div className="cursor-pointer">
+          <Title>{title}</Title>
+        </div>
         <Description>{description}</Description>
         <FeatureList items={features} />
         <div className="flex justify-end">

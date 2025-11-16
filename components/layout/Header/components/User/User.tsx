@@ -24,7 +24,7 @@ const User = () => {
         onClick={() => handleClick()}
         user={user}
       />
-      <DarkBackground open={isOpen} setOpen={() => setIsOpen(false)} />
+      <DarkBackground open={isOpen} onClose={() => setIsOpen(false)} />
       <UserDropdown
         user={user}
         open={isOpen}

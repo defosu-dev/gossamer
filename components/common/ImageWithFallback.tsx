@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Image as ImageIcon, Loader2 } from "lucide-react";
 import { cn } from "@/utils/cn";
 
-type ImageWithFallbackProps = {
+export type ImageWithFallbackProps = {
   src: string;
   alt: string;
   width?: number;
@@ -50,7 +50,7 @@ export function ImageWithFallback({
   priority = false,
 }: ImageWithFallbackProps) {
   const [status, setStatus] = useState<"loading" | "error" | "loaded">(
-    "loading"
+    "loading",
   );
 
   useEffect(() => {

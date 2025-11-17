@@ -1,8 +1,8 @@
-import { ImageWithFallback } from "@/components/common/ImageWithFallback";
-import { cn } from "@/utils/cn";
-import { User } from "@supabase/supabase-js";
-import { Loader2, UserRound } from "lucide-react";
-import Link from "next/link";
+import { ImageWithFallback } from '@/components/common/ImageWithFallback';
+import { cn } from '@/utils/cn';
+import { User } from '@supabase/supabase-js';
+import { Loader2, UserRound } from 'lucide-react';
+import Link from 'next/link';
 
 export type IUserImage = {
   isLoading: boolean;
@@ -18,7 +18,7 @@ const UserImage = ({ isLoading = true, user: User }: IUserImage) => {
         </div>
       ) : User ? (
         <ImageWithFallback
-          src={User.user_metadata?.avatar_url ?? "/placeholder.jpg"}
+          src={User.user_metadata?.avatar_url ?? '/placeholder.jpg'}
           alt="User avatar"
           className="size-full object-cover"
         />
@@ -26,9 +26,9 @@ const UserImage = ({ isLoading = true, user: User }: IUserImage) => {
         <Link
           href="/auth/sign-in"
           className={cn(
-            "flex size-full items-center justify-center",
-            "transition-colors hover:bg-neutral-50 focus:outline-none focus:ring-2 focus:ring-neutral-500",
-            "rounded-full"
+            'flex size-full items-center justify-center',
+            'transition-colors hover:bg-neutral-50 focus:ring-2 focus:ring-neutral-500 focus:outline-none',
+            'rounded-full'
           )}
           aria-label="Sign in"
         >

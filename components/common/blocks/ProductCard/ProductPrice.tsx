@@ -1,5 +1,5 @@
 // components/common/ProductPrice/ProductPrice.tsx
-import React from "react";
+import React from 'react';
 
 /**
  * Renders product price with optional discount display.
@@ -18,29 +18,25 @@ type ProductPriceProps = {
   showDiscount?: boolean;
 };
 
-const ProductPrice = ({
-  minPrice,
-  maxOldPrice,
-  showDiscount = false,
-}: ProductPriceProps) => {
+const ProductPrice = ({ minPrice, maxOldPrice, showDiscount = false }: ProductPriceProps) => {
   // No price available
   if (minPrice === null) {
     return <p className="text-xl font-bold text-gray-900">Price unavailable</p>;
   }
 
   // Format current price (e.g., $54.99)
-  const formattedMin = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
+  const formattedMin = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }).format(minPrice);
 
   // Format old price (if provided)
   const formattedOld = maxOldPrice
-    ? new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
+    ? new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
       }).format(maxOldPrice)

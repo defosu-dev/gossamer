@@ -1,6 +1,6 @@
-import { cn } from "@/utils/cn";
-import { IContainer } from "./types";
-import React from "react";
+import { cn } from '@/utils/cn';
+import { IContainer } from './types';
+import React from 'react';
 
 /**
  * A container component with flexbox alignment.
@@ -12,17 +12,17 @@ import React from "react";
  */
 const Container = ({
   children,
-  className = "",
+  className = '',
   xCenter = true,
-  justifyContent = "start",
-  alignItems = "start",
+  justifyContent = 'start',
+  alignItems = 'start',
 }: IContainer) => {
   return (
     <div
       className={cn(
-        "container flex max-w-7xl w-full px-4",
+        'container flex w-full max-w-7xl px-4',
         {
-          "mx-auto": xCenter,
+          'mx-auto': xCenter,
           [`justify-${justifyContent}`]: justifyContent,
           [`items-${alignItems}`]: alignItems,
         },

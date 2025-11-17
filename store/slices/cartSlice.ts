@@ -1,4 +1,4 @@
-import { StateCreator } from "zustand";
+import { StateCreator } from 'zustand';
 
 export type CartItem = {
   variant_id: string;
@@ -22,9 +22,7 @@ export const createCartSlice: StateCreator<CartSlice> = (set) => ({
       if (existing) {
         return {
           cart: state.cart.map((item) =>
-            item.variant_id === variantId
-              ? { ...item, quantity: item.quantity + quantity }
-              : item
+            item.variant_id === variantId ? { ...item, quantity: item.quantity + quantity } : item
           ),
         };
       }

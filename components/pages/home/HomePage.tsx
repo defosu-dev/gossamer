@@ -1,11 +1,11 @@
-"use server";
-import React, { Suspense } from "react";
-import NewArrival from "./sections/newarrival/NewArrival";
-import ProductCard from "@/components/common/blocks/ProductCard/ProductCard";
-import ExploreSection from "./sections/explorecurated/ExploreSection";
-import SearchBar from "@/components/common/SearchBar/SearchBar";
-import { testdatanewarrival } from "./sections/newarrival/testdatanewarrival";
-import { fetchProducts } from "@/utils/supabase/server/products";
+'use server';
+import React, { Suspense } from 'react';
+import NewArrival from './sections/newarrival/NewArrival';
+import ProductCard from '@/components/common/blocks/ProductCard/ProductCard';
+import ExploreSection from './sections/explorecurated/ExploreSection';
+import SearchBar from '@/components/common/SearchBar/SearchBar';
+import { testdatanewarrival } from './sections/newarrival/testdatanewarrival';
+import { fetchProducts } from '@/utils/supabase/server/products';
 
 /**
  * Home page with:
@@ -18,12 +18,12 @@ import { fetchProducts } from "@/utils/supabase/server/products";
  */
 export default async function HomePage() {
   return (
-    <div className="flex flex-col w-full gap-10 pb-16">
+    <div className="flex w-full flex-col gap-10 pb-16">
       <SearchBar />
 
       {/* Product Grid */}
-      <section className="container mx-auto p-1 max-w-7xl px-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <section className="container mx-auto max-w-7xl p-1 px-6">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           <Suspense fallback={<ProductGridLoading />}>
             <ProductGridServer />
           </Suspense>
@@ -41,7 +41,7 @@ export default async function HomePage() {
 
 const ProductGridServer = async () => {
   const { data: products } = await fetchProducts({
-    sort: { field: "current_price", order: "asc" },
+    sort: { field: 'current_price', order: 'asc' },
   });
 
   return (

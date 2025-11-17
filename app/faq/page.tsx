@@ -1,5 +1,5 @@
-import FaqPage from "@/components/pages/faq";
-import React from "react";
+import FaqPage from '@/components/pages/faq';
+import React from 'react';
 
 const page = () => {
   return (

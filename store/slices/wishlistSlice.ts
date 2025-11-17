@@ -10,6 +10,7 @@ export type WishlistSlice = {
 export const createWishlistSlice: StateCreator<WishlistSlice> = (set) => ({
   wishlist: [],
   addToWishlist: (item) => set((state) => ({ wishlist: [...state.wishlist, item] })),
-  removeFromWishlist: (item) => set((state) => ({ wishlist: state.wishlist.filter((i) => i !== item) })),
+  removeFromWishlist: (item) =>
+    set((state) => ({ wishlist: state.wishlist.filter((i) => i !== item) })),
   setWishlist: (items) => set({ wishlist: items }),
 });

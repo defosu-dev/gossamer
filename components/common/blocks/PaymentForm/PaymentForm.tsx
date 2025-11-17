@@ -1,33 +1,26 @@
 // components/PaymentForm.tsx
-"use client";
+'use client';
 
-import { useState } from "react";
-import { loadStripe } from "@stripe/stripe-js";
-import {
-  Elements,
-  CardElement,
-  useStripe,
-  useElements,
-} from "@stripe/react-stripe-js";
-import { useAuth } from "@/hooks";
-import { Loader2 } from "lucide-react";
+import { useState } from 'react';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { useAuth } from '@/hooks';
+import { Loader2 } from 'lucide-react';
 
-const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
-);
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
 const FIXED_AMOUNT = 50; // $50.00
 
 const CARD_ELEMENT_OPTIONS = {
   style: {
     base: {
-      fontSize: "16px",
-      color: "#1f2937",
-      fontFamily: "ui-sans-serif, system-ui, sans-serif",
-      "::placeholder": { color: "#9ca3af" },
-      lineHeight: "1.5",
+      fontSize: '16px',
+      color: '#1f2937',
+      fontFamily: 'ui-sans-serif, system-ui, sans-serif',
+      '::placeholder': { color: '#9ca3af' },
+      lineHeight: '1.5',
     },
-    invalid: { color: "#dc2626", iconColor: "#dc2626" },
+    invalid: { color: '#dc2626', iconColor: '#dc2626' },
   },
   hidePostalCode: true,
 };
@@ -53,9 +46,9 @@ const CheckoutForm = () => {
     setSuccess(false);
 
     try {
-      const res = await fetch("/api/create-payment-intent", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const res = await fetch('/api/create-payment-intent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           amount: FIXED_AMOUNT,
           userId: user.id,
@@ -65,7 +58,7 @@ const CheckoutForm = () => {
 
       if (!res.ok) {
         const err = await res.json();
-        throw new Error(err.error || "Payment failed");
+        throw new Error(err.error || 'Payment failed');
       }
 
       const { clientSecret } = await res.json();
@@ -75,7 +68,7 @@ const CheckoutForm = () => {
       });
 
       if (result.error) {
-        setError(result.error.message || "Payment failed");
+        setError(result.error.message || 'Payment failed');
       } else {
         setSuccess(true);
       }
@@ -87,42 +80,36 @@ const CheckoutForm = () => {
   };
 
   if (!user) {
-    return (
-      <p className="text-red-500 text-center">You must be logged in to pay</p>
-    );
+    return <p className="text-center text-red-500">You must be logged in to pay</p>;
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 w-full max-w-md mx-auto">
+    <form onSubmit={handleSubmit} className="mx-auto w-full max-w-md space-y-6">
       {/* Сума */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Amount
-        </label>
-        <div className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-lg font-semibold text-gray-900">
+        <label className="mb-1 block text-sm font-medium text-gray-700">Amount</label>
+        <div className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-lg font-semibold text-gray-900">
           ${FIXED_AMOUNT.toFixed(2)}
         </div>
       </div>
 
       {/* Картка */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Card Details
-        </label>
-        <div className="p-4 border border-gray-300 rounded-lg bg-white focus-within:border-neutral-500 focus-within:ring-2 focus-within:ring-neutral-200 transition-all">
+        <label className="mb-1 block text-sm font-medium text-gray-700">Card Details</label>
+        <div className="rounded-lg border border-gray-300 bg-white p-4 transition-all focus-within:border-neutral-500 focus-within:ring-2 focus-within:ring-neutral-200">
           <CardElement options={CARD_ELEMENT_OPTIONS} />
         </div>
       </div>
 
       {/* Помилки */}
       {error && (
-        <p className="text-sm text-red-600 bg-red-50 p-3 rounded-lg border border-red-200">
+        <p className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-600">
           {error}
         </p>
       )}
 
       {success && (
-        <p className="text-sm text-green-600 bg-green-50 p-3 rounded-lg border border-green-200">
+        <p className="rounded-lg border border-green-200 bg-green-50 p-3 text-sm text-green-600">
           Payment successful!
         </p>
       )}
@@ -130,7 +117,7 @@ const CheckoutForm = () => {
       <button
         type="submit"
         disabled={!stripe || loading}
-        className="w-full py-3 bg-neutral-900 text-white rounded-full font-semibold disabled:opacity-50 flex items-center justify-center gap-2 transition-all hover:shadow-lg"
+        className="flex w-full items-center justify-center gap-2 rounded-full bg-neutral-900 py-3 font-semibold text-white transition-all hover:shadow-lg disabled:opacity-50"
       >
         {loading ? (
           <>

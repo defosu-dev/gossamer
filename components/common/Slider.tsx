@@ -1,10 +1,8 @@
-"use client";
+'use client';
 
-import React, { useRef } from "react";
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import CategoryCard, {
-  Category,
-} from "../pages/home/sections/explorecurated/CategoryCard";
+import React, { useRef } from 'react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+import CategoryCard, { Category } from '../pages/home/sections/explorecurated/CategoryCard';
 
 type CategorySliderProps = {
   categories: Category[];
@@ -13,43 +11,40 @@ type CategorySliderProps = {
 const Slider = ({ categories }: CategorySliderProps) => {
   const sliderRef = useRef<HTMLDivElement>(null);
 
-  const scroll = (direction: "left" | "right") => {
+  const scroll = (direction: 'left' | 'right') => {
     if (sliderRef.current) {
       const cardWidth = 300;
       sliderRef.current.scrollBy({
-        left: direction === "left" ? -cardWidth : cardWidth,
-        behavior: "smooth",
+        left: direction === 'left' ? -cardWidth : cardWidth,
+        behavior: 'smooth',
       });
     }
   };
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-8">
-        <h2 className="text-2xl md:text-3xl font-bold leading-tight">
+      <div className="mb-8 flex items-center justify-between">
+        <h2 className="text-2xl leading-tight font-bold md:text-3xl">
           Explore our curated categories <br /> and transform your living spaces
         </h2>
         <div className="flex gap-2">
           <button
-            onClick={() => scroll("left")}
-            className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition"
+            onClick={() => scroll('left')}
+            className="rounded-full bg-gray-100 p-2 transition hover:bg-gray-200"
           >
-            <ArrowLeft className="w-5 h-5" />
+            <ArrowLeft className="h-5 w-5" />
           </button>
           <button
-            onClick={() => scroll("right")}
-            className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition"
+            onClick={() => scroll('right')}
+            className="rounded-full bg-gray-100 p-2 transition hover:bg-gray-200"
           >
-            <ArrowRight className="w-5 h-5" />
+            <ArrowRight className="h-5 w-5" />
           </button>
         </div>
       </div>
 
       {/* Cards */}
-      <div
-        ref={sliderRef}
-        className="flex gap-6 overflow-x-hidden scroll-smooth"
-      >
+      <div ref={sliderRef} className="flex gap-6 overflow-x-hidden scroll-smooth">
         {categories.map((cat, idx) => (
           <CategoryCard key={idx} {...cat} />
         ))}

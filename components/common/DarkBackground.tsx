@@ -1,4 +1,4 @@
-import { cn } from "@/utils/cn";
+import { cn } from '@/utils/cn';
 
 type DarkBackgroundProps = {
   /** Whether the backdrop is visible */
@@ -24,11 +24,9 @@ const DarkBackground = ({ open, onClose }: DarkBackgroundProps) => {
     <div
       role="presentation"
       className={cn(
-        "fixed inset-0 z-40 bg-black/30",
-        "transition-opacity duration-300",
-        open
-          ? "opacity-100 pointer-events-auto"
-          : "opacity-0 pointer-events-none"
+        'fixed inset-0 z-40 bg-black/30',
+        'transition-opacity duration-300',
+        open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
       )}
       onClick={onClose}
       aria-hidden={!open}

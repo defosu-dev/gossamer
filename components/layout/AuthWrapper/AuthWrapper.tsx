@@ -1,5 +1,5 @@
-import { IAuthWrapper } from "./types";
-import React from "react";
+import { IAuthWrapper } from './types';
+import React from 'react';
 
 const AuthWrapper = ({ children }: IAuthWrapper) => {
   return (

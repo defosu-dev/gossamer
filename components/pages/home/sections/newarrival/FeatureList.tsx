@@ -1,5 +1,5 @@
-import React from "react";
-import FeatureItem, { FeatureItemProps } from "./FeatureItem";
+import React from 'react';
+import FeatureItem, { FeatureItemProps } from './FeatureItem';
 
 type FeatureListProps = {
   items: FeatureItemProps[];

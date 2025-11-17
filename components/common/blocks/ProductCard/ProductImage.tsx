@@ -1,4 +1,4 @@
-import { ImageWithFallback } from "@/components/common/ImageWithFallback";
+import { ImageWithFallback } from '@/components/common/ImageWithFallback';
 
 type ProductImageProps = {
   src: string;
@@ -8,7 +8,7 @@ type ProductImageProps = {
 
 const ProductImage = ({ src, alt, priority = false }: ProductImageProps) => {
   return (
-    <div className="relative w-full aspect-square rounded-lg overflow-hidden">
+    <div className="relative aspect-square w-full overflow-hidden rounded-lg">
       <ImageWithFallback
         src={src}
         alt={alt}

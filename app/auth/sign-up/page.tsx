@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import LogoIcon from "@/components/common/LogoIcon";
-import { useAuth } from "@/hooks";
-import { cn } from "@/utils/cn";
-import { useForm } from "@tanstack/react-form";
-import { Eye, EyeOff, Loader2, Lock, Mail, UserRound } from "lucide-react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
-import { z } from "zod";
+import LogoIcon from '@/components/common/LogoIcon';
+import { useAuth } from '@/hooks';
+import { cn } from '@/utils/cn';
+import { useForm } from '@tanstack/react-form';
+import { Eye, EyeOff, Loader2, Lock, Mail, UserRound } from 'lucide-react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import React, { useState } from 'react';
+import { z } from 'zod';
 
 /**
  * Zod schema for sign-up form validation.
@@ -16,17 +16,17 @@ import { z } from "zod";
 const signUpSchema = z.object({
   fullName: z
     .string()
-    .min(2, "Full name must be at least 2 characters")
-    .max(50, "Full name too long"),
-  email: z.string().email("Invalid email address"),
+    .min(2, 'Full name must be at least 2 characters')
+    .max(50, 'Full name too long'),
+  email: z.string().email('Invalid email address'),
   password: z
     .string()
-    .min(8, "Password must be at least 8 characters")
-    .regex(/[A-Z]/, "Must contain at least one uppercase letter")
-    .regex(/[a-z]/, "Must contain at least one lowercase letter")
-    .regex(/[0-9]/, "Must contain at least one number"),
+    .min(8, 'Password must be at least 8 characters')
+    .regex(/[A-Z]/, 'Must contain at least one uppercase letter')
+    .regex(/[a-z]/, 'Must contain at least one lowercase letter')
+    .regex(/[0-9]/, 'Must contain at least one number'),
   agree: z.boolean().refine((val) => val === true, {
-    message: "You must accept the terms and conditions",
+    message: 'You must accept the terms and conditions',
   }),
 });
 
@@ -41,9 +41,9 @@ const SignUpPage = () => {
 
   const form = useForm({
     defaultValues: {
-      fullName: "",
-      email: "",
-      password: "",
+      fullName: '',
+      email: '',
+      password: '',
       agree: false,
     },
     validators: {
@@ -52,7 +52,7 @@ const SignUpPage = () => {
     onSubmit: async ({ value }) => {
       try {
         await signUp(value.email, value.password, value.fullName).then(() => {
-          router.push("/auth/sign-in");
+          router.push('/auth/sign-in');
         });
       } catch (err) {
         setError((err as Error).message);
@@ -68,31 +68,24 @@ const SignUpPage = () => {
         form.handleSubmit();
       }}
       className={cn(
-        "min-w-xs w-full max-w-md md:max-w-3xl",
-        "border border-neutral-100 rounded-3xl p-2 shadow-sm",
-        "grid grid-cols-1 gap-4 md:grid-cols-11"
+        'w-full max-w-md min-w-xs md:max-w-3xl',
+        'rounded-3xl border border-neutral-100 p-2 shadow-sm',
+        'grid grid-cols-1 gap-4 md:grid-cols-11'
       )}
       noValidate
     >
       {/* Left Column */}
-      <div
-        className={cn(
-          "col-span-full md:col-span-6",
-          "p-4 flex flex-col items-center"
-        )}
-      >
+      <div className={cn('col-span-full md:col-span-6', 'flex flex-col items-center p-4')}>
         <LogoIcon className="size-12" />
-        <h2 className={cn("text-3xl font-bold", "mt-4")}>Ready to Join</h2>
-        <p className={cn("text-sm text-neutral-800", "mt-2")}>
-          Are you ready to join us?
-        </p>
+        <h2 className={cn('text-3xl font-bold', 'mt-4')}>Ready to Join</h2>
+        <p className={cn('text-sm text-neutral-800', 'mt-2')}>Are you ready to join us?</p>
 
         {/* Full Name */}
         <form.Field name="fullName">
           {(field) => (
             <>
-              <div className={cn("group relative mt-8", "w-full")}>
-                <UserRound className="size-4.5 absolute top-1/2 left-3 -translate-y-1/2 text-neutral-800" />
+              <div className={cn('group relative mt-8', 'w-full')}>
+                <UserRound className="absolute top-1/2 left-3 size-4.5 -translate-y-1/2 text-neutral-800" />
                 <input
                   type="text"
                   placeholder="Your full name"
@@ -100,24 +93,19 @@ const SignUpPage = () => {
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                   className={cn(
-                    "text-sm text-neutral-900 placeholder-neutral-700 font-medium",
-                    "w-full h-full pl-9 py-3 rounded-full border",
+                    'text-sm font-medium text-neutral-900 placeholder-neutral-700',
+                    'h-full w-full rounded-full border py-3 pl-9',
                     field.state.meta.errors.length
-                      ? "border-red-500 focus:ring-red-500"
-                      : "border-neutral-300 focus:ring-neutral-500",
-                    "focus:outline-none focus:ring-2 focus:border-transparent",
-                    "transition-all duration-200"
+                      ? 'border-red-500 focus:ring-red-500'
+                      : 'border-neutral-300 focus:ring-neutral-500',
+                    'focus:border-transparent focus:ring-2 focus:outline-none',
+                    'transition-all duration-200'
                   )}
                 />
               </div>
               {field.state.meta.errors.map((error, index) => (
-                <p
-                  key={index}
-                  className="text-xs text-red-500 mt-1 ml-2 w-full"
-                >
-                  {typeof error === "string"
-                    ? error
-                    : error?.message ?? "Invalid password"}
+                <p key={index} className="mt-1 ml-2 w-full text-xs text-red-500">
+                  {typeof error === 'string' ? error : (error?.message ?? 'Invalid password')}
                 </p>
               ))}
             </>
@@ -128,8 +116,8 @@ const SignUpPage = () => {
         <form.Field name="email">
           {(field) => (
             <>
-              <div className={cn("group relative mt-3.5", "w-full")}>
-                <Mail className="size-4.5 absolute top-1/2 left-3 -translate-y-1/2 text-neutral-800" />
+              <div className={cn('group relative mt-3.5', 'w-full')}>
+                <Mail className="absolute top-1/2 left-3 size-4.5 -translate-y-1/2 text-neutral-800" />
                 <input
                   type="email"
                   placeholder="Your email"
@@ -137,24 +125,19 @@ const SignUpPage = () => {
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                   className={cn(
-                    "text-sm text-neutral-900 placeholder-neutral-700 font-medium",
-                    "w-full h-full pl-9 py-3 rounded-full border",
+                    'text-sm font-medium text-neutral-900 placeholder-neutral-700',
+                    'h-full w-full rounded-full border py-3 pl-9',
                     field.state.meta.errors.length
-                      ? "border-red-500 focus:ring-red-500"
-                      : "border-neutral-300 focus:ring-neutral-500",
-                    "focus:outline-none focus:ring-2 focus:border-transparent",
-                    "transition-all duration-200"
+                      ? 'border-red-500 focus:ring-red-500'
+                      : 'border-neutral-300 focus:ring-neutral-500',
+                    'focus:border-transparent focus:ring-2 focus:outline-none',
+                    'transition-all duration-200'
                   )}
                 />
               </div>
               {field.state.meta.errors.map((error, index) => (
-                <p
-                  key={index}
-                  className="text-xs text-red-500 mt-1 ml-2 w-full"
-                >
-                  {typeof error === "string"
-                    ? error
-                    : error?.message ?? "Invalid password"}
+                <p key={index} className="mt-1 ml-2 w-full text-xs text-red-500">
+                  {typeof error === 'string' ? error : (error?.message ?? 'Invalid password')}
                 </p>
               ))}
             </>
@@ -165,47 +148,35 @@ const SignUpPage = () => {
         <form.Field name="password">
           {(field) => (
             <>
-              <div className={cn("group relative mt-3.5", "w-full")}>
-                <Lock className="size-4.5 absolute top-1/2 left-3 -translate-y-1/2 text-neutral-800" />
+              <div className={cn('group relative mt-3.5', 'w-full')}>
+                <Lock className="absolute top-1/2 left-3 size-4.5 -translate-y-1/2 text-neutral-800" />
                 <input
-                  type={showPassword ? "text" : "password"}
+                  type={showPassword ? 'text' : 'password'}
                   placeholder="Your password"
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                   className={cn(
-                    "text-sm text-neutral-900 placeholder-neutral-700 font-medium",
-                    "w-full h-full pl-9 pr-12 py-3 rounded-full border",
+                    'text-sm font-medium text-neutral-900 placeholder-neutral-700',
+                    'h-full w-full rounded-full border py-3 pr-12 pl-9',
                     field.state.meta.errors.length
-                      ? "border-red-500 focus:ring-red-500"
-                      : "border-neutral-300 focus:ring-neutral-500",
-                    "focus:outline-none focus:ring-2 focus:border-transparent",
-                    "transition-all duration-200"
+                      ? 'border-red-500 focus:ring-red-500'
+                      : 'border-neutral-300 focus:ring-neutral-500',
+                    'focus:border-transparent focus:ring-2 focus:outline-none',
+                    'transition-all duration-200'
                   )}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className={cn(
-                    "absolute top-1/2 right-3 -translate-y-1/2",
-                    "text-neutral-800"
-                  )}
+                  className={cn('absolute top-1/2 right-3 -translate-y-1/2', 'text-neutral-800')}
                 >
-                  {showPassword ? (
-                    <EyeOff className="size-4.5" />
-                  ) : (
-                    <Eye className="size-4.5" />
-                  )}
+                  {showPassword ? <EyeOff className="size-4.5" /> : <Eye className="size-4.5" />}
                 </button>
               </div>
               {field.state.meta.errors.map((error, index) => (
-                <p
-                  key={index}
-                  className="text-xs text-red-500 mt-1 ml-2 w-full"
-                >
-                  {typeof error === "string"
-                    ? error
-                    : error?.message ?? "Invalid password"}
+                <p key={index} className="mt-1 ml-2 w-full text-xs text-red-500">
+                  {typeof error === 'string' ? error : (error?.message ?? 'Invalid password')}
                 </p>
               ))}
             </>
@@ -215,8 +186,8 @@ const SignUpPage = () => {
         {/* Terms Checkbox */}
         <form.Field name="agree">
           {(field) => (
-            <div className="flex flex-col w-full mt-4">
-              <div className="w-full flex items-baseline flex-nowrap">
+            <div className="mt-4 flex w-full flex-col">
+              <div className="flex w-full flex-nowrap items-baseline">
                 <input
                   type="checkbox"
                   checked={field.state.value}
@@ -224,18 +195,14 @@ const SignUpPage = () => {
                   onBlur={field.handleBlur}
                   className="cursor-pointer"
                 />
-                <label className="ml-2 text-sm text-neutral-600 font-medium">
-                  I agree to the Gossamer terms and conditions and the privacy
-                  policy
+                <label className="ml-2 text-sm font-medium text-neutral-600">
+                  I agree to the Gossamer terms and conditions and the privacy policy
                 </label>
               </div>
               {field.state.meta.isTouched &&
                 field.state.meta.errors.map((error, index) => (
-                  <p
-                    key={index}
-                    className="text-xs text-red-500 mt-1 ml-2 w-full"
-                  >
-                    {typeof error === "string" ? error : error?.message}
+                  <p key={index} className="mt-1 ml-2 w-full text-xs text-red-500">
+                    {typeof error === 'string' ? error : error?.message}
                   </p>
                 ))}
             </div>
@@ -247,14 +214,14 @@ const SignUpPage = () => {
           type="submit"
           disabled={loading || form.state.isSubmitting}
           className={cn(
-            "w-full mt-6",
-            "bg-neutral-900 text-white font-semibold",
-            "py-3 rounded-full",
-            "hover:shadow-lg cursor-pointer",
-            "active:shadow-inner active:scale-95",
-            "transition-all duration-200",
-            "disabled:opacity-50 disabled:cursor-not-allowed",
-            "flex items-center justify-center gap-2"
+            'mt-6 w-full',
+            'bg-neutral-900 font-semibold text-white',
+            'rounded-full py-3',
+            'cursor-pointer hover:shadow-lg',
+            'active:scale-95 active:shadow-inner',
+            'transition-all duration-200',
+            'disabled:cursor-not-allowed disabled:opacity-50',
+            'flex items-center justify-center gap-2'
           )}
         >
           {loading || form.state.isSubmitting ? (
@@ -263,16 +230,16 @@ const SignUpPage = () => {
               Creating account...
             </>
           ) : (
-            "Sign Up"
+            'Sign Up'
           )}
         </button>
-        {error && <p className="text-sm text-red-600 mt-2 w-full">{error}</p>}
+        {error && <p className="mt-2 w-full text-sm text-red-600">{error}</p>}
 
         {/* Divider */}
-        <div className="flex items-center gap-2 w-full mt-6">
-          <div className="w-full h-px bg-neutral-200" />
-          <span className="text-sm text-neutral-400 font-semibold">OR</span>
-          <div className="w-full h-px bg-neutral-200" />
+        <div className="mt-6 flex w-full items-center gap-2">
+          <div className="h-px w-full bg-neutral-200" />
+          <span className="text-sm font-semibold text-neutral-400">OR</span>
+          <div className="h-px w-full bg-neutral-200" />
         </div>
 
         {/* Google */}
@@ -281,13 +248,13 @@ const SignUpPage = () => {
           onClick={signInWithGoogle}
           disabled={loading}
           className={cn(
-            "w-full mt-6",
-            "border border-neutral-300 rounded-full",
-            "py-3 flex items-center justify-center gap-3",
-            "hover:shadow-lg cursor-pointer",
-            "active:scale-95",
-            "transition-all duration-300",
-            "disabled:opacity-50"
+            'mt-6 w-full',
+            'rounded-full border border-neutral-300',
+            'flex items-center justify-center gap-3 py-3',
+            'cursor-pointer hover:shadow-lg',
+            'active:scale-95',
+            'transition-all duration-300',
+            'disabled:opacity-50'
           )}
         >
           <svg height="24" viewBox="0 0 24 24" width="24">
@@ -309,40 +276,24 @@ const SignUpPage = () => {
             />
             <path d="M1 1h22v22H1z" fill="none" />
           </svg>
-          <span className="text-neutral-900 font-semibold">
-            Continue with Google
-          </span>
+          <span className="font-semibold text-neutral-900">Continue with Google</span>
         </button>
 
         {/* Sign In Link */}
-        <p className={cn("text-sm text-neutral-500", "mt-4")}>
-          Have an account?{" "}
-          <Link
-            href="/auth/sign-in"
-            className="text-sm text-neutral-800 font-semibold text-nowrap"
-          >
+        <p className={cn('text-sm text-neutral-500', 'mt-4')}>
+          Have an account?{' '}
+          <Link href="/auth/sign-in" className="text-sm font-semibold text-nowrap text-neutral-800">
             Sign In
           </Link>
         </p>
 
-        <p
-          className={cn(
-            "text-sm text-neutral-500 leading-6",
-            "mt-6 text-center"
-          )}
-        >
-          By signing up you agree to our <br />{" "}
-          <Link
-            href="#"
-            className="text-sm text-neutral-800 font-bold text-nowrap"
-          >
+        <p className={cn('text-sm leading-6 text-neutral-500', 'mt-6 text-center')}>
+          By signing up you agree to our <br />{' '}
+          <Link href="#" className="text-sm font-bold text-nowrap text-neutral-800">
             Terms
-          </Link>{" "}
-          and{" "}
-          <Link
-            href="#"
-            className="text-sm text-neutral-800 font-semibold text-nowrap"
-          >
+          </Link>{' '}
+          and{' '}
+          <Link href="#" className="text-sm font-semibold text-nowrap text-neutral-800">
             Privacy Policy
           </Link>
         </p>
@@ -350,10 +301,7 @@ const SignUpPage = () => {
 
       {/* Right Column (decorative) */}
       <div
-        className={cn(
-          "hidden md:block md:col-span-5",
-          "p-4 bg-neutral-800 rounded-2xl shadow"
-        )}
+        className={cn('hidden md:col-span-5 md:block', 'rounded-2xl bg-neutral-800 p-4 shadow')}
       />
     </form>
   );

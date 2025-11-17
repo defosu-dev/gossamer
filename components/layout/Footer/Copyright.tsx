@@ -1,15 +1,15 @@
-import React from "react";
-import Link from "next/link";
+import React from 'react';
+import Link from 'next/link';
 
 const Copyright = () => {
   return (
-    <div className="border-t px-4 md:px-16 py-4 flex flex-col md:flex-row justify-between items-center text-sm text-zinc-400">
+    <div className="flex flex-col items-center justify-between border-t px-4 py-4 text-sm text-zinc-400 md:flex-row md:px-16">
       <span>Copyright © 2025 Grandexh-Defosu. All Rights Reserved.</span>
-      <div className="flex gap-4 mt-2 md:mt-0">
-        <Link href="#" className="hover:text-black transition">
+      <div className="mt-2 flex gap-4 md:mt-0">
+        <Link href="#" className="transition hover:text-black">
           Terms of Service
         </Link>
-        <a href="#" className="hover:text-black transition">
+        <a href="#" className="transition hover:text-black">
           Privacy Policy
         </a>
       </div>

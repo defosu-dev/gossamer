@@ -1,4 +1,4 @@
-import { supabaseBrowser } from "../supabaseBrowser";
+import { supabaseBrowser } from '../supabaseBrowser';
 
 /**
  * ===============================================================
@@ -29,29 +29,29 @@ import { supabaseBrowser } from "../supabaseBrowser";
 export const fetchWishlist = async (userId: string): Promise<string[]> => {
   // Step 1: Fetch the wishlist record for this user
   const { data: wishlist, error: wishlistError } = await supabaseBrowser
-    .from("wishlists")
-    .select("id")
-    .eq("user_id", userId)
+    .from('wishlists')
+    .select('id')
+    .eq('user_id', userId)
     .single();
 
   // If an error occurs (other than "not found" - PGRST116), throw it
-  if (wishlistError && wishlistError.code !== "PGRST116") throw wishlistError;
+  if (wishlistError && wishlistError.code !== 'PGRST116') throw wishlistError;
 
   // If no wishlist exists yet, return an empty array
   if (!wishlist) return [];
 
   // Step 2: Fetch all variant IDs from wishlist_items for this wishlist
   const { data: items, error: itemsError } = await supabaseBrowser
-    .from("wishlist_items")
-    .select("variant_id")
-    .eq("wishlist_id", wishlist.id);
+    .from('wishlist_items')
+    .select('variant_id')
+    .eq('wishlist_id', wishlist.id);
 
   if (itemsError) throw itemsError;
 
   // Filter out nulls and ensure the result is strictly string[]
   return (items ?? [])
     .map((i) => i.variant_id)
-    .filter((id): id is string => typeof id === "string");
+    .filter((id): id is string => typeof id === 'string');
 };
 
 /**
@@ -72,9 +72,9 @@ export const fetchWishlist = async (userId: string): Promise<string[]> => {
 export const updateWishlist = async (userId: string, variantIds: string[]) => {
   // Step 1: Ensure wishlist exists or create it
   const { data: wishlist, error: wishlistError } = await supabaseBrowser
-    .from("wishlists")
-    .upsert({ user_id: userId }, { onConflict: "user_id" })
-    .select("id")
+    .from('wishlists')
+    .upsert({ user_id: userId }, { onConflict: 'user_id' })
+    .select('id')
     .single();
 
   if (wishlistError) throw wishlistError;
@@ -83,22 +83,20 @@ export const updateWishlist = async (userId: string, variantIds: string[]) => {
 
   // Step 2: Remove existing wishlist items for this user
   const { error: deleteError } = await supabaseBrowser
-    .from("wishlist_items")
+    .from('wishlist_items')
     .delete()
-    .eq("wishlist_id", wishlistId);
+    .eq('wishlist_id', wishlistId);
 
   if (deleteError) throw deleteError;
 
   // Step 3: Insert the new wishlist items
   if (variantIds.length > 0) {
-    const { error: insertError } = await supabaseBrowser
-      .from("wishlist_items")
-      .insert(
-        variantIds.map((variant_id) => ({
-          wishlist_id: wishlistId,
-          variant_id,
-        }))
-      );
+    const { error: insertError } = await supabaseBrowser.from('wishlist_items').insert(
+      variantIds.map((variant_id) => ({
+        wishlist_id: wishlistId,
+        variant_id,
+      }))
+    );
 
     if (insertError) throw insertError;
   }

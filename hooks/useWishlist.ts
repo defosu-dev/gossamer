@@ -7,13 +7,13 @@ import { useEffect } from 'react';
 
 /**
  * Custom hook for managing the user's wishlist.
- * 
+ *
  * - Returns data from Zustand store (prevents UI flickering).
  * - Synchronizes wishlist with Supabase via React Query.
  * - Automatically loads wishlist on user authentication.
  * - Local mutations (add/remove) are instant in UI.
  * - Changes are persisted to Supabase in the background.
- * 
+ *
  * @returns {Object} Wishlist state and actions
  * @returns {string[]} .wishlist - Current wishlist items (from Zustand)
  * @returns {(item: string) => void} .addToWishlist - Add item to wishlist
@@ -26,7 +26,12 @@ export const useWishlist = () => {
   const { user, loading: authLoading } = useAuth();
   const userId = user?.id;
   const queryClient = useQueryClient();
-  const { wishlist, setWishlist, addToWishlist: addLocal, removeFromWishlist: removeLocal } = useStore();
+  const {
+    wishlist,
+    setWishlist,
+    addToWishlist: addLocal,
+    removeFromWishlist: removeLocal,
+  } = useStore();
 
   const { data, isLoading: queryLoading } = useQuery({
     queryKey: ['wishlist', userId],

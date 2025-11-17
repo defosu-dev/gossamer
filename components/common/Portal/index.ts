@@ -1,2 +1,2 @@
-export { default } from "./Portal";
-export type { IPortal } from "./Portal";
+export { default } from './Portal';
+export type { IPortal } from './Portal';

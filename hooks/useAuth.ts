@@ -1,12 +1,7 @@
-import { supabaseBrowser } from "@/utils/supabase/supabaseBrowser";
-import { useEffect, useState } from "react";
-import { User } from "@supabase/supabase-js";
-import {
-  signUp,
-  signIn,
-  signInWithGoogle,
-  signOut,
-} from "@/utils/supabase/client/auth";
+import { supabaseBrowser } from '@/utils/supabase/supabaseBrowser';
+import { useEffect, useState } from 'react';
+import { User } from '@supabase/supabase-js';
+import { signUp, signIn, signInWithGoogle, signOut } from '@/utils/supabase/client/auth';
 
 /**
  * Custom hook for Supabase authentication.
@@ -37,11 +32,7 @@ export const useAuth = () => {
     };
   }, []);
 
-  const handleSignUp = async (
-    email: string,
-    password: string,
-    fullName: string
-  ): Promise<void> => {
+  const handleSignUp = async (email: string, password: string, fullName: string): Promise<void> => {
     setLoading(true);
     try {
       await signUp(email, password, fullName);
@@ -50,10 +41,7 @@ export const useAuth = () => {
     }
   };
 
-  const handleSignIn = async (
-    email: string,
-    password: string
-  ): Promise<void> => {
+  const handleSignIn = async (email: string, password: string): Promise<void> => {
     setLoading(true);
     try {
       await signIn(email, password);

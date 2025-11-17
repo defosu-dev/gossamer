@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export const FaqCard = ({
   icon,
@@ -9,11 +9,11 @@ export const FaqCard = ({
   title: string;
   text: string;
 }) => (
-  <div className="p-6 rounded-xl shadow-sm bg-white">
-    <div className="w-10 h-10 flex items-center justify-center bg-gray-100 rounded-md mb-4">
+  <div className="rounded-xl bg-white p-6 shadow-sm">
+    <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-md bg-gray-100">
       {icon}
     </div>
-    <h3 className="font-semibold mb-2">{title}</h3>
+    <h3 className="mb-2 font-semibold">{title}</h3>
     <p className="text-sm text-gray-600">{text}</p>
   </div>
 );

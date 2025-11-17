@@ -1,10 +1,7 @@
-"use client";
-import { useState } from "react";
-import Button from "@/components/common/Button";
-import {
-  ImageWithFallback,
-  ImageWithFallbackProps,
-} from "@/components/common/ImageWithFallback";
+'use client';
+import { useState } from 'react';
+import Button from '@/components/common/Button';
+import { ImageWithFallback, ImageWithFallbackProps } from '@/components/common/ImageWithFallback';
 
 export default function OrderBar({ src, alt }: ImageWithFallbackProps) {
   const [quantity, setQuantity] = useState(1);
@@ -16,19 +13,19 @@ export default function OrderBar({ src, alt }: ImageWithFallbackProps) {
   const handleIncrease = () => setQuantity((q) => q + 1); // для теста
 
   return (
-    <div className="max-w-sm w-full rounded-2xl border border-gray-200 p-5 shadow-sm bg-white">
-      <h2 className="text-lg font-semibold mb-3">Organize adding to cart</h2>
+    <div className="w-full max-w-sm rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+      <h2 className="mb-3 text-lg font-semibold">Organize adding to cart</h2>
 
       <div className="flex items-center gap-4 p-2">
-        <div className=" flex min-w-10 h-10 rounded-lg overflow-hidden aspect-square ">
+        <div className="flex aspect-square h-10 min-w-10 overflow-hidden rounded-lg">
           <ImageWithFallback src={src} alt={alt} />
         </div>
-        <p className="font-medium text-sm text-gray-800 w-full">Marshall</p>
+        <p className="w-full text-sm font-medium text-gray-800">Marshall</p>
       </div>
 
       {/* Quantity controls */}
-      <div className="flex items-center mt-4">
-        <div className="flex items-center border rounded-full px-3 py-1 w-fit">
+      <div className="mt-4 flex items-center">
+        <div className="flex w-fit items-center rounded-full border px-3 py-1">
           <button
             onClick={handleDecrease}
             className="px-2 text-lg font-semibold text-gray-600 hover:text-black"
@@ -43,16 +40,14 @@ export default function OrderBar({ src, alt }: ImageWithFallbackProps) {
             +
           </button>
         </div>
-        <p className="text-xs text-gray-500 pl-5">Stock: {stock}</p>
+        <p className="pl-5 text-xs text-gray-500">Stock: {stock}</p>
       </div>
 
       {/* Price */}
       <div className="mt-5">
         <p className="text-sm text-gray-500">Subtotal:</p>
         <div className="flex items-baseline gap-2">
-          <p className="text-2xl font-semibold">
-            ${(price * quantity).toFixed(2)}
-          </p>
+          <p className="text-2xl font-semibold">${(price * quantity).toFixed(2)}</p>
           <p className="text-sm text-gray-400 line-through">${oldPrice}</p>
         </div>
       </div>

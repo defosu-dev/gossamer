@@ -1,6 +1,6 @@
-import PaymentHistory from "@/components/common/blocks/PaymentHistory/PaymentHistory";
-import Container from "@/components/common/Container";
-import PaymentForm from "../../../components/common/blocks/PaymentForm/PaymentForm";
+import PaymentHistory from '@/components/common/blocks/PaymentHistory/PaymentHistory';
+import Container from '@/components/common/Container';
+import PaymentForm from '../../../components/common/blocks/PaymentForm/PaymentForm';
 
 const page = () => {
   return (

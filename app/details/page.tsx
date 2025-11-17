@@ -1,5 +1,5 @@
-import DetailsPage from "@/components/pages/details/DetailsPage";
-import React from "react";
+import DetailsPage from '@/components/pages/details/DetailsPage';
+import React from 'react';
 
 const page = () => {
   return (

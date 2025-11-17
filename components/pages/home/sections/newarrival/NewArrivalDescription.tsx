@@ -1,11 +1,11 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode } from 'react';
 
 type DescriptionProps = {
   children: ReactNode;
 };
 
 const NewArrivalDescription = ({ children }: DescriptionProps) => {
-  return <p className="text-gray-500 leading-relaxed mb-8">{children}</p>;
+  return <p className="mb-8 leading-relaxed text-gray-500">{children}</p>;
 };
 
 export default NewArrivalDescription;

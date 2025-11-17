@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react';
 
-import { ImageWithFallback } from "@/components/common/ImageWithFallback";
+import { ImageWithFallback } from '@/components/common/ImageWithFallback';
 type ImageBlockProps = {
   src: string;
   alt: string;
 };
 const ProductGallery = ({ src, alt }: ImageBlockProps) => {
   return (
-    <div className="bg-gray-50 rounded-2xl p-4">
+    <div className="rounded-2xl bg-gray-50 p-4">
       {/* Main image */}
-      <div className="relative bg-white rounded-2xl overflow-hidden mb-4 flex justify-center items-center">
+      <div className="relative mb-4 flex items-center justify-center overflow-hidden rounded-2xl bg-white">
         <ImageWithFallback
           src={src}
           alt={alt}
@@ -17,7 +17,7 @@ const ProductGallery = ({ src, alt }: ImageBlockProps) => {
           height={400}
           className="object-contain"
         />
-        <span className="absolute top-3 right-3 bg-white border text-gray-700 text-sm px-3 py-1 rounded-full">
+        <span className="absolute top-3 right-3 rounded-full border bg-white px-3 py-1 text-sm text-gray-700">
           Music
         </span>
       </div>
@@ -27,7 +27,7 @@ const ProductGallery = ({ src, alt }: ImageBlockProps) => {
         {[1, 2, 3, 4].map((i) => (
           <div
             key={i}
-            className="rounded-xl border border-gray-300 hover:border-gray-500 transition p-1"
+            className="rounded-xl border border-gray-300 p-1 transition hover:border-gray-500"
           >
             <ImageWithFallback
               src="/img/placeholder.png" // заглушка

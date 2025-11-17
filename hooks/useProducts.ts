@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import { fetchProducts } from "@/utils/supabase/client/products";
+import { useQuery } from '@tanstack/react-query';
+import { fetchProducts } from '@/utils/supabase/client/products';
 
 /**
  * Hook to fetch paginated, filtered, and sorted products.
@@ -15,15 +15,15 @@ export const useProducts = ({
   page = 1,
   limit = 20,
   filters = {},
-  sort = { field: "created_at", order: "desc" },
+  sort = { field: 'created_at', order: 'desc' },
 }: {
   page?: number;
   limit?: number;
   filters?: Record<string, string | number | boolean>;
-  sort?: { field: string; order: "asc" | "desc" };
+  sort?: { field: string; order: 'asc' | 'desc' };
 } = {}) =>
   useQuery({
-    queryKey: ["products", { page, limit, filters, sort }],
+    queryKey: ['products', { page, limit, filters, sort }],
     queryFn: () => fetchProducts({ page, limit, filters, sort }),
     placeholderData: (prev) => prev,
     staleTime: 60_000,

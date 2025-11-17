@@ -1,4 +1,4 @@
-import HomePage from "@/components/pages/home";
+import HomePage from '@/components/pages/home';
 
 const page = () => {
   return <HomePage />;

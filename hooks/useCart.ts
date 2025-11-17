@@ -1,10 +1,10 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { fetchCart, updateCart } from "@/utils/supabase/client/cart";
-import { getCartEnrichedProducts } from "@/utils/supabase/server/products";
-import { useAuth } from "./useAuth";
-import { useStore } from "@/store";
-import { useEffect, useMemo, useCallback, useRef } from "react";
-import { CartItem } from "@/store/slices/cartSlice";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { fetchCart, updateCart } from '@/utils/supabase/client/cart';
+import { getCartEnrichedProducts } from '@/utils/supabase/server/products';
+import { useAuth } from './useAuth';
+import { useStore } from '@/store';
+import { useEffect, useMemo, useCallback, useRef } from 'react';
+import { CartItem } from '@/store/slices/cartSlice';
 
 /**
  * Extended cart item that includes full product and variant details.
@@ -100,7 +100,7 @@ export const useCart = (): {
     error: cartError,
     refetch,
   } = useQuery({
-    queryKey: ["cart", userId],
+    queryKey: ['cart', userId],
     queryFn: () => fetchCart(userId!),
     enabled: isAuthenticated,
     staleTime: 5 * 60 * 1000, // 5 minutes
@@ -125,7 +125,7 @@ export const useCart = (): {
     isLoading: productsLoading,
     error: productsError,
   } = useQuery({
-    queryKey: ["cart-products", ...variantIds],
+    queryKey: ['cart-products', ...variantIds],
     queryFn: () => getCartEnrichedProducts(variantIds),
     enabled: variantIds.length > 0,
     staleTime: 10 * 60 * 1000, // 10 minutes
@@ -162,16 +162,14 @@ export const useCart = (): {
             description: variantData.product.description,
             created_at: variantData.product.created_at,
             category: variantData.product.category,
-            product_variants: (variantData.product.product_variants ?? []).map(
-              (v) => ({
-                id: v.id,
-                name: v.name,
-                sku: v.sku,
-                current_price: v.current_price,
-                old_price: v.old_price,
-                stock: v.stock,
-              })
-            ),
+            product_variants: (variantData.product.product_variants ?? []).map((v) => ({
+              id: v.id,
+              name: v.name,
+              sku: v.sku,
+              current_price: v.current_price,
+              old_price: v.old_price,
+              stock: v.stock,
+            })),
           },
         };
       })
@@ -182,10 +180,10 @@ export const useCart = (): {
   const { mutate: syncCart } = useMutation({
     mutationFn: (items: CartItem[]) => updateCart(userId!, items),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["cart", userId] });
+      queryClient.invalidateQueries({ queryKey: ['cart', userId] });
     },
     onError: (error) => {
-      console.error("Cart sync failed:", error);
+      console.error('Cart sync failed:', error);
     },
   });
 
@@ -249,15 +247,11 @@ export const useCart = (): {
   }, [setCart, isAuthenticated, syncCart]);
 
   // Calculate total items
-  const totalItems = useMemo(
-    () => localCart.reduce((sum, i) => sum + i.quantity, 0),
-    [localCart]
-  );
+  const totalItems = useMemo(() => localCart.reduce((sum, i) => sum + i.quantity, 0), [localCart]);
 
   // Calculate total price
   const totalPrice = useMemo(
-    () =>
-      enrichedCart.reduce((sum, i) => sum + i.variant.price * i.quantity, 0),
+    () => enrichedCart.reduce((sum, i) => sum + i.variant.price * i.quantity, 0),
     [enrichedCart]
   );
 

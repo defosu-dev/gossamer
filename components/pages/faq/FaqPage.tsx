@@ -1,5 +1,5 @@
-"use client";
-import React from "react";
+'use client';
+import React from 'react';
 import {
   User,
   Lock,
@@ -11,42 +11,40 @@ import {
   Music,
   Phone,
   Archive,
-} from "lucide-react";
-import { FaqCard } from "./FaqCard";
-import { Category } from "../../common/Category";
-import { Accordion } from "../../common/Accordion";
+} from 'lucide-react';
+import { FaqCard } from './FaqCard';
+import { Category } from '../../common/Category';
+import { Accordion } from '../../common/Accordion';
 
 const FaqPage = () => {
   return (
-    <div className="w-full max-w-6xl items-center mx-auto">
+    <div className="mx-auto w-full max-w-6xl items-center">
       {/* Top section */}
-      <div className="relative h-64 bg-gray-300 flex flex-col justify-end pb-6 pl-10">
+      <div className="relative flex h-64 flex-col justify-end bg-gray-300 pb-6 pl-10">
         <div className="absolute inset-0 bg-black/40" />
         <div className="relative z-10 text-white">
-          <p className=" text-sm mb-2">Need Help ?</p>
+          <p className="mb-2 text-sm">Need Help ?</p>
           <h1 className="text-3xl font-semibold">Frequently asked Questions</h1>
         </div>
       </div>
 
       {/* FAQ Content */}
-      <div className="mx-auto max-w-6xl py-12 px-4 space-y-12">
+      <div className="mx-auto max-w-6xl space-y-12 px-4 py-12">
         <div>
-          <h2 className="text-sm font-semibold text-gray-800 mb-6 uppercase">
-            General Questions
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <h2 className="mb-6 text-sm font-semibold text-gray-800 uppercase">General Questions</h2>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             <FaqCard
-              icon={<User className="w-6 h-6 text-gray-700" />}
+              icon={<User className="h-6 w-6 text-gray-700" />}
               title="How to Register & Login"
               text="Registering for a Stuffus account is even easier with a choice of various ways..."
             />
             <FaqCard
-              icon={<Lock className="w-6 h-6 text-gray-700" />}
+              icon={<Lock className="h-6 w-6 text-gray-700" />}
               title="Login Constraints"
               text="Registering for a Stuffus account is even easier with a choice of various ways..."
             />
             <FaqCard
-              icon={<Settings className="w-6 h-6 text-gray-700" />}
+              icon={<Settings className="h-6 w-6 text-gray-700" />}
               title="Set Up Account"
               text="Registering for a Stuffus account is even easier with a choice of various ways..."
             />
@@ -55,22 +53,20 @@ const FaqPage = () => {
 
         {/* Sales Support */}
         <div>
-          <h2 className="text-sm font-semibold text-gray-800 mb-6 uppercase">
-            Sales Support
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <h2 className="mb-6 text-sm font-semibold text-gray-800 uppercase">Sales Support</h2>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             <FaqCard
-              icon={<Users className="w-6 h-6 text-gray-700" />}
+              icon={<Users className="h-6 w-6 text-gray-700" />}
               title="How to Manage My Employee"
               text="Registering for a Stuffus account is even easier with a choice of various ways..."
             />
             <FaqCard
-              icon={<DollarSign className="w-6 h-6 text-gray-700" />}
+              icon={<DollarSign className="h-6 w-6 text-gray-700" />}
               title="How does back pricing work?"
               text="Registering for a Stuffus account is even easier with a choice of various ways..."
             />
             <FaqCard
-              icon={<Bell className="w-6 h-6 text-gray-700" />}
+              icon={<Bell className="h-6 w-6 text-gray-700" />}
               title="Notify Stuffus Admin"
               text="Registering for a Stuffus account is even easier with a choice of various ways..."
             />
@@ -78,34 +74,31 @@ const FaqPage = () => {
         </div>
 
         {/* Category FAQ */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           {/* Left side - Categories */}
           <div className="space-y-4">
             <Category
               title="Shipping"
               sub={[
-                { label: "For Home", icon: <Home className="w-4 h-4" /> },
-                { label: "For Music", icon: <Music className="w-4 h-4" /> },
-                { label: "For Phone", icon: <Phone className="w-4 h-4" /> },
-                { label: "For Storage", icon: <Archive className="w-4 h-4" /> },
+                { label: 'For Home', icon: <Home className="h-4 w-4" /> },
+                { label: 'For Music', icon: <Music className="h-4 w-4" /> },
+                { label: 'For Phone', icon: <Phone className="h-4 w-4" /> },
+                { label: 'For Storage', icon: <Archive className="h-4 w-4" /> },
               ]}
             />
             <Category
               title="Complain Order"
-              sub={[{ label: "Damaged" }, { label: "Wrong Item" }]}
+              sub={[{ label: 'Damaged' }, { label: 'Wrong Item' }]}
             />
-            <Category
-              title="Sales Support"
-              sub={[{ label: "Discounts" }, { label: "Coupons" }]}
-            />
+            <Category title="Sales Support" sub={[{ label: 'Discounts' }, { label: 'Coupons' }]} />
             <Category
               title="Promotions"
-              sub={[{ label: "Black Friday" }, { label: "Season Sale" }]}
+              sub={[{ label: 'Black Friday' }, { label: 'Season Sale' }]}
             />
           </div>
 
           {/* Right side - Accordion */}
-          <div className="md:col-span-2 space-y-4">
+          <div className="space-y-4 md:col-span-2">
             <Accordion
               title="Terms and Conditions of Application Service Fee"
               answer="Our service fee is applied based on the selected plan and will be billed monthly."

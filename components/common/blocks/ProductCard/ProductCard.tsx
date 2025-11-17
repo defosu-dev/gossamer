@@ -1,14 +1,13 @@
-"use client";
-import React from "react";
-import ProductImage from "./ProductImage";
-import ProductCategoryBadge from "./ProductCategoryBadge";
-import ProductTitle from "./ProductTitle";
-import ProductPrice from "./ProductPrice";
-import ProductActions from "./ProductActions";
-import { hasDiscount, getMinPriceVariant } from "@/utils/price";
-import type { ProductWithRelations } from "@/types/IProductsWithRelations";
-import { Star } from "lucide-react";
-
+'use client';
+import React from 'react';
+import ProductImage from './ProductImage';
+import ProductCategoryBadge from './ProductCategoryBadge';
+import ProductTitle from './ProductTitle';
+import ProductPrice from './ProductPrice';
+import ProductActions from './ProductActions';
+import { hasDiscount, getMinPriceVariant } from '@/utils/price';
+import type { ProductWithRelations } from '@/types/IProductsWithRelations';
+import { Star } from 'lucide-react';
 
 /**
  * Product card with primary image, price (min + discount), category badge, and actions.
@@ -28,24 +27,24 @@ const ProductCard = ({
 }) => {
   if (isLoading || !product) {
     return (
-      <div className="bg-white rounded-lg overflow-hidden max-w-sm flex flex-col animate-pulse">
+      <div className="flex max-w-sm animate-pulse flex-col overflow-hidden rounded-lg bg-white">
         <div className="relative p-1">
-          <div className="w-full aspect-square bg-gray-200 rounded-lg" />
-          <div className="absolute top-2 right-2 h-6 w-20 bg-gray-300 rounded-full" />
+          <div className="aspect-square w-full rounded-lg bg-gray-200" />
+          <div className="absolute top-2 right-2 h-6 w-20 rounded-full bg-gray-300" />
         </div>
 
-        <div className="p-4 flex flex-col flex-grow">
-          <div className="h-7 w-3/4 bg-gray-300 rounded" />
-          <div className="flex justify-between items-end mb-4 mt-auto">
-            <div className="h-5 w-24 bg-gray-300 rounded" />
+        <div className="flex flex-grow flex-col p-4">
+          <div className="h-7 w-3/4 rounded bg-gray-300" />
+          <div className="mt-auto mb-4 flex items-end justify-between">
+            <div className="h-5 w-24 rounded bg-gray-300" />
             <div className="flex flex-col items-end gap-2">
-              <div className="h-5 w-14 bg-gray-300 rounded" />
-              <div className="h-7 w-16 bg-gray-300 rounded" />
+              <div className="h-5 w-14 rounded bg-gray-300" />
+              <div className="h-7 w-16 rounded bg-gray-300" />
             </div>
           </div>
-          <div className="flex justify-between gap-2 mt-auto">
-            <div className="h-[42px] w-1/2 bg-gray-300 rounded-full" />
-            <div className="h-[42px] w-1/2 bg-gray-300 rounded-full" />
+          <div className="mt-auto flex justify-between gap-2">
+            <div className="h-[42px] w-1/2 rounded-full bg-gray-300" />
+            <div className="h-[42px] w-1/2 rounded-full bg-gray-300" />
           </div>
         </div>
       </div>
@@ -56,20 +55,22 @@ const ProductCard = ({
   const defaultVariant = product.product_variants[0];
 
   return (
-    <div className="bg-white rounded-lg overflow-hidden max-w-sm flex flex-col hover:shadow-md transition-shadow">
+    <div className="flex max-w-sm flex-col overflow-hidden rounded-lg bg-white transition-shadow hover:shadow-md">
       <div className="relative p-1">
         <ProductImage
-          src={minPriceVariant?.product_images[0].url ?? ""}
-          alt={minPriceVariant?.product_images[0].alt ?? ""}
+          src={minPriceVariant?.product_images[0].url ?? ''}
+          alt={minPriceVariant?.product_images[0].alt ?? ''}
           priority={priority}
         />
         <ProductCategoryBadge>{product.category?.name}</ProductCategoryBadge>
       </div>
 
-      <div className="p-4 flex flex-col flex-grow">
+      <div className="flex flex-grow flex-col p-4">
         <ProductTitle title={product.title} />
-        <div className="flex h-full items-end justify-between text-gray-600 text-sm mb-4 mt-auto">
-          <span><Star className="text-amber-300 w-5 h-5 mr-1" /> 4.8 (18 Reviews)</span>
+        <div className="mt-auto mb-4 flex h-full items-end justify-between text-sm text-gray-600">
+          <span>
+            <Star className="mr-1 h-5 w-5 text-amber-300" /> 4.8 (18 Reviews)
+          </span>
           <ProductPrice
             minPrice={minPriceVariant?.current_price ?? 0}
             maxOldPrice={minPriceVariant?.old_price}
@@ -80,9 +81,7 @@ const ProductCard = ({
           />
         </div>
         <div className="mt-auto">
-          <ProductActions
-            variantId={minPriceVariant?.id ?? defaultVariant.id}
-          />
+          <ProductActions variantId={minPriceVariant?.id ?? defaultVariant.id} />
         </div>
       </div>
     </div>

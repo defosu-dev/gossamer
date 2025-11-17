@@ -1,11 +1,11 @@
-import { supabaseBrowser } from "../supabaseBrowser";
-import type { ProductWithRelations } from "@/types/IProductsWithRelations";
+import { supabaseBrowser } from '../supabaseBrowser';
+import type { ProductWithRelations } from '@/types/IProductsWithRelations';
 
 type FetchProductsParams = {
   page?: number;
   limit?: number;
   filters?: Record<string, string | number | boolean>;
-  sort?: { field: string; order: "asc" | "desc" };
+  sort?: { field: string; order: 'asc' | 'desc' };
 };
 
 /**
@@ -17,12 +17,12 @@ export const fetchProducts = async ({
   page = 1,
   limit = 20,
   filters = {},
-  sort = { field: "created_at", order: "desc" },
+  sort = { field: 'created_at', order: 'desc' },
 }: FetchProductsParams) => {
   const supabase = supabaseBrowser;
 
   // 1. Base query with relations + count
-  let query = supabase.from("products").select(
+  let query = supabase.from('products').select(
     `
       id,
       title,
@@ -34,7 +34,7 @@ export const fetchProducts = async ({
         product_images ( id, url, alt, position )
       )
     `,
-    { count: "exact" }
+    { count: 'exact' }
   );
 
   // 2. Apply filters (e.g. category_id, stock)
@@ -43,16 +43,11 @@ export const fetchProducts = async ({
   }
 
   // 3. Server-side sort — only safe top-level fields
-  type ServerSortableField = "id" | "title" | "created_at" | "description";
-  const serverSortable: ServerSortableField[] = [
-    "id",
-    "title",
-    "created_at",
-    "description",
-  ];
+  type ServerSortableField = 'id' | 'title' | 'created_at' | 'description';
+  const serverSortable: ServerSortableField[] = ['id', 'title', 'created_at', 'description'];
 
   if (serverSortable.includes(sort.field as ServerSortableField)) {
-    query = query.order(sort.field, { ascending: sort.order === "asc" });
+    query = query.order(sort.field, { ascending: sort.order === 'asc' });
   }
 
   // 4. Pagination
@@ -67,20 +62,16 @@ export const fetchProducts = async ({
   let finalData = data as ProductWithRelations[] | null;
 
   // 6. Client-side sort by min price (if requested)
-  if (finalData && sort.field === "price") {
-    const getMinPrice = (
-      variants: ProductWithRelations["product_variants"]
-    ) => {
-      const prices = variants
-        .map((v) => v.current_price)
-        .filter((p): p is number => p !== null);
+  if (finalData && sort.field === 'price') {
+    const getMinPrice = (variants: ProductWithRelations['product_variants']) => {
+      const prices = variants.map((v) => v.current_price).filter((p): p is number => p !== null);
       return prices.length ? Math.min(...prices) : Infinity;
     };
 
     finalData = [...finalData].sort((a, b) => {
       const pa = getMinPrice(a.product_variants);
       const pb = getMinPrice(b.product_variants);
-      return sort.order === "asc" ? pa - pb : pb - pa;
+      return sort.order === 'asc' ? pa - pb : pb - pa;
     });
   }
 

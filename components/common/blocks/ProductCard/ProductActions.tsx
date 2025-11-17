@@ -1,7 +1,7 @@
-import React from "react";
-import Button from "../../Button";
-import { useCart } from "@/hooks/useCart";
-import { useRouter } from "next/navigation";
+import React from 'react';
+import Button from '../../Button';
+import { useCart } from '@/hooks/useCart';
+import { useRouter } from 'next/navigation';
 
 type ProductActionsProps = {
   variantId: string;
@@ -17,7 +17,7 @@ const ProductActions = ({ variantId }: ProductActionsProps) => {
 
   const handleBuyNow = () => {
     addToCart(variantId);
-    router.push("/checkout");
+    router.push('/checkout');
   };
 
   return (

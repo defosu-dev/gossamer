@@ -1,5 +1,5 @@
-import { supabaseServer } from "@/utils/supabase/supabaseServer";
-import { NextResponse } from "next/server";
+import { supabaseServer } from '@/utils/supabase/supabaseServer';
+import { NextResponse } from 'next/server';
 
 export async function middleware() {
   const res = NextResponse.next();
@@ -9,5 +9,5 @@ export async function middleware() {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
 };

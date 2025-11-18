@@ -2,36 +2,27 @@ import React from "react";
 import Link from "next/link";
 
 import { BadgeInfo, InstagramIcon, Youtube, YoutubeIcon } from "lucide-react";
+import InstagramMediaIcon from "@/components/common/icons/InstagramMediaIcon";
+import YoutubeMediaIcon from "@/components/common/icons/YoutubeMediaIcon";
+import FacebookMediaIcon from "@/components/common/icons/FacebookMediaIcon";
+import WhatsappMediaIcon from "@/components/common/icons/WhatsappMediaIcon";
 const SocialMediaList = () => {
   return (
     <div>
       <span className="block text-zinc-500 mb-2">Social Media</span>
       <div className="flex gap-4">
         <Link href="#">
-          <BadgeInfo
-            size={28}
-            className="text-black hover:text-zinc-600 transition-colors"
-          />
+          <InstagramMediaIcon />
+        </Link>
+
+        <Link href="#">
+          <YoutubeMediaIcon />
         </Link>
         <Link href="#">
-          <BadgeInfo
-            size={28}
-            className="text-black hover:text-zinc-600 transition-colors"
-          />
-        </Link>
-        <YoutubeIcon />
-        <InstagramIcon />
-        <Link href="#">
-          <BadgeInfo
-            size={28}
-            className="text-black hover:text-zinc-600 transition-colors"
-          />
+          <FacebookMediaIcon />
         </Link>
         <Link href="#">
-          <BadgeInfo
-            size={28}
-            className="text-black hover:text-zinc-600 transition-colors"
-          />
+          <WhatsappMediaIcon />
         </Link>
       </div>
     </div>

@@ -1,29 +1,38 @@
-"use client";
-import React, { ReactNode, useState } from "react";
-import { ChevronDown } from "lucide-react";
+'use client';
 
-type AccordionProps = {
+import React, { type ReactNode, useState } from 'react';
+import { ChevronDown } from 'lucide-react';
+
+import { cn } from '@/utils/cn';
+
+interface AccordionProps {
   title: string;
   answer: ReactNode;
-};
+}
 
-export const Accordion = ({ title, answer }: AccordionProps) => {
+/**
+ * Collapsible accordion component.
+ *
+ * @remarks
+ * Client component that shows/hides content when the header is clicked.
+ */
+export function Accordion({ title, answer }: AccordionProps) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="rounded-lg bg-white shadow-sm border-dashed border-1">
+    <div className={cn('rounded-lg border border-dashed bg-white shadow-sm')}>
       <button
         onClick={() => setOpen(!open)}
-        className="w-full flex justify-between items-center p-4"
+        className={cn('flex w-full items-center justify-between p-4')}
       >
         <span>{title}</span>
         <ChevronDown
-          className={`w-5 h-5 text-gray-500 transition-transform ${
-            open ? "rotate-180" : ""
-          }`}
+          className={cn('h-5 w-5 text-gray-500 transition-transform', open && 'rotate-180')}
         />
       </button>
-      {open && <div className="px-4 pb-4 text-sm text-gray-600">{answer}</div>}
+      {open && <div className={cn('px-4 pb-4 text-sm text-gray-600')}>{answer}</div>}
     </div>
   );
-};
+}
+
+export default Accordion;

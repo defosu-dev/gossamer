@@ -1,11 +1,20 @@
-import React from "react";
-import FeatureItem, { FeatureItemProps } from "./FeatureItem";
+import FeatureItem, { type FeatureItemProps } from './FeatureItem';
 
-type FeatureListProps = {
+interface FeatureListProps {
+  /** Array of feature items to display */
   items: FeatureItemProps[];
-};
+}
 
-const FeatureList = ({ items }: FeatureListProps) => {
+/**
+ * FeatureList.
+ *
+ * Renders a vertical list of feature items with icons.
+ *
+ * @remarks
+ * Pure presentational component. Accepts an array of objects containing
+ * icon name and description text. Typically used in product details.
+ */
+export function FeatureList({ items }: FeatureListProps) {
   return (
     <div className="flex flex-col gap-6">
       {items.map((feature, idx) => (
@@ -13,6 +22,6 @@ const FeatureList = ({ items }: FeatureListProps) => {
       ))}
     </div>
   );
-};
+}
 
 export default FeatureList;

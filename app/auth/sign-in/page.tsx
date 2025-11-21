@@ -1,47 +1,47 @@
-"use client";
+'use client';
 
-import LogoIcon from "@/components/common/LogoIcon";
-import { useAuth } from "@/hooks";
-import { cn } from "@/utils/cn";
-import { useForm } from "@tanstack/react-form";
-import { Eye, EyeOff, Loader2, Lock, UserRound } from "lucide-react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
-import { z } from "zod";
+import { useState } from 'react';
+import { useForm } from '@tanstack/react-form';
+import { Eye, EyeOff, Loader2, Lock, UserRound } from 'lucide-react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { z } from 'zod';
 
-/**
- * Zod schema for sign-in form validation.
- */
-const signInSchema = z.object({
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(1, "Password is required"),
-  remember: z.boolean(),
-});
+import { cn } from '@/utils/cn';
+import { useAuth } from '@/hooks';
+import LogoIcon from '@/components/common/LogoIcon';
 
 /**
- * Sign-in page with full validation and preserved original styling.
+ * @remarks
+ * Client-side sign-in page with form validation and authentication handling.
+ * Supports email/password sign-in and Google OAuth.
  */
-const SignInPage = () => {
+export default function SignInPage() {
   const { signIn, signInWithGoogle, loading } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string>('');
   const router = useRouter();
+
+  const signInSchema = z.object({
+    email: z.string().email('Invalid email address'),
+    password: z.string().min(1, 'Password is required'),
+    remember: z.boolean(),
+  });
 
   const form = useForm({
     defaultValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
       remember: false,
     },
     validators: {
       onSubmit: signInSchema,
     },
     onSubmit: async ({ value }) => {
-      setError(null);
+      setError('');
       try {
         await signIn(value.email, value.password).then(() => {
-          router.push("/");
+          router.push('/');
         });
       } catch (err) {
         setError((err as Error).message);
@@ -57,31 +57,24 @@ const SignInPage = () => {
         form.handleSubmit();
       }}
       className={cn(
-        "min-w-xs w-full max-w-md md:max-w-3xl",
-        "border border-neutral-100 rounded-3xl p-2 shadow-sm",
-        "grid grid-cols-1 gap-4 md:grid-cols-11"
+        'w-full max-w-md min-w-xs md:max-w-3xl',
+        'rounded-3xl border border-neutral-100 p-2 shadow-sm',
+        'grid grid-cols-1 gap-4 md:grid-cols-11'
       )}
       noValidate
     >
       {/* Left Column */}
-      <div
-        className={cn(
-          "col-span-full md:col-span-6",
-          "p-4 flex flex-col items-center"
-        )}
-      >
+      <div className={cn('col-span-full md:col-span-6', 'flex flex-col items-center p-4')}>
         <LogoIcon className="size-12" />
-        <h2 className={cn("text-3xl font-bold", "mt-4")}>Welcome Back</h2>
-        <p className={cn("text-sm text-neutral-800", "mt-2")}>
-          Are you a returning customer?
-        </p>
+        <h2 className={cn('text-3xl font-bold', 'mt-4')}>Welcome Back</h2>
+        <p className={cn('text-sm text-neutral-800', 'mt-2')}>Are you a returning customer?</p>
 
         {/* Email */}
         <form.Field name="email">
           {(field) => (
             <>
-              <div className={cn("group relative mt-8", "w-full")}>
-                <UserRound className="size-4.5 absolute top-1/2 left-3 -translate-y-1/2 text-neutral-800" />
+              <div className={cn('group relative mt-8', 'w-full')}>
+                <UserRound className="absolute top-1/2 left-3 size-4.5 -translate-y-1/2 text-neutral-800" />
                 <input
                   type="email"
                   placeholder="Your email"
@@ -89,22 +82,19 @@ const SignInPage = () => {
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                   className={cn(
-                    "text-sm text-neutral-900 placeholder-neutral-700 font-medium",
-                    "w-full h-full pl-9 py-3 rounded-full border",
+                    'text-sm font-medium text-neutral-900 placeholder-neutral-700',
+                    'h-full w-full rounded-full border py-3 pl-9',
                     field.state.meta.errors.length
-                      ? "border-red-500 focus:ring-red-500"
-                      : "border-neutral-300 focus:ring-neutral-500",
-                    "focus:outline-none focus:ring-2 focus:border-transparent",
-                    "transition-all duration-200"
+                      ? 'border-red-500 focus:ring-red-500'
+                      : 'border-neutral-300 focus:ring-neutral-500',
+                    'focus:border-transparent focus:ring-2 focus:outline-none',
+                    'transition-all duration-200'
                   )}
                 />
               </div>
               {field.state.meta.errors.map((error, index) => (
-                <p
-                  key={index}
-                  className="text-xs text-red-500 mt-1 ml-2 w-full"
-                >
-                  {typeof error === "string" ? error : error?.message}
+                <p key={index} className="mt-1 ml-2 w-full text-xs text-red-500">
+                  {typeof error === 'string' ? error : error?.message}
                 </p>
               ))}
             </>
@@ -115,45 +105,35 @@ const SignInPage = () => {
         <form.Field name="password">
           {(field) => (
             <>
-              <div className={cn("group relative mt-3.5", "w-full")}>
-                <Lock className="size-4.5 absolute top-1/2 left-3 -translate-y-1/2 text-neutral-800" />
+              <div className={cn('group relative mt-3.5', 'w-full')}>
+                <Lock className="absolute top-1/2 left-3 size-4.5 -translate-y-1/2 text-neutral-800" />
                 <input
-                  type={showPassword ? "text" : "password"}
+                  type={showPassword ? 'text' : 'password'}
                   placeholder="Your password"
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                   className={cn(
-                    "text-sm text-neutral-900 placeholder-neutral-700 font-medium",
-                    "w-full h-full pl-9 pr-12 py-3 rounded-full border",
+                    'text-sm font-medium text-neutral-900 placeholder-neutral-700',
+                    'h-full w-full rounded-full border py-3 pr-12 pl-9',
                     field.state.meta.errors.length
-                      ? "border-red-500 focus:ring-red-500"
-                      : "border-neutral-300 focus:ring-neutral-500",
-                    "focus:outline-none focus:ring-2 focus:border-transparent",
-                    "transition-all duration-200"
+                      ? 'border-red-500 focus:ring-red-500'
+                      : 'border-neutral-300 focus:ring-neutral-500',
+                    'focus:border-transparent focus:ring-2 focus:outline-none',
+                    'transition-all duration-200'
                   )}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className={cn(
-                    "absolute top-1/2 right-3 -translate-y-1/2",
-                    "text-neutral-800"
-                  )}
+                  className={cn('absolute top-1/2 right-3 -translate-y-1/2', 'text-neutral-800')}
                 >
-                  {showPassword ? (
-                    <EyeOff className="size-4.5" />
-                  ) : (
-                    <Eye className="size-4.5" />
-                  )}
+                  {showPassword ? <EyeOff className="size-4.5" /> : <Eye className="size-4.5" />}
                 </button>
               </div>
               {field.state.meta.errors.map((error, index) => (
-                <p
-                  key={index}
-                  className="text-xs text-red-500 mt-1 ml-2 w-full"
-                >
-                  {typeof error === "string" ? error : error?.message}
+                <p key={index} className="mt-1 ml-2 w-full text-xs text-red-500">
+                  {typeof error === 'string' ? error : error?.message}
                 </p>
               ))}
             </>
@@ -161,25 +141,23 @@ const SignInPage = () => {
         </form.Field>
 
         {/* Remember me + Forget Password */}
-        <div className="flex justify-between items-center w-full mt-4">
+        <div className="mt-4 flex w-full items-center justify-between">
           <form.Field name="remember">
             {(field) => (
-              <div className="flex items-baseline flex-nowrap">
+              <div className="flex flex-nowrap items-baseline">
                 <input
                   type="checkbox"
                   checked={field.state.value}
                   onChange={(e) => field.handleChange(e.target.checked)}
                   className="cursor-pointer"
                 />
-                <label className="ml-2 text-sm text-neutral-600 font-medium">
-                  Remember me
-                </label>
+                <label className="ml-2 text-sm font-medium text-neutral-600">Remember me</label>
               </div>
             )}
           </form.Field>
           <Link
             href="/auth/forgot-password"
-            className="text-sm text-neutral-800 font-semibold text-nowrap"
+            className="text-sm font-semibold text-nowrap text-neutral-800"
           >
             Forget Password
           </Link>
@@ -190,14 +168,14 @@ const SignInPage = () => {
           type="submit"
           disabled={loading || form.state.isSubmitting}
           className={cn(
-            "w-full mt-6",
-            "bg-neutral-900 text-white font-semibold",
-            "py-3 rounded-full",
-            "hover:shadow-lg cursor-pointer",
-            "active:shadow-inner active:scale-95",
-            "transition-all duration-200",
-            "disabled:opacity-50 disabled:cursor-not-allowed",
-            "flex items-center justify-center gap-2"
+            'mt-6 w-full',
+            'bg-neutral-900 font-semibold text-white',
+            'rounded-full py-3',
+            'cursor-pointer hover:shadow-lg',
+            'active:scale-95 active:shadow-inner',
+            'transition-all duration-200',
+            'disabled:cursor-not-allowed disabled:opacity-50',
+            'flex items-center justify-center gap-2'
           )}
         >
           {loading || form.state.isSubmitting ? (
@@ -206,16 +184,16 @@ const SignInPage = () => {
               Signing in...
             </>
           ) : (
-            "Sign In"
+            'Sign In'
           )}
         </button>
-        {error && <p className="text-sm text-red-600 mt-2 w-full">{error}</p>}
+        {error && <p className="mt-2 w-full text-sm text-red-600">{error}</p>}
 
         {/* Divider */}
-        <div className="flex items-center gap-2 w-full mt-6">
-          <div className="w-full h-px bg-neutral-200" />
-          <span className="text-sm text-neutral-400 font-semibold">OR</span>
-          <div className="w-full h-px bg-neutral-200" />
+        <div className="mt-6 flex w-full items-center gap-2">
+          <div className="h-px w-full bg-neutral-200" />
+          <span className="text-sm font-semibold text-neutral-400">OR</span>
+          <div className="h-px w-full bg-neutral-200" />
         </div>
 
         {/* Google */}
@@ -224,13 +202,13 @@ const SignInPage = () => {
           onClick={signInWithGoogle}
           disabled={loading}
           className={cn(
-            "w-full mt-6",
-            "border border-neutral-300 rounded-full",
-            "py-3 flex items-center justify-center gap-3",
-            "hover:shadow-lg cursor-pointer",
-            "active:scale-95",
-            "transition-all duration-300",
-            "disabled:opacity-50"
+            'mt-6 w-full',
+            'rounded-full border border-neutral-300',
+            'flex items-center justify-center gap-3 py-3',
+            'cursor-pointer hover:shadow-lg',
+            'active:scale-95',
+            'transition-all duration-300',
+            'disabled:opacity-50'
           )}
         >
           <svg height="24" viewBox="0 0 24 24" width="24">
@@ -252,18 +230,13 @@ const SignInPage = () => {
             />
             <path d="M1 1h22v22H1z" fill="none" />
           </svg>
-          <span className="text-neutral-900 font-semibold">
-            Continue with Google
-          </span>
+          <span className="font-semibold text-neutral-900">Continue with Google</span>
         </button>
 
         {/* Sign Up Link */}
-        <p className={cn("text-sm text-neutral-500", "mt-4")}>
-          Don&apos;t have an account?{" "}
-          <Link
-            href="/auth/sign-up"
-            className="text-sm text-neutral-800 font-semibold text-nowrap"
-          >
+        <p className={cn('text-sm text-neutral-500', 'mt-4')}>
+          Don&apos;t have an account?{' '}
+          <Link href="/auth/sign-up" className="text-sm font-semibold text-nowrap text-neutral-800">
             Sign Up
           </Link>
         </p>
@@ -271,13 +244,8 @@ const SignInPage = () => {
 
       {/* Right Column (decorative) */}
       <div
-        className={cn(
-          "hidden md:block md:col-span-5",
-          "p-4 bg-neutral-800 rounded-2xl shadow"
-        )}
+        className={cn('hidden md:col-span-5 md:block', 'rounded-2xl bg-neutral-800 p-4 shadow')}
       />
     </form>
   );
-};
-
-export default SignInPage;
+}

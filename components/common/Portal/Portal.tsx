@@ -1,35 +1,49 @@
-import { IChildren } from "@/types/IChildren";
-import { useEffect, useState } from "react";
-import { createPortal } from "react-dom";
+'use client';
 
-export interface IPortal extends IChildren {
+import { useState, useEffect, type ReactNode } from 'react';
+import { createPortal } from 'react-dom';
+
+/**
+ * Props for the Portal component.
+ */
+export interface PortalProps {
+  /** Content to render inside the portal */
+  children: ReactNode;
+
+  /** ID of the container element for the portal */
   containerId?: string;
 }
 
-const Portal = ({ children, containerId = "portal-root" }: IPortal) => {
-  const [container, setContainer] = useState<HTMLElement | null>(null);
-
-  useEffect(() => {
+/**
+ * Portal.
+ *
+ * Renders children into a DOM node outside the parent hierarchy.
+ * - Creates the container element if it doesn't exist.
+ * - Cleans up the container if it's empty when unmounted.
+ *
+ * @remarks
+ * Client component required.
+ */
+export function Portal({ children, containerId = 'portal-root' }: PortalProps) {
+  const [container] = useState<HTMLElement>(() => {
     let element = document.getElementById(containerId);
-
     if (!element) {
-      element = document.createElement("div");
+      element = document.createElement('div');
       element.id = containerId;
       document.body.appendChild(element);
     }
+    return element;
+  });
 
-    setContainer(element);
-
+  useEffect(() => {
     return () => {
-      if (element && element.parentNode && element.childNodes.length === 0) {
-        element.parentNode.removeChild(element);
+      if (container.parentNode && container.childNodes.length === 0) {
+        container.parentNode.removeChild(container);
       }
     };
-  }, [containerId]);
-
-  if (!container) return null;
+  }, [container]);
 
   return createPortal(children, container);
-};
+}
 
 export default Portal;

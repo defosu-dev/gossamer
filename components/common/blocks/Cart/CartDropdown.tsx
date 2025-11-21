@@ -1,19 +1,26 @@
 'use client';
 
-import { cn } from '@/utils/cn';
-import { CartItemWithProduct } from '@/hooks/useCart';
 import Link from 'next/link';
 import { memo, useRef } from 'react';
-import formatCurrency from '@/utils/formatCurrency';
 import { X } from 'lucide-react';
+
+import { cn } from '@/utils/cn';
+import type { CartItemWithProduct } from '@/hooks/useCart';
+import formatCurrency from '@/utils/formatCurrency';
+
 import { CartItem } from './CartItem';
 
 /**
  * Props for the CartDropdown component.
+ *
+ * @remarks
+ * - Controls visibility, item list, total price, and quantity change callbacks.
  */
 export interface CartDropdownProps {
   /**
    * Controls whether the dropdown is visible.
+   *
+   * @default false
    */
   open: boolean;
 
@@ -35,17 +42,17 @@ export interface CartDropdownProps {
   /**
    * Handler for quantity changes or item removal (quantity = 0).
    *
-   * @param variantId - Unique identifier of the product variant
-   * @param quantity - New quantity (0 means remove)
+   * @param variantId Unique identifier of the product variant.
+   * @param quantity New quantity (0 means remove).
    */
   onQuantityChange: (variantId: string, quantity: number) => void;
 }
 
 /**
- * CartDropdown
+ * CartDropdown.
  *
  * A floating cart summary that appears on hover/click, showing cart contents,
- * total, and quick controls. Fully accessible and animated.
+ * total, and quick controls.
  *
  * @remarks
  * - Uses `role="dialog"` with proper ARIA attributes for screen readers.
@@ -54,9 +61,7 @@ export interface CartDropdownProps {
  * - Optimistic updates via `CartItem` (debounced quantity sync).
  * - Mobile-first responsive: `w-xs` → `w-lg` on medium screens.
  * - Clicking outside or "Close" button triggers `onClose`.
- * - **Exported in two forms**:
- *   - `CartDropdown` — original function (for tests, HOC)
- *   - `default export` — memoized version (for production)
+ * - Fully memoized for performance.
  */
 export function CartDropdown({ open, onClose, items, total, onQuantityChange }: CartDropdownProps) {
   const dialogId = 'cart-dropdown';
@@ -69,25 +74,26 @@ export function CartDropdown({ open, onClose, items, total, onQuantityChange }: 
       aria-modal="true"
       aria-labelledby={`${dialogId}-title`}
       className={cn(
-        'absolute right-0 z-50 mt-2 flex w-xs origin-top-right flex-col overflow-hidden bg-white transition-all duration-200 md:w-lg',
+        'absolute right-0 z-50 mt-2 flex w-xs origin-top-right flex-col overflow-hidden rounded-xl border border-neutral-300 bg-white shadow-xl transition-all duration-200 md:w-lg',
         open
           ? 'pointer-events-auto translate-y-0 scale-100 opacity-100'
-          : 'pointer-events-none -translate-y-1 scale-95 opacity-0',
-        'rounded-xl border border-neutral-300 shadow-xl'
+          : 'pointer-events-none -translate-y-1 scale-95 opacity-0'
       )}
     >
       {/* Header */}
-      <div className="flex items-center justify-between px-3 py-2">
-        <h3 id={`${dialogId}-title`} className="text-sm font-semibold">
+      <div className={cn('flex items-center justify-between px-3 py-2')}>
+        <h3 id={`${dialogId}-title`} className={cn('text-sm font-semibold')}>
           Your cart
         </h3>
         <button
           type="button"
           onClick={onClose}
           aria-label="Close cart"
-          className="cursor-pointer rounded-full p-1 text-sm opacity-70 transition-opacity hover:opacity-100 focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:outline-none"
+          className={cn(
+            'cursor-pointer rounded-full p-1 text-sm opacity-70 transition-opacity hover:opacity-100 focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:outline-none'
+          )}
         >
-          <X className="size-4" aria-hidden="true" />
+          <X className={cn('size-4')} aria-hidden="true" />
         </button>
       </div>
 
@@ -95,23 +101,23 @@ export function CartDropdown({ open, onClose, items, total, onQuantityChange }: 
       <ul
         ref={listRef}
         tabIndex={-1}
-        className="max-h-96 divide-y divide-gray-200 overflow-y-auto scroll-smooth"
+        className={cn('max-h-96 divide-y divide-gray-200 overflow-y-auto scroll-smooth')}
       >
         {items.length === 0 ? (
-          <li className="p-4 text-center text-sm text-gray-600">Your cart is empty</li>
+          <li className={cn('p-4 text-center text-sm text-gray-600')}>Your cart is empty</li>
         ) : (
           items.map((item) => (
             <CartItem
               key={item.variant_id}
               variantId={item.variant_id}
-              title={item.variant.name || item.product.title || 'Unnamed Product'}
+              title={item.variant.name ?? item.product.title ?? 'Unnamed Product'}
               image={item.variant.images[0]?.url ?? ''}
               price={{
                 currentPrice: item.variant.price,
                 oldPrice: item.variant.old_price ?? 0,
               }}
               quantity={item.quantity}
-              attributes={[]} // Reserved for future use
+              attributes={[]}
               onChange={onQuantityChange}
             />
           ))
@@ -119,16 +125,20 @@ export function CartDropdown({ open, onClose, items, total, onQuantityChange }: 
       </ul>
 
       {/* Footer: Total + View All */}
-      <div className="flex items-center justify-between gap-4 border-t border-gray-200 px-3 py-2">
+      <div
+        className={cn('flex items-center justify-between gap-4 border-t border-gray-200 px-3 py-2')}
+      >
         <Link
           href="/cart"
           onClick={onClose}
-          className="text-sm font-semibold underline transition hover:no-underline focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:outline-none"
+          className={cn(
+            'text-sm font-semibold underline transition hover:no-underline focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:outline-none'
+          )}
         >
           All products
         </Link>
 
-        <span className="text-sm font-semibold">Total: {formatCurrency(total)}</span>
+        <span className={cn('text-sm font-semibold')}>Total: {formatCurrency(total)}</span>
       </div>
     </div>
   );

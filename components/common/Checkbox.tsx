@@ -1,7 +1,8 @@
 'use client';
 
+import { memo, useCallback, type ChangeEvent } from 'react';
+
 import { cn } from '@/utils/cn';
-import { memo, useCallback } from 'react';
 
 /**
  * Props for the custom Checkbox component.
@@ -24,18 +25,15 @@ export interface CheckboxProps {
 }
 
 /**
- * Checkbox
+ * Checkbox.
  *
  * Fully custom, accessible checkbox with Tailwind styling.
  * Supports label, disabled state, and keyboard interaction.
  *
  * @remarks
- * - Uses native `<input type="checkbox">` under the hood for accessibility.
+ * - Uses native `<input type="checkbox">` for accessibility.
  * - Custom visual indicator with checkmark.
- * - Focus ring and hover states.
- * - **Exported in two forms**:
- *   - `Checkbox` — original function (for tests, HOC)
- *   - `default export` — memoized version (for production)
+ * - Focus ring and hover states included.
  */
 export function Checkbox({
   checked,
@@ -45,11 +43,13 @@ export function Checkbox({
   disabled = false,
 }: CheckboxProps) {
   const handleChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: ChangeEvent<HTMLInputElement>) => {
       onCheckedChange(e.target.checked);
     },
     [onCheckedChange]
   );
+
+  const hasLabel = label != null && label !== '';
 
   return (
     <label
@@ -65,7 +65,7 @@ export function Checkbox({
         onChange={handleChange}
         disabled={disabled}
         className="peer sr-only"
-        aria-label={label}
+        aria-label={label ?? undefined}
       />
       <div
         className={cn(
@@ -92,7 +92,7 @@ export function Checkbox({
           </svg>
         )}
       </div>
-      {label && <span className="text-sm text-gray-700">{label}</span>}
+      {hasLabel && <span className="text-sm text-gray-700">{label}</span>}
     </label>
   );
 }

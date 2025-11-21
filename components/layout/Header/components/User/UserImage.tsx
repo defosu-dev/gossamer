@@ -1,24 +1,35 @@
-import { ImageWithFallback } from "@/components/common/ImageWithFallback";
-import { cn } from "@/utils/cn";
-import { User } from "@supabase/supabase-js";
-import { Loader2, UserRound } from "lucide-react";
-import Link from "next/link";
+import type { User } from '@supabase/supabase-js';
+import { Loader2, UserRound } from 'lucide-react';
+import Link from 'next/link';
 
-export type IUserImage = {
+import { cn } from '@/utils/cn';
+import { ImageWithFallback } from '@/components/common/ImageWithFallback';
+
+/**
+ *
+ */
+export interface UserImageProps {
   isLoading: boolean;
   user: User | null;
-};
+}
 
-const UserImage = ({ isLoading = true, user: User }: IUserImage) => {
+/**
+ * Renders user avatar with loading, authenticated, and guest states.
+ *
+ * @remarks
+ * Displays spinner during loading, user image when authenticated,
+ * and sign-in link with silhouette icon when not authenticated.
+ */
+export function UserImage({ isLoading, user }: UserImageProps) {
   return (
     <>
       {isLoading ? (
         <div className="flex size-full items-center justify-center bg-neutral-200/40">
           <Loader2 className="size-4 animate-spin text-gray-500" />
         </div>
-      ) : User ? (
+      ) : user ? (
         <ImageWithFallback
-          src={User.user_metadata?.avatar_url ?? "/placeholder.jpg"}
+          src={user.user_metadata?.avatar_url ?? '/placeholder.jpg'}
           alt="User avatar"
           className="size-full object-cover"
         />
@@ -26,9 +37,9 @@ const UserImage = ({ isLoading = true, user: User }: IUserImage) => {
         <Link
           href="/auth/sign-in"
           className={cn(
-            "flex size-full items-center justify-center",
-            "transition-colors hover:bg-neutral-50 focus:outline-none focus:ring-2 focus:ring-neutral-500",
-            "rounded-full"
+            'flex size-full items-center justify-center',
+            'transition-colors hover:bg-neutral-50 focus:ring-2 focus:ring-neutral-500 focus:outline-none',
+            'rounded-full'
           )}
           aria-label="Sign in"
         >
@@ -37,6 +48,6 @@ const UserImage = ({ isLoading = true, user: User }: IUserImage) => {
       )}
     </>
   );
-};
+}
 
 export default UserImage;

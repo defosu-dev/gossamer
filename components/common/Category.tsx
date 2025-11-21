@@ -1,51 +1,67 @@
-"use client";
-import React, { useState } from "react";
-import { ChevronDown } from "lucide-react";
+'use client';
+import React, { useState } from 'react';
+import { ChevronDown } from 'lucide-react';
 
-type SubItem = {
+interface SubItem {
+  /** Label for the sub-item */
   label: string;
+
+  /** Optional icon for the sub-item */
   icon?: React.ReactNode;
-};
+}
 
-type CategoryProps = {
+interface CategoryProps {
+  /** Title of the category */
   title: string;
-  sub?: SubItem[];
-};
 
-export const Category = ({ title, sub = [] }: CategoryProps) => {
+  /** Optional array of sub-items */
+  sub?: SubItem[];
+}
+
+/**
+ * Category component with expandable sub-items.
+ *
+ * Renders a clickable title that expands/collapses a list of sub-items.
+ * Each sub-item can have an optional icon.
+ *
+ * @remarks
+ * - Uses `ChevronDown` icon that rotates when expanded.
+ * - Sub-items are connected visually with a vertical line.
+ */
+export function Category({ title, sub = [] }: CategoryProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="rounded-lg bg-white shadow-sm">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex justify-between items-center w-full p-4 font-medium hover:bg-gray-50 rounded-lg"
+        className="flex w-full items-center justify-between rounded-lg p-4 font-medium hover:bg-gray-50"
       >
         {title}
         {sub.length > 0 && (
           <ChevronDown
-            className={`w-5 h-5 text-gray-500 transition-transform ${
-              isOpen ? "rotate-180" : ""
-            }`}
+            className={`h-5 w-5 text-gray-500 transition-transform ${isOpen ? 'rotate-180' : ''}`}
           />
         )}
       </button>
 
       {isOpen && sub.length > 0 && (
-        <ul className="relative pl-6 pb-4 text-sm text-gray-700 space-y-3">
-          <div className="absolute left-2 top-0 h-[calc(100%-1.25rem)] border-l border-gray-300"></div>
+        <ul className="relative space-y-3 pb-4 pl-6 text-sm text-gray-700">
+          {/* Vertical connector line */}
+          <div className="absolute top-0 left-2 h-[calc(100%-1.25rem)] border-l border-gray-300" />
 
-          {sub.map((s, i) => {
-            const isLast = i === sub.length - 1;
+          {sub.map((item, index) => {
+            const isLast = index === sub.length - 1;
             return (
-              <li key={s.label} className="relative flex items-center gap-2">
+              <li key={item.label} className="relative flex items-center gap-2">
+                {/* Small connector */}
                 <span
-                  className={`absolute -left-4 top-1/2 w-4 h-4 border-t border-gray-300 ${
-                    isLast ? "border-l rounded-bl-lg" : "border-l"
+                  className={`absolute top-1/2 -left-4 h-4 w-4 border-t border-gray-300 ${
+                    isLast ? 'rounded-bl-lg border-l' : 'border-l'
                   }`}
-                ></span>
-                {s.icon}
-                {s.label}
+                />
+                {item.icon}
+                {item.label}
               </li>
             );
           })}
@@ -53,4 +69,4 @@ export const Category = ({ title, sub = [] }: CategoryProps) => {
       )}
     </div>
   );
-};
+}

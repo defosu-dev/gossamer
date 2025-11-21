@@ -1,7 +1,7 @@
-import Stripe from "stripe";
+import Stripe from 'stripe';
 
-if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error("STRIPE_SECRET_KEY is missing");
+if (process.env.STRIPE_SECRET_KEY == null) {
+  throw new Error('STRIPE_SECRET_KEY is missing');
 }
 
 export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {

@@ -1,7 +1,11 @@
-import React from "react";
+import React from 'react';
 
-const page = () => {
-  return <div>page</div>;
-};
-
-export default page;
+/**
+ * Product detail page placeholder for dynamic catalog route.
+ *
+ * @remarks
+ * Client-side route for /catalog/[product-id].
+ */
+export default function Page() {
+  return <div>Product page</div>;
+}

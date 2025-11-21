@@ -1,17 +1,51 @@
-import Button from "@/components/common/Button";
-import React from "react";
+'use client';
 
-const Form = () => {
+import { memo } from 'react';
+
+import { cn } from '@/utils/cn';
+import Button from '@/components/common/Button';
+
+interface FormProps {
+  /** Placeholder text for the email input */
+  placeholder?: string;
+
+  /** Text displayed on the submit button */
+  buttonText?: string;
+}
+
+/**
+ * Email subscription/search form with an input field and primary action button.
+ *
+ * @remarks
+ * This is a client component required for handling user input focus and keyboard events.
+ * The actual form submission logic should be implemented in a parent component or
+ * via a form wrapper if needed.
+ */
+export function Form({ placeholder = 'Enter your email', buttonText = 'Subscribe' }: FormProps) {
   return (
-    <div className="flex items-center w-full md:w-[360px] h-10 rounded-full border border-neutral-300 shadow-sm overflow-hidden bg-white">
+    <div
+      className={cn(
+        'flex h-12 w-full items-center overflow-hidden rounded-full',
+        'border border-zinc-300 bg-white shadow-sm transition-shadow',
+        'focus-within:border-zinc-400 focus-within:shadow-md',
+        'md:w-96'
+      )}
+    >
       <input
-        type="text"
-        placeholder="Enter your email"
-        className="flex-1 px-3 outline-none text-sm "
+        type="email"
+        placeholder={placeholder}
+        className={cn(
+          'h-full flex-1 px-5 text-sm outline-none placeholder:text-zinc-500',
+          'disabled:cursor-not-allowed disabled:opacity-60'
+        )}
+        aria-label="Email address"
       />
-      <Button variant="primary">Search</Button>
+
+      <Button variant="primary" className="h-full rounded-l-none rounded-r-full px-6">
+        {buttonText}
+      </Button>
     </div>
   );
-};
+}
 
-export default Form;
+export default memo(Form);

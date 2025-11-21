@@ -2,10 +2,11 @@
 
 import { memo, useCallback } from 'react';
 import { Trash } from 'lucide-react';
+
 import { cn } from '@/utils/cn';
 
 /**
- * Props for the DeleteButton component.
+ * Props for {@link DeleteButton}.
  */
 export interface DeleteButtonProps {
   /**
@@ -24,10 +25,9 @@ export interface DeleteButtonProps {
 }
 
 /**
- * DeleteButton
+ * DeleteButton.
  *
  * A compact, accessible icon-only button for item removal.
- * Can be used inside list items, cart UI blocks, or any container with a Tailwind `group`.
  *
  * @remarks
  * - Includes `aria-label="Delete Item"` for screen readers.

@@ -12,8 +12,8 @@ import { cn } from '@/utils/cn';
  */
 export function SocialMediaList() {
   return (
-    <div className="text-center md:text-right">
-      <span className={cn('mb-3 block text-sm font-medium text-zinc-600')}>Follow us</span>
+    <div className="text-center md:text-left">
+      <span className={cn('mb-3 block text-sm font-medium text-zinc-600')}>Social Media</span>
 
       <div className={cn('flex justify-center gap-5 md:justify-end')}>
         <Link

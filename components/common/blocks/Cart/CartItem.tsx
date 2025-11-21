@@ -1,14 +1,12 @@
-// src/components/cart/CartItem.tsx
 'use client';
 
-import { useState, useCallback, memo } from 'react';
+import { memo, useCallback } from 'react';
 
 import { cn } from '@/utils/cn';
 import Checkbox from '@/components/common/Checkbox';
 import DeleteButton from '@/components/common/DeleteButton';
 import { ImageWithFallback } from '@/components/common/ImageWithFallback';
 import InputQuantity from '@/components/common/InputQuantity';
-import useDebouncedCallback from '@/hooks/useDebouncedCallback';
 import { Badge } from '@/components/common/Badge';
 
 import CartDescription from './CartDescription';
@@ -36,7 +34,7 @@ export interface CartItemProps {
     oldPrice: number;
   };
 
-  /** Current quantity from store/state */
+  /** Current quantity from parent/store */
   quantity: number;
 
   /** Optional list of product attributes like color, size, etc. */
@@ -62,17 +60,15 @@ export interface CartItemProps {
  * CartItem component.
  *
  * Represents a single item in the shopping cart dropdown.
- * Optimistically updates quantity and supports deletion.
+ * Fully controlled: quantity and selection are passed from the parent.
  *
  * @remarks
- * - Debounces quantity updates to reduce store/network calls.
+ * - Does not maintain internal state for quantity or selection.
+ * - Does not debounce changes; calls `onChange` immediately.
  * - Fully accessible: images with alt, focus-visible styling on interactive elements.
  * - Designed for Tailwind `group` usage for hover effects.
  * - Optional checkbox for selection (controlled via `showCheckbox` prop).
  * - Memoized for performance.
- * - Two forms exported:
- *   - `CartItem` — function component for HOC or testing
- *   - `default export` — memoized version for production
  */
 export function CartItem({
   variantId,
@@ -86,32 +82,21 @@ export function CartItem({
   onSelect,
   showCheckbox = false,
 }: CartItemProps) {
-  // Local quantity state
-  const [localQuantity, setLocalQuantity] = useState(quantity);
-
-  // Sync localQuantity if external quantity prop changes
-  if (localQuantity !== quantity) {
-    setLocalQuantity(quantity);
-  }
-
-  // Debounced callback to notify parent/store about quantity changes
-  const debouncedSend = useDebouncedCallback((qty: number) => {
-    onChange(variantId, qty);
-  }, 300);
-
+  /** Called when the quantity changes */
   const handleQuantityChange = useCallback(
     (newQty: number) => {
       if (newQty < 1) return;
-      setLocalQuantity(newQty);
-      debouncedSend(newQty);
+      onChange(variantId, newQty);
     },
-    [debouncedSend]
+    [onChange, variantId]
   );
 
+  /** Called when the item is deleted (quantity set to 0) */
   const handleDelete = useCallback(() => {
     onChange(variantId, 0);
   }, [onChange, variantId]);
 
+  /** Called when the selection checkbox changes */
   const handleSelectChange = useCallback(
     (checked: boolean) => {
       onSelect?.(variantId, checked);
@@ -162,7 +147,7 @@ export function CartItem({
 
           <div className="mt-auto flex items-center gap-4">
             <DeleteButton onDelete={handleDelete} />
-            <InputQuantity quantity={localQuantity} onChange={handleQuantityChange} />
+            <InputQuantity quantity={quantity} onChange={handleQuantityChange} />
           </div>
         </div>
       </div>

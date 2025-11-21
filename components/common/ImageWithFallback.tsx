@@ -66,7 +66,7 @@ export function ImageWithFallback({
     'flex items-center justify-center bg-neutral-100 absolute inset-0 rounded-[inherit]'
   );
 
-  const iconSizeClasses = `[width:${iconSize}rem] [height:${iconSize}rem]`;
+  const iconSizeClasses = `size-${iconSize}`;
 
   return (
     <div style={containerStyle} className={cn(className)}>

@@ -42,7 +42,7 @@ export function CartButton({ open, count, onClick }: CartButtonProps) {
       onClick={onClick}
       type="button"
       className={cn(
-        'relative flex h-9 w-9 items-center justify-center rounded-full',
+        'relative flex h-10 w-10 items-center justify-center rounded-full',
         'border border-neutral-300 bg-white shadow',
         'transition-all hover:bg-neutral-50 active:scale-95 active:shadow-inner'
       )}

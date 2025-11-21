@@ -93,7 +93,7 @@ export function ProductCard({
       <div className="flex flex-grow flex-col p-4">
         <ProductTitle title={product.title} />
         <div className="mt-auto mb-4 flex h-full items-end justify-between text-sm text-gray-600">
-          <span>
+          <span className="flex items-center">
             <Star className="mr-1 h-5 w-5 text-amber-300" /> 4.8 (18 Reviews)
           </span>
           <ProductPrice

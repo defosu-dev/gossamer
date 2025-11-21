@@ -31,7 +31,7 @@ export function UserImage({ isLoading, user }: UserImageProps) {
         <ImageWithFallback
           src={user.user_metadata?.avatar_url ?? '/placeholder.jpg'}
           alt="User avatar"
-          className="size-full object-cover"
+          className="size-4 object-cover"
         />
       ) : (
         <Link

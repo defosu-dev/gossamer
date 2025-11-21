@@ -59,7 +59,7 @@ export function UserDropdown({ user, open, onClose, onSignOut }: UserDropdownPro
       <ul className={cn('py-1')}>
         <li>
           <Link
-            href="/profile"
+            href="/auth/profile"
             onClick={onClose}
             className={cn(
               'block px-4 py-2.5 text-sm text-zinc-700 transition-colors',

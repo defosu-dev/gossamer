@@ -3,7 +3,6 @@ import type { ReactNode } from 'react';
 import { cn } from '@/utils/cn';
 
 interface ContainerProps {
-
   /** Content to render inside the container */
   children: ReactNode;
 

@@ -9,7 +9,6 @@ import { useStore } from '@/store';
 import { useAuth } from './useAuth';
 
 interface UseWishlistReturn {
-
   /** Current wishlist items (product/variant IDs) */
   wishlist: string[];
 
@@ -49,7 +48,7 @@ export function useWishlist(): UseWishlistReturn {
   const { data, isLoading: queryLoading } = useQuery({
     queryKey: ['wishlist', userId],
     queryFn: () => fetchWishlist(userId!),
-    enabled: !!userId && !authLoading,
+    enabled: userId != null && !authLoading,
     staleTime: 1000 * 60 * 5,
   });
 
@@ -71,13 +70,13 @@ export function useWishlist(): UseWishlistReturn {
   const addToWishlist = (item: string) => {
     const newList = [...wishlist, item];
     addLocal(item);
-    if (userId) syncWishlist(newList);
+    if (userId != null) syncWishlist(newList);
   };
 
   const removeFromWishlist = (item: string) => {
     const newList = wishlist.filter((i) => i !== item);
     removeLocal(item);
-    if (userId) syncWishlist(newList);
+    if (userId != null) syncWishlist(newList);
   };
 
   return {

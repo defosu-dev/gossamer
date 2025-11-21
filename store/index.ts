@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
+import toast from 'react-hot-toast';
 
 import { createCartSlice, type CartSlice } from './slices/cartSlice';
 import { createWishlistSlice, type WishlistSlice } from './slices/wishlistSlice';
@@ -33,8 +34,8 @@ export const useStore = create<Store>()(
           wishlist: state.wishlist,
         }),
         onRehydrateStorage: () => (state, error) => {
-          if (error) {
-            console.error('Failed to rehydrate Zustand store:', error);
+          if (error != null) {
+            toast.error('Failed to rehydrate Zustand store:', error);
           }
         },
       }

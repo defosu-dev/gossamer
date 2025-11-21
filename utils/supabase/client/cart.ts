@@ -43,7 +43,6 @@ export const fetchCart = async (userId: string): Promise<CartItem[]> => {
  * - Used by useCart hook for background sync
  */
 export const updateCart = async (userId: string, items: CartItem[]) => {
-
   // 1. Ensure cart row exists
   const { data: cart, error: cartError } = await supabaseBrowser
     .from('carts')
@@ -51,7 +50,9 @@ export const updateCart = async (userId: string, items: CartItem[]) => {
     .select('id')
     .single();
 
-  if (cartError || !cart) throw cartError ?? new Error('Cart upsert failed');
+  if (cartError != null || cart == null) {
+    throw cartError ?? new Error('Cart upsert failed');
+  }
 
   // 2. Remove all existing items
   const { error: delError } = await supabaseBrowser

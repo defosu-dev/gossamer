@@ -5,7 +5,6 @@ import type { ProductWithRelations } from '@/types/IProductsWithRelations';
 import { supabaseServer } from '../supabaseServer';
 
 interface FetchProductsParams {
-
   /** Page number (1-based). Default: 1 */
   page?: number;
 
@@ -75,7 +74,7 @@ export const fetchProducts = async ({
   let finalData = data as ProductWithRelations[] | null;
 
   // Client-side sort by minimum price across variants
-  if (finalData && sort.field === 'price') {
+  if (finalData !== null && finalData !== undefined && sort.field === 'price') {
     const getMinPrice = (variants: ProductWithRelations['product_variants']) => {
       const prices = variants.map((v) => v.current_price).filter((p): p is number => p !== null);
       return prices.length ? Math.min(...prices) : Infinity;
@@ -108,7 +107,7 @@ export type ProductWithVariant = ProductWithRelations & {
  * Used in cart/checkout flow to get full product data from variant IDs.
  */
 export async function getProductsByVariants(variantIds: string[]): Promise<ProductWithVariant[]> {
-  if (!variantIds?.length) return [];
+  if (variantIds == null || variantIds.length === 0) return [];
 
   const supabase = await supabaseServer();
 
@@ -138,8 +137,8 @@ export async function getProductsByVariants(variantIds: string[]): Promise<Produ
 
   if (error) throw error;
 
-  const products: ProductWithVariant[] = (data || [])
-    .filter((v): v is NonNullable<typeof v> => !!v.product)
+  const products: ProductWithVariant[] = (data ?? [])
+    .filter((v): v is NonNullable<typeof v> => v.product != null)
     .map((v) => ({
       ...(v.product as ProductWithRelations),
       variant: {
@@ -147,12 +146,11 @@ export async function getProductsByVariants(variantIds: string[]): Promise<Produ
         name: v.name,
         price: v.current_price,
         stock: v.stock,
-        images:
-          v.product_images?.map((img) => ({
-            id: img.id,
-            url: img.url,
-            alt: img.alt || null,
-          })) || [],
+        images: v.product_images.map((img) => ({
+          id: img.id,
+          url: img.url,
+          alt: img.alt ?? null,
+        })),
       },
     }));
 
@@ -167,7 +165,7 @@ export async function getProductsByVariants(variantIds: string[]): Promise<Produ
  * Used by useCart hook for client-side enrichment.
  */
 export async function getCartEnrichedProducts(variantIds: string[]) {
-  if (!variantIds?.length) return [];
+  if (variantIds == null || variantIds.length === 0) return [];
 
   const orFilter = variantIds.map((id) => `id.eq.${id}`).join(',');
   const supabase = await supabaseServer();

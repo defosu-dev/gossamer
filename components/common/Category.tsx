@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 
 interface SubItem {
-
   /** Label for the sub-item */
   label: string;
 
@@ -12,7 +11,6 @@ interface SubItem {
 }
 
 interface CategoryProps {
-
   /** Title of the category */
   title: string;
 

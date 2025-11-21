@@ -6,7 +6,6 @@ import Button from '@/components/common/Button';
 import formatCurrency from '@/utils/formatCurrency';
 
 interface SummaryOrderProps {
-
   /** Total price in the smallest currency unit */
   totalPrice: number;
 

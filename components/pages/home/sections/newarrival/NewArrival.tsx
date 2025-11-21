@@ -7,7 +7,6 @@ import ImageBlock from './ImageBlock';
 import { type FeatureItemProps } from './FeatureItem';
 
 interface NewArrivalProps {
-
   /** Optional badge label above the title */
   label?: string;
 

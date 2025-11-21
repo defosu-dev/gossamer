@@ -61,7 +61,7 @@ export const getUserPayments = async (userId: string, sessionId?: string) => {
     .from('payments')
     .select('id, amount, currency, status, created_at, stripe_payment_intent_id, order_id');
 
-  if (sessionId) {
+  if (sessionId != null) {
     query = query.or(`user_id.eq.${userId},session_id.eq.${sessionId}`);
   } else {
     query = query.eq('user_id', userId);

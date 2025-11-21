@@ -3,7 +3,6 @@ import type { ReactNode } from 'react';
 import { cn } from '@/utils/cn';
 
 interface ButtonProps {
-
   /** Button content */
   children: ReactNode;
 

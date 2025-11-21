@@ -6,7 +6,6 @@ import { cn } from '@/utils/cn';
 import Button from '@/components/common/Button';
 
 interface FormProps {
-
   /** Placeholder text for the email input */
   placeholder?: string;
 

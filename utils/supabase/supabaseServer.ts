@@ -23,11 +23,9 @@ export const supabaseServer = async () => {
     <T extends (...args: any[]) => void>(fn: T) =>
     (...args: Parameters<T>) => {
       try {
-
         // @ts-ignore – fn is guaranteed to be called with correct args
         fn(...args);
       } catch {
-
         // no-op
       }
     };

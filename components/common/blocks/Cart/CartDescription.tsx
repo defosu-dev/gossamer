@@ -8,7 +8,6 @@ import { cn } from '@/utils/cn';
  * Props for the CartItemDescription component.
  */
 export interface CartDescriptionProps {
-
   /** List of attribute key-value pairs to display (e.g., color, size) */
   items: { label: string; value: string }[];
 

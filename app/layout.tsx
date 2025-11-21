@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
 import { Quicksand } from 'next/font/google';
+import { Toaster } from 'react-hot-toast';
 
-import { cn } from '@/utils/cn';
 import Footer from '@/components/layout/Footer';
 import Header from '@/components/layout/Header';
 import { QueryProvider } from '@/components/providers/QueryProvider';
 import type { ILayout } from '@/types/ILayout';
+import { cn } from '@/utils/cn';
 
 import './globals.css';
 
@@ -38,6 +39,7 @@ export function RootLayout({ children }: ILayout) {
           <Header />
           <main className={cn('flex flex-1')}>{children}</main>
           <Footer />
+          <Toaster position="top-right" reverseOrder={false} />
         </QueryProvider>
       </body>
     </html>

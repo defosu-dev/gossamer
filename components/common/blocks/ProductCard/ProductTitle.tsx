@@ -1,7 +1,6 @@
 import { cn } from '@/utils/cn';
 
 interface ProductTitleProps {
-
   /** Product title text */
   title: string;
 }

@@ -2,9 +2,7 @@ import type { ReactNode } from 'react';
 
 import { cn } from '@/utils/cn';
 
-
 interface TypographyProps {
-
   /** Text content to be displayed */
   children: ReactNode;
 

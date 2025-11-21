@@ -4,7 +4,6 @@ import type { StateCreator } from 'zustand';
  *
  */
 export interface CartItem {
-
   /** Variant ID from the product_variants table */
   variant_id: string;
 
@@ -16,7 +15,6 @@ export interface CartItem {
  *
  */
 export interface CartSlice {
-
   /** Current cart items */
   cart: CartItem[];
 

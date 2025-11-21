@@ -1,7 +1,6 @@
 import FeatureItem, { type FeatureItemProps } from './FeatureItem';
 
 interface FeatureListProps {
-
   /** Array of feature items to display */
   items: FeatureItemProps[];
 }

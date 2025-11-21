@@ -7,7 +7,6 @@ import { supabaseBrowser } from '@/utils/supabase/supabaseBrowser';
 import { signUp, signIn, signInWithGoogle, signOut } from '@/utils/supabase/client/auth';
 
 interface UseAuthReturn {
-
   /** Currently authenticated user or null if not signed in */
   user: User | null;
 

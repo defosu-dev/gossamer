@@ -13,7 +13,6 @@ import ProductPrice from './ProductPrice';
 import ProductActions from './ProductActions';
 
 interface ProductCardProps {
-
   /** Full product object with variants, images, and category */
   product?: ProductWithRelations;
 

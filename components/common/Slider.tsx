@@ -10,7 +10,6 @@ import CategoryCard, {
 } from '../pages/home/sections/explorecurated/CategoryCard';
 
 interface CategorySliderProps {
-
   /** Array of categories to display */
   categories: CategoryCardProps[];
 }

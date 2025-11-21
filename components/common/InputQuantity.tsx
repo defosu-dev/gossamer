@@ -9,7 +9,6 @@ import { cn } from '@/utils/cn';
  * Props for InputQuantity.
  */
 export interface InputQuantityProps {
-
   /** Current quantity value */
   quantity: number;
 

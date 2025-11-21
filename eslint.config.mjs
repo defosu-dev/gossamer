@@ -9,7 +9,7 @@ import jsdoc from 'eslint-plugin-jsdoc';
 import unicorn from 'eslint-plugin-unicorn';
 import globals from 'globals';
 
-export default [
+const config = [
   // === Ignored files and folders ===
   {
     ignores: ['node_modules/', '.next/', 'dist/', 'build/', 'coverage/', 'next-env.d.ts', 'out/**'],
@@ -187,3 +187,5 @@ export default [
     },
   },
 ];
+
+export default config;

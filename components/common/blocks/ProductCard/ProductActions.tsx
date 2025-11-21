@@ -8,7 +8,6 @@ import { cn } from '@/utils/cn';
 import Button from '../../Button';
 
 interface ProductActionsProps {
-
   /** Variant ID of the product */
   variantId: string;
 

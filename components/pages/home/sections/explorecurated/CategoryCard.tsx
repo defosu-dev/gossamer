@@ -4,7 +4,6 @@ import { ImageWithFallback } from '@/components/common/ImageWithFallback';
  *
  */
 export interface CategoryCardProps {
-
   /** URL of the category image */
   image: string;
 

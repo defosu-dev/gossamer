@@ -4,7 +4,6 @@ import { cn } from '@/utils/cn';
 import LogoIcon from '@/components/common/LogoIcon';
 
 interface LogoProps {
-
   /** Controls visibility of the text label next to the icon */
   showText?: boolean;
 }

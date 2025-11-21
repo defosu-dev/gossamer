@@ -4,7 +4,6 @@ import type { StateCreator } from 'zustand';
  *
  */
 export interface WishlistSlice {
-
   /** Array of product/variant IDs in the wishlist */
   wishlist: string[];
 

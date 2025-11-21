@@ -40,7 +40,6 @@ const ATTRIBUTES = [
 function saveJson(table: string, rows: unknown[]) {
   const file = path.join(DATA_DIR, `${table}.json`);
   fs.writeFileSync(file, JSON.stringify(rows, null, 2));
-  console.log(`Saved ${rows.length} rows → ${table}.json`);
 }
 
 function jsonToSql(tableName: string, rows: unknown[]): string {
@@ -74,8 +73,6 @@ function jsonToSql(tableName: string, rows: unknown[]): string {
 // GENERATE FAKE DATA
 // ---------------------------------------------------------------------------
 function generateData() {
-  console.log('Generating fake data...\n');
-
   // 1. Categories
   const categories = Array.from({ length: CATEGORY_COUNT }).map(() => {
     const name = faker.commerce.department();
@@ -254,8 +251,6 @@ function generateData() {
 // CREATE MIGRATION WITH SQL DIRECTLY
 // ---------------------------------------------------------------------------
 function createMigration() {
-  console.log('\nGenerating SQL and creating migration...\n');
-
   const tableOrder = [
     'categories',
     'attributes',
@@ -288,11 +283,6 @@ function createMigration() {
   const migrationPath = path.join(MIGRATIONS_DIR, fileName);
 
   fs.writeFileSync(migrationPath, fullSql);
-  console.log(`Migration created: ${migrationPath}`);
-  console.log(`\nNext steps:`);
-  console.log(`   npx supabase db reset`);
-  console.log(`   # or`);
-  console.log(`   npx supabase db push`);
 }
 
 // ---------------------------------------------------------------------------

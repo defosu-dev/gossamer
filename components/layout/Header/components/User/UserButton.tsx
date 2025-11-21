@@ -5,7 +5,6 @@ import { cn } from '@/utils/cn';
 import UserImage, { type UserImageProps } from './UserImage';
 
 interface UserButtonProps extends UserImageProps {
-
   /** Callback triggered when the button is clicked */
   onClick: () => void;
 }

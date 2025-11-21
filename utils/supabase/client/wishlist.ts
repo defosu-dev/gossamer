@@ -11,7 +11,6 @@ import { supabaseBrowser } from '../supabaseBrowser';
  * - Returns array of variant_id strings (never null/undefined)
  */
 export const fetchWishlist = async (userId: string): Promise<string[]> => {
-
   // Step 1: Get or create wishlist record
   const { data: wishlist, error: wishlistError } = await supabaseBrowser
     .from('wishlists')
@@ -46,7 +45,6 @@ export const fetchWishlist = async (userId: string): Promise<string[]> => {
  * - Works for both authenticated and guest users (if userId is session-based)
  */
 export const updateWishlist = async (userId: string, variantIds: string[]) => {
-
   // Step 1: Ensure wishlist record exists (upsert on user_id)
   const { data: wishlist, error: wishlistError } = await supabaseBrowser
     .from('wishlists')

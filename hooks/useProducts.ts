@@ -5,7 +5,6 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchProducts } from '@/utils/supabase/client/products';
 
 interface UseProductsParams {
-
   /** Current page (1-based). Default: 1 */
   page?: number;
 

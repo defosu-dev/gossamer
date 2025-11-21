@@ -4,7 +4,6 @@ import Button from '@/components/common/Button';
 import { ImageWithFallback } from '@/components/common/ImageWithFallback';
 
 interface InfoBlockProps {
-
   /** URL of the variant preview image */
   src: string;
 

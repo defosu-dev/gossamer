@@ -1,7 +1,6 @@
 import { type ReactNode } from 'react';
 
 interface NewArrivalDescriptionProps {
-
   /** Description text content */
   children: ReactNode;
 }

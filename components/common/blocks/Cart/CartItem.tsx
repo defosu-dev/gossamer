@@ -18,7 +18,6 @@ import CartItemPrice from './CartItemPrice';
  * Props for a single cart item in the dropdown.
  */
 export interface CartItemProps {
-
   /** Unique product variant identifier */
   variantId: string;
 
@@ -30,7 +29,6 @@ export interface CartItemProps {
 
   /** Pricing information */
   price: {
-
     /** Current sale price */
     currentPrice: number;
 
@@ -88,7 +86,6 @@ export function CartItem({
   onSelect,
   showCheckbox = false,
 }: CartItemProps) {
-
   // Local quantity state
   const [localQuantity, setLocalQuantity] = useState(quantity);
 

@@ -1,7 +1,6 @@
 import { ImageWithFallback } from '@/components/common/ImageWithFallback';
 
 interface ProductGalleryProps {
-
   /** URL of the main product image */
   src: string;
 

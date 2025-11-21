@@ -5,7 +5,6 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
  * Strongly typed Supabase database schema used by the generated client.
  */
 export interface Database {
-
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {

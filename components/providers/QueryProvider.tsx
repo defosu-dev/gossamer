@@ -4,7 +4,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useState, type ReactNode } from 'react';
 
 interface QueryProviderProps {
-
   /** Application subtree that needs access to React Query */
   children: ReactNode;
 }

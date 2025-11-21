@@ -1,7 +1,6 @@
 import { cn } from '@/utils/cn';
 
 interface DarkBackgroundProps {
-
   /** Whether the backdrop is visible */
   open: boolean;
 

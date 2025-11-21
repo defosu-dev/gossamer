@@ -1,7 +1,6 @@
 import { ImageWithFallback } from '@/components/common/ImageWithFallback';
 
 interface ImageBlockProps {
-
   /** Image source URL */
   src: string;
 

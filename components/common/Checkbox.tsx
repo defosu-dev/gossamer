@@ -8,7 +8,6 @@ import { cn } from '@/utils/cn';
  * Props for the custom Checkbox component.
  */
 export interface CheckboxProps {
-
   /** Whether the checkbox is checked */
   checked: boolean;
 

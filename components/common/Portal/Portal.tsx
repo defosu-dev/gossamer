@@ -7,7 +7,6 @@ import { createPortal } from 'react-dom';
  * Props for the Portal component.
  */
 export interface PortalProps {
-
   /** Content to render inside the portal */
   children: ReactNode;
 

@@ -9,7 +9,6 @@ import { cn } from '@/utils/cn';
  * Props for the CartButton component.
  */
 export interface CartButtonProps {
-
   /** Whether the cart dropdown is currently open */
   open: boolean;
 

@@ -3,7 +3,6 @@ import type { ReactNode } from 'react';
 import { cn } from '@/utils/cn';
 
 interface AuthWrapperProps {
-
   /** Content to render inside the wrapper */
   children: ReactNode;
 }

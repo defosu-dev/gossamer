@@ -9,7 +9,6 @@ import { cn } from '@/utils/cn';
  * Props for {@link DeleteButton}.
  */
 export interface DeleteButtonProps {
-
   /**
    * Callback executed when the delete action is triggered.
    */

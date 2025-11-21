@@ -1,12 +1,13 @@
 'use client';
 
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useEffect, useMemo, useCallback, useRef } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
+import toast from 'react-hot-toast';
 
-import { fetchCart, updateCart } from '@/utils/supabase/client/cart';
-import { getCartEnrichedProducts } from '@/utils/supabase/server/products';
 import { useStore } from '@/store';
 import { type CartItem } from '@/store/slices/cartSlice';
+import { fetchCart, updateCart } from '@/utils/supabase/client/cart';
+import { getCartEnrichedProducts } from '@/utils/supabase/server/products';
 
 import { useAuth } from './useAuth';
 
@@ -178,10 +179,8 @@ export function useCart(): UseCartReturn {
   const { mutate: syncCart } = useMutation({
     mutationFn: (items: CartItem[]) => updateCart(userId!, items),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['cart', userId] }),
-    onError: (error) => {
-      if (process.env.NODE_ENV !== 'production') {
-        console.error('Cart sync failed:', error);
-      }
+    onError: () => {
+      toast.error('Failed to sync cart');
     },
   });
 

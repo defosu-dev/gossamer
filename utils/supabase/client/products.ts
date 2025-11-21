@@ -5,7 +5,6 @@ import type { ProductWithRelations } from '@/types/IProductsWithRelations';
 import { supabaseBrowser } from '../supabaseBrowser';
 
 interface FetchProductsParams {
-
   /** Page number (1-based). Default: 1 */
   page?: number;
 

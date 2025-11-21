@@ -7,7 +7,6 @@ import { memo } from 'react';
  * Props for Breadcrumbs component.
  */
 export interface BreadcrumbsProps {
-
   /** Array of breadcrumb items with label and navigation link */
   items: { label: string; href: string }[];
 }

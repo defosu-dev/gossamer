@@ -1,7 +1,6 @@
 import { type ReactNode } from 'react';
 
 interface FaqCardProps {
-
   /** Icon displayed in the top-left circle */
   icon: ReactNode;
 

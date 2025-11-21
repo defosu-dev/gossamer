@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { cn } from '@/utils/cn';
 
 interface UserDropdownProps {
-
   /** Currently authenticated user object from Supabase */
   user: User | null;
 

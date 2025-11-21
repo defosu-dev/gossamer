@@ -3,7 +3,6 @@ import type { ReactNode } from 'react';
 import { cn } from '@/utils/cn';
 
 interface DescriptionProductProps {
-
   /** Content of the description */
   children: ReactNode;
 

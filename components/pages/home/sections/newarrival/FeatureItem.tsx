@@ -5,7 +5,6 @@ import { type ComponentType } from 'react';
  *
  */
 export interface FeatureItemProps {
-
   /** Name of the Lucide icon (e.g. "Check", "Shield", "Truck") */
   icon: keyof typeof Icons;
 

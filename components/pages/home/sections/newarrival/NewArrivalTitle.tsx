@@ -1,7 +1,6 @@
 import { type ReactNode } from 'react';
 
 interface NewArrivalTitleProps {
-
   /** Title text content */
   children: ReactNode;
 }

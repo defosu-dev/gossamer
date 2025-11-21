@@ -9,7 +9,6 @@ import formatCurrency from '@/utils/formatCurrency';
  * Props for price display.
  */
 export interface CartItemPriceProps {
-
   /** Current (discounted) price in the smallest currency unit */
   currentPrice: number;
 

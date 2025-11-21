@@ -1,33 +1,54 @@
 'use client';
-import React from 'react';
+
+import { Star } from 'lucide-react';
+
+import { cn } from '@/utils/cn';
+import { hasDiscount, getMinPriceVariant } from '@/utils/price';
+import type { ProductWithRelations } from '@/types/IProductsWithRelations';
+
 import ProductImage from './ProductImage';
 import ProductCategoryBadge from './ProductCategoryBadge';
 import ProductTitle from './ProductTitle';
 import ProductPrice from './ProductPrice';
 import ProductActions from './ProductActions';
-import { hasDiscount, getMinPriceVariant } from '@/utils/price';
-import type { ProductWithRelations } from '@/types/IProductsWithRelations';
-import { Star } from 'lucide-react';
+
+interface ProductCardProps {
+
+  /** Full product object with variants, images, and category */
+  product?: ProductWithRelations;
+
+  /** Set true for LCP images (first 3–6 cards) */
+  priority?: boolean;
+
+  /** Set true to display a loading skeleton */
+  isLoading?: boolean;
+
+  /** Optional additional class names */
+  className?: string;
+}
 
 /**
- * Product card with primary image, price (min + discount), category badge, and actions.
+ * ProductCard.
  *
- * @param product  - Full product with variants, images, and category.
- * @param priority - Set `true` for LCP images (first 3–6 cards). Improves Lighthouse score.
- * @param isLoading - Set `true` to display a loading skeleton.
+ * @remarks
+ * Displays a product card with image, price, category badge, rating, and actions.
+ * Handles loading skeleton when product data is not available.
+ * Client component due to nested ProductActions usage (useCart + useRouter).
  */
-const ProductCard = ({
+export function ProductCard({
   product,
   priority = false,
   isLoading = false,
-}: {
-  product?: ProductWithRelations;
-  priority?: boolean;
-  isLoading?: boolean;
-}) => {
+  className,
+}: ProductCardProps) {
   if (isLoading || !product) {
     return (
-      <div className="flex max-w-sm animate-pulse flex-col overflow-hidden rounded-lg bg-white">
+      <div
+        className={cn(
+          'flex max-w-sm animate-pulse flex-col overflow-hidden rounded-lg bg-white',
+          className
+        )}
+      >
         <div className="relative p-1">
           <div className="aspect-square w-full rounded-lg bg-gray-200" />
           <div className="absolute top-2 right-2 h-6 w-20 rounded-full bg-gray-300" />
@@ -55,11 +76,16 @@ const ProductCard = ({
   const defaultVariant = product.product_variants[0];
 
   return (
-    <div className="flex max-w-sm flex-col overflow-hidden rounded-lg bg-white transition-shadow hover:shadow-md">
+    <div
+      className={cn(
+        'flex max-w-sm flex-col overflow-hidden rounded-lg bg-white transition-shadow hover:shadow-md',
+        className
+      )}
+    >
       <div className="relative p-1">
         <ProductImage
-          src={minPriceVariant?.product_images[0].url ?? ''}
-          alt={minPriceVariant?.product_images[0].alt ?? ''}
+          src={minPriceVariant?.product_images[0]?.url ?? ''}
+          alt={minPriceVariant?.product_images[0]?.alt ?? ''}
           priority={priority}
         />
         <ProductCategoryBadge>{product.category?.name}</ProductCategoryBadge>
@@ -86,6 +112,6 @@ const ProductCard = ({
       </div>
     </div>
   );
-};
+}
 
 export default ProductCard;

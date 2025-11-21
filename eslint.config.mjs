@@ -1,4 +1,3 @@
-// eslint.config.mjs
 import js from '@eslint/js';
 import tsPlugin from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
@@ -6,20 +5,30 @@ import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import nextVitals from 'eslint-config-next/core-web-vitals';
 import prettier from 'eslint-config-prettier/flat';
-import jsdoc from 'eslint-plugin-jsdoc'; // Додано
+import jsdoc from 'eslint-plugin-jsdoc';
 import unicorn from 'eslint-plugin-unicorn';
 import globals from 'globals';
 
 export default [
-  // === Ignores ===
+  // === Ignored files and folders ===
   {
     ignores: ['node_modules/', '.next/', 'dist/', 'build/', 'coverage/', 'next-env.d.ts', 'out/**'],
   },
 
-  // === Base JS ===
+  // === Base JavaScript rules ===
   js.configs.recommended,
+  {
+    files: ['**/*.{js,ts,tsx}'],
+    rules: {
+      'no-console': 'warn',
+      'no-debugger': 'error',
+      'no-var': 'error',
+      'prefer-const': 'error',
+      'no-duplicate-imports': 'error',
+    },
+  },
 
-  // === TypeScript ===
+  // === TypeScript rules ===
   {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
@@ -39,10 +48,16 @@ export default [
     },
     rules: {
       ...tsPlugin.configs.recommended.rules,
+      '@typescript-eslint/strict-boolean-expressions': 'warn',
+      '@typescript-eslint/typedef': 'warn',
+      '@typescript-eslint/prefer-readonly': 'warn',
+      '@typescript-eslint/prefer-readonly-parameter-types': 'off', // React props rarely need this
+      '@typescript-eslint/member-ordering': 'warn',
+      '@typescript-eslint/consistent-type-imports': 'error',
     },
   },
 
-  // === React + Hooks ===
+  // === React and Hooks rules ===
   {
     files: ['**/*.{jsx,tsx}'],
     plugins: {
@@ -58,16 +73,27 @@ export default [
       'react/prop-types': 'off',
       'react/react-in-jsx-scope': 'off',
       'react/display-name': 'off',
+      'react/jsx-key': 'error',
+      'react/jsx-no-duplicate-props': 'error',
     },
   },
 
   // === Next.js Core Web Vitals ===
   ...nextVitals,
+  {
+    files: ['**/*.{ts,tsx,jsx,js}'],
+    rules: {
+      '@next/next/no-img-element': 'error',
+      '@next/next/no-html-link-for-pages': 'warn',
+      '@next/next/no-sync-scripts': 'error',
+      '@next/next/google-font-display': 'warn',
+    },
+  },
 
-  // === Prettier (відключає стилістичні правила) ===
+  // === Prettier (disables stylistic ESLint rules) ===
   prettier,
 
-  // === Unicorn (opinionated) ===
+  // === Unicorn rules (only key ones kept) ===
   {
     plugins: { unicorn },
     rules: {
@@ -77,13 +103,13 @@ export default [
     },
   },
 
-  // === JSDoc (обов’язковий, з @remarks) ===
+  // === JSDoc rules (warn level) ===
   {
     files: ['**/*.{ts,tsx}'],
-    plugins: { jsdoc }, // Підключено
+    plugins: { jsdoc },
     rules: {
       'jsdoc/require-jsdoc': [
-        'error',
+        'warn',
         {
           publicOnly: true,
           require: {
@@ -98,20 +124,19 @@ export default [
           ],
         },
       ],
-      'jsdoc/tag-lines': ['error', 'any', { startLines: 1 }],
-      'jsdoc/require-description-complete-sentence': 'error',
-      'jsdoc/require-hyphen-before-param-description': ['error', 'never'],
-      'jsdoc/require-param-description': 'error',
-      'jsdoc/require-returns-description': 'off',
-      'jsdoc/check-tag-names': ['error', { definedTags: ['remarks'] }],
+      'jsdoc/tag-lines': ['warn', 'any', { startLines: 1 }],
+      'jsdoc/require-description-complete-sentence': 'off',
+      'jsdoc/require-hyphen-before-param-description': ['warn', 'never'],
+      'jsdoc/require-param-description': 'warn',
+      'jsdoc/require-returns-description': 'warn',
+      'jsdoc/check-tag-names': ['warn', { definedTags: ['remarks'] }],
     },
   },
 
-  // === Наш стиль: function, interface, Next.js rules ===
+  // === Our style rules: function components, interfaces, imports ===
   {
     files: ['**/*.{ts,tsx}'],
     rules: {
-      // Function components only
       'react/function-component-definition': [
         'error',
         {
@@ -119,11 +144,7 @@ export default [
           unnamedComponents: 'function-expression',
         },
       ],
-      // Interface over type
       '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
-
-      // Next.js specifics
-      '@next/next/no-img-element': 'error',
       'import/order': [
         'error',
         {
@@ -131,18 +152,29 @@ export default [
           'newlines-between': 'always',
         },
       ],
-
-      // General
+      'import/no-duplicates': 'error',
+      'import/no-unresolved': 'error',
+      'import/extensions': 'off',
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
       '@typescript-eslint/no-empty-function': 'off',
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       '@typescript-eslint/ban-ts-comment': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
-      'lines-around-comment': ['error', { beforeLineComment: true, beforeBlockComment: true }],
+      'lines-around-comment': [
+        'error',
+        {
+          beforeBlockComment: true,
+          afterBlockComment: false,
+          allowBlockStart: true,
+          allowObjectStart: true,
+          allowArrayStart: true,
+          ignorePattern: '^\\s*(/|\\*|export|\\)|\\}|\\]|\\*\\s*@)',
+        },
+      ],
     },
   },
 
-  // === Tests ===
+  // === Test files ===
   {
     files: ['**/*.test.{ts,tsx}'],
     languageOptions: {

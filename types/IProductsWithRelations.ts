@@ -1,4 +1,9 @@
-export type ProductWithRelations = {
+/**
+ * @remarks
+ * Represents a product with all related entities, including category,
+ * variants, pricing and associated images.
+ */
+export interface ProductWithRelations {
   id: string;
   title: string;
   description: string | null;
@@ -18,4 +23,4 @@ export type ProductWithRelations = {
       position: number | null;
     }[];
   }[];
-};
+}

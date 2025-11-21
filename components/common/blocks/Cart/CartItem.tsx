@@ -1,21 +1,24 @@
 // src/components/cart/CartItem.tsx
 'use client';
 
+import { useState, useCallback, memo } from 'react';
+
+import { cn } from '@/utils/cn';
 import Checkbox from '@/components/common/Checkbox';
 import DeleteButton from '@/components/common/DeleteButton';
 import { ImageWithFallback } from '@/components/common/ImageWithFallback';
 import InputQuantity from '@/components/common/InputQuantity';
 import useDebouncedCallback from '@/hooks/useDebouncedCallback';
-import { cn } from '@/utils/cn';
-import { useState, useRef, useEffect, useCallback, memo } from 'react';
+import { Badge } from '@/components/common/Badge';
+
 import CartDescription from './CartDescription';
 import CartItemPrice from './CartItemPrice';
-import { Badge } from '@/components/common/Badge';
 
 /**
  * Props for a single cart item in the dropdown.
  */
 export interface CartItemProps {
+
   /** Unique product variant identifier */
   variantId: string;
 
@@ -27,17 +30,24 @@ export interface CartItemProps {
 
   /** Pricing information */
   price: {
+
+    /** Current sale price */
     currentPrice: number;
+
+    /** Original price (crossed out) */
     oldPrice: number;
   };
 
-  /** Current quantity from store */
+  /** Current quantity from store/state */
   quantity: number;
 
-  /** Optional list of attributes like color, size, type */
+  /** Optional list of product attributes like color, size, etc. */
   attributes?: { label: string; value: string }[];
 
-  /** Handler for quantity changes or removal (qty = 0) */
+  /**
+   * Handler for quantity changes or removal.
+   * - If quantity = 0, the item is removed.
+   */
   onChange: (variantId: string, quantity: number) => void;
 
   /** Whether the item is currently selected */
@@ -46,52 +56,51 @@ export interface CartItemProps {
   /** Callback when selection state changes */
   onSelect?: (variantId: string, selected: boolean) => void;
 
-  /** Controls whether checkbox is rendered */
+  /** Controls whether the checkbox is rendered */
   showCheckbox?: boolean;
 }
 
 /**
- * CartItem
+ * CartItem component.
  *
  * Represents a single item in the shopping cart dropdown.
  * Optimistically updates quantity and supports deletion.
  *
  * @remarks
- * - Debounces quantity changes to reduce store/network updates.
+ * - Debounces quantity updates to reduce store/network calls.
  * - Fully accessible: images with alt, focus-visible styling on interactive elements.
  * - Designed for Tailwind `group` usage for hover effects.
- * - Optional checkbox for selection (controlled via `showCheckbox`).
- * - **Exported in two forms**:
- *   - `CartItem` — original function (for tests, HOC)
- *   - `default export` — memoized version (for production)
+ * - Optional checkbox for selection (controlled via `showCheckbox` prop).
+ * - Memoized for performance.
+ * - Two forms exported:
+ *   - `CartItem` — function component for HOC or testing
+ *   - `default export` — memoized version for production
  */
 export function CartItem({
   variantId,
   title,
   image,
   price,
-  quantity: externalQuantity,
+  quantity,
   attributes = [],
   onChange,
   selected = false,
   onSelect,
   showCheckbox = false,
 }: CartItemProps) {
-  const [localQuantity, setLocalQuantity] = useState(externalQuantity);
-  const prevExternal = useRef(externalQuantity);
 
-  // Debounced callback to sync quantity with parent/store
+  // Local quantity state
+  const [localQuantity, setLocalQuantity] = useState(quantity);
+
+  // Sync localQuantity if external quantity prop changes
+  if (localQuantity !== quantity) {
+    setLocalQuantity(quantity);
+  }
+
+  // Debounced callback to notify parent/store about quantity changes
   const debouncedSend = useDebouncedCallback((qty: number) => {
     onChange(variantId, qty);
   }, 300);
-
-  // Sync local quantity if external quantity changes
-  useEffect(() => {
-    if (prevExternal.current !== externalQuantity) {
-      setLocalQuantity(externalQuantity);
-    }
-    prevExternal.current = externalQuantity;
-  }, [externalQuantity]);
 
   const handleQuantityChange = useCallback(
     (newQty: number) => {
@@ -115,9 +124,8 @@ export function CartItem({
 
   return (
     <li className="group flex gap-3 p-3">
-      {/* Checkbox — only if showCheckbox is true */}
       {showCheckbox && (
-        <div className="flex items-start pt-1">
+        <div className={cn('flex items-start pt-1')}>
           <Checkbox
             checked={selected}
             onCheckedChange={handleSelectChange}
@@ -127,7 +135,6 @@ export function CartItem({
       )}
 
       <div className={cn('grid flex-1 grid-cols-4 gap-3', showCheckbox && 'ml-0')}>
-        {/* Product image */}
         <div className="relative col-span-1 aspect-square w-full overflow-hidden rounded-lg shadow">
           <ImageWithFallback
             src={image}
@@ -137,9 +144,8 @@ export function CartItem({
           />
         </div>
 
-        {/* Product info */}
         <div className="col-span-2 flex flex-col">
-          <Badge as="link" href="#" className="self-start">
+          <Badge as="link" href="#" className={cn('self-start')}>
             Product
           </Badge>
 
@@ -147,15 +153,14 @@ export function CartItem({
             {title}
           </div>
 
-          <CartDescription items={attributes} className="mt-1" />
+          <CartDescription items={attributes} className={cn('mt-1')} />
         </div>
 
-        {/* Price and controls */}
         <div className="col-span-1 flex flex-col items-end">
           <CartItemPrice
             currentPrice={price.currentPrice}
             oldPrice={price.oldPrice}
-            className="text-end"
+            className={cn('text-end')}
           />
 
           <div className="mt-auto flex items-center gap-4">

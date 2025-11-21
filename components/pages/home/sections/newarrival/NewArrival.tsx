@@ -1,32 +1,50 @@
-import React from 'react';
+import Button from '@/components/common/Button';
+
 import Title from './NewArrivalTitle';
 import Description from './NewArrivalDescription';
 import FeatureList from './FeatureList';
 import ImageBlock from './ImageBlock';
-import { FeatureItemProps } from './FeatureItem';
-import Button from '@/components/common/Button';
+import { type FeatureItemProps } from './FeatureItem';
 
-type NewArrivalProps = {
+interface NewArrivalProps {
+
+  /** Optional badge label above the title */
   label?: string;
+
+  /** Main product title */
   title: string;
+
+  /** Product description text */
   description: string;
+
+  /** List of feature items with icon and text */
   features: FeatureItemProps[];
+
+  /** Image object for the product */
   image: {
     src: string;
     alt: string;
   };
-};
+}
 
-const NewArrival = ({
+/**
+ * NewArrival section showcasing a highlighted product with title,
+ * description, feature list and large image.
+ *
+ * @remarks
+ * Responsive two-column layout (stacked on mobile). Pure presentational
+ * component used on the homepage and category pages.
+ */
+export function NewArrival({
   label = 'NEW ARRIVAL',
   title,
   description,
   features,
   image,
-}: NewArrivalProps) => {
+}: NewArrivalProps) {
   return (
     <section className="container mx-auto flex max-w-7xl items-center justify-between gap-8 p-1">
-      {/* Контент слева */}
+      {/* Content left */}
       <div className="mx-auto flex max-w-lg flex-col px-6">
         <span className="mb-2 text-xs font-semibold text-zinc-600">{label}</span>
         <div className="cursor-pointer">
@@ -39,12 +57,12 @@ const NewArrival = ({
         </div>
       </div>
 
-      {/* Изображение справа */}
+      {/* Image right */}
       <div className="h-[460px] flex-1">
         <ImageBlock src={image.src} alt={image.alt} />
       </div>
     </section>
   );
-};
+}
 
 export default NewArrival;

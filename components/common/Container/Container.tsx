@@ -1,22 +1,38 @@
+import type { ReactNode } from 'react';
+
 import { cn } from '@/utils/cn';
-import { IContainer } from './types';
-import React from 'react';
+
+interface ContainerProps {
+
+  /** Content to render inside the container */
+  children: ReactNode;
+
+  /** Additional CSS classes */
+  className?: string;
+
+  /** Centers content horizontally */
+  xCenter?: boolean;
+
+  /** Flexbox justify-content property (start, center, end, between, around, evenly) */
+  justifyContent?: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly';
+
+  /** Flexbox align-items property (start, center, end, stretch, baseline) */
+  alignItems?: 'start' | 'center' | 'end' | 'stretch' | 'baseline';
+}
 
 /**
+ * @remarks
  * A container component with flexbox alignment.
- * @param children - The content to be rendered inside the container.
- * @param className - Additional CSS classes to apply.
- * @param xCenter - Centers content horizontally (sets margin to auto).
- * @param justifyContent - Flexbox justify-content property.
- * @param alignItems - Flexbox align-items property.
+ * - Uses a max width of 7xl and horizontal padding.
+ * - Supports optional horizontal centering, justify-content, and align-items.
  */
-const Container = ({
+export function Container({
   children,
   className = '',
   xCenter = true,
   justifyContent = 'start',
   alignItems = 'start',
-}: IContainer) => {
+}: ContainerProps) {
   return (
     <div
       className={cn(
@@ -32,6 +48,6 @@ const Container = ({
       {children}
     </div>
   );
-};
+}
 
 export default Container;

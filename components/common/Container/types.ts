@@ -1,4 +1,4 @@
-import { IChildren } from '@/types/IChildren';
+import type { IChildren } from '@/types/IChildren';
 
 export type IContainer = {
   justifyContent?: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly';

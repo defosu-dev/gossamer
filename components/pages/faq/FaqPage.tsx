@@ -1,5 +1,3 @@
-'use client';
-import React from 'react';
 import {
   User,
   Lock,
@@ -12,14 +10,24 @@ import {
   Phone,
   Archive,
 } from 'lucide-react';
-import { FaqCard } from './FaqCard';
+
 import { Category } from '../../common/Category';
 import { Accordion } from '../../common/Accordion';
 
-const FaqPage = () => {
+import { FaqCard } from './FaqCard';
+
+/**
+ * FAQ page containing general questions, sales support cards,
+ * category navigation and detailed accordion answers.
+ *
+ * @remarks
+ * This is a server component. All interactivity is delegated to child
+ * client components (Accordion, Category).
+ */
+export function FaqPage() {
   return (
     <div className="mx-auto w-full max-w-6xl items-center">
-      {/* Top section */}
+      {/* Hero section */}
       <div className="relative flex h-64 flex-col justify-end bg-gray-300 pb-6 pl-10">
         <div className="absolute inset-0 bg-black/40" />
         <div className="relative z-10 text-white">
@@ -30,6 +38,7 @@ const FaqPage = () => {
 
       {/* FAQ Content */}
       <div className="mx-auto max-w-6xl space-y-12 px-4 py-12">
+        {/* General Questions */}
         <div>
           <h2 className="mb-6 text-sm font-semibold text-gray-800 uppercase">General Questions</h2>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
@@ -73,9 +82,9 @@ const FaqPage = () => {
           </div>
         </div>
 
-        {/* Category FAQ */}
+        {/* Category FAQ + Accordion */}
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-          {/* Left side - Categories */}
+          {/* Categories */}
           <div className="space-y-4">
             <Category
               title="Shipping"
@@ -97,7 +106,7 @@ const FaqPage = () => {
             />
           </div>
 
-          {/* Right side - Accordion */}
+          {/* Accordion */}
           <div className="space-y-4 md:col-span-2">
             <Accordion
               title="Terms and Conditions of Application Service Fee"
@@ -120,6 +129,6 @@ const FaqPage = () => {
       </div>
     </div>
   );
-};
+}
 
 export default FaqPage;

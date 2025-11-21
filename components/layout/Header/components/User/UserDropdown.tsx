@@ -1,49 +1,106 @@
 'use client';
-import { cn } from '@/utils/cn';
-import { User } from '@supabase/supabase-js';
+
+import type { User } from '@supabase/supabase-js';
 import Link from 'next/link';
 
-export type IUserDropdown = {
-  user: User | null;
-  open: boolean;
-  onClose: () => void;
-  onSignOut: () => void;
-};
+import { cn } from '@/utils/cn';
 
-export default function UserDropdown({ user, open, onClose, onSignOut }: IUserDropdown) {
-  const handleClose = () => {
-    onClose();
+interface UserDropdownProps {
+
+  /** Currently authenticated user object from Supabase */
+  user: User | null;
+
+  /** Controls dropdown visibility */
+  open: boolean;
+
+  /** Callback to close the dropdown */
+  onClose: () => void;
+
+  /** Callback to initiate sign-out flow */
+  onSignOut: () => void;
+}
+
+/**
+ * User account dropdown menu displayed when clicking the avatar in the header.
+ *
+ * @remarks
+ * This is a client component required for handling click events on links and the sign-out button.
+ * Uses conditional Tailwind classes for smooth mount/unmount animation.
+ * All navigation uses Next.js Link with onClick closure for immediate dropdown dismissal.
+ */
+export function UserDropdown({ user, open, onClose, onSignOut }: UserDropdownProps) {
+  const handleSignOut = () => {
     onSignOut();
+    onClose();
   };
 
   return (
     <div
       role="menu"
+      aria-orientation="vertical"
+      aria-labelledby="user-menu-button"
       className={cn(
-        'absolute right-0 z-50 mt-2 origin-top-right overflow-hidden',
-        'flex flex-col',
-        'min-w-3xs md:max-w-lg',
-        'transition-all duration-200',
-        'rounded-xl border border-neutral-300 bg-white shadow-xl',
+        'absolute top-full right-0 z-50 mt-2 w-56 origin-top-right overflow-hidden rounded-xl',
+        'ring-opacity-5 border border-zinc-300 bg-white shadow-lg ring-1 ring-black',
+        'transition-all duration-200 ease-out',
         open
           ? 'pointer-events-auto translate-y-0 scale-100 opacity-100'
-          : 'pointer-events-none -translate-y-1 scale-95 opacity-0'
+          : 'pointer-events-none -translate-y-2 scale-95 opacity-0'
       )}
     >
-      <div className="flex items-center justify-between gap-4 border-b border-gray-200 px-3 py-2">
-        <span className="text font-bold">{user?.user_metadata.full_name}</span>
+      {/* User Info Header */}
+      <div className={cn('border-b border-zinc-200 px-4 py-3')}>
+        <p className={cn('text-sm font-medium text-zinc-900')}>
+          {user?.user_metadata?.full_name ?? 'User'}
+        </p>
+        <p className={cn('truncate text-xs text-zinc-500')}>{user?.email}</p>
       </div>
-      <ul className="flex h-full max-h-96 flex-col divide-y divide-gray-200 overflow-y-auto scroll-smooth">
-        <Link href="auth/profile" onClick={onClose} className="px-6 py-1.5 font-semibold">
-          • Profile
-        </Link>
+
+      {/* Menu Items */}
+      <ul className={cn('py-1')}>
+        <li>
+          <Link
+            href="/profile"
+            onClick={onClose}
+            className={cn(
+              'block px-4 py-2.5 text-sm text-zinc-700 transition-colors',
+              'hover:bg-zinc-100 hover:text-zinc-900',
+              'focus-visible:bg-zinc-100 focus-visible:text-zinc-900 focus-visible:outline-none'
+            )}
+          >
+            Profile
+          </Link>
+        </li>
+        <li>
+          <Link
+            href="/settings"
+            onClick={onClose}
+            className={cn(
+              'block px-4 py-2.5 text-sm text-zinc-700 transition-colors',
+              'hover:bg-zinc-100 hover:text-zinc-900',
+              'focus-visible:bg-zinc-100 focus-visible:text-zinc-900 focus-visible:outline-none'
+            )}
+          >
+            Settings
+          </Link>
+        </li>
       </ul>
 
-      <div className="flex items-center justify-between gap-4 border-t border-gray-200 px-3 py-2">
-        <button onClick={handleClose} className="text cursor-pointer font-bold">
-          Sign Out
+      {/* Sign Out Footer */}
+      <div className={cn('border-t border-zinc-200 px-4 py-3')}>
+        <button
+          onClick={handleSignOut}
+          className={cn(
+            'w-full text-left text-sm font-medium text-red-600 transition-colors',
+            'rounded-md px-2 py-1.5 hover:bg-red-50 hover:text-red-700',
+            'focus-visible:bg-red-50 focus-visible:text-red-700 focus-visible:outline-none'
+          )}
+        >
+          Sign out
         </button>
       </div>
     </div>
   );
 }
+
+export default UserDropdown;

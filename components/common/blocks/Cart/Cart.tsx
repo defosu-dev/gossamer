@@ -1,22 +1,16 @@
 'use client';
 
 import { memo, useCallback, useEffect, useState } from 'react';
-import CartDropdown from './CartDropdown';
-import CartButton from './CartButton';
+
 import DarkBackground from '@/components/common/DarkBackground';
 import { useCart } from '@/hooks';
+import { cn } from '@/utils/cn';
+
+import CartDropdown from './CartDropdown';
+import CartButton from './CartButton';
 
 /**
- * Props for the Cart component.
- *
- * @remarks
- * This component accepts no external props — all state is managed internally
- * and via the `useCart` hook.
- */
-export interface CartProps {}
-
-/**
- * Cart
+ * Cart.
  *
  * Root component for the shopping cart UI in the header.
  * Manages dropdown visibility, integrates with `useCart` hook, and handles
@@ -32,7 +26,7 @@ export interface CartProps {}
  *   - `Cart` — original function (for tests, HOC)
  *   - `default export` — memoized version (for production)
  */
-export function Cart({}: CartProps) {
+export function Cart() {
   const [open, setOpen] = useState(false);
   const { totalItems, cart, totalPrice, updateQuantity } = useCart();
 
@@ -52,7 +46,7 @@ export function Cart({}: CartProps) {
   }, [open, closeCart]);
 
   return (
-    <div className="relative">
+    <div className={cn('relative')}>
       <CartButton onClick={toggle} open={open} count={totalItems} />
 
       <DarkBackground open={open} onClose={closeCart} />

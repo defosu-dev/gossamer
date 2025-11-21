@@ -1,25 +1,42 @@
 'use client';
-import React from 'react';
-import UserImage, { IUserImage } from './UserImage';
+
 import { cn } from '@/utils/cn';
 
-type IUserButton = {
-  onClick: () => void;
-} & IUserImage;
+import UserImage, { type UserImageProps } from './UserImage';
 
-export default function UserButton({ onClick, user, isLoading }: IUserButton) {
+interface UserButtonProps extends UserImageProps {
+
+  /** Callback triggered when the button is clicked */
+  onClick: () => void;
+}
+
+/**
+ * Header user avatar button that toggles the account dropdown menu.
+ *
+ * @remarks
+ * This is a client component due to the onClick handler and interactive states.
+ * Renders a circular avatar with loading/placeholder states handled by UserImage.
+ * Includes hover, active, and focus-visible styles for full accessibility.
+ */
+export function UserButton({ onClick, user, isLoading }: UserButtonProps) {
   return (
     <button
-      aria-haspopup="menu"
-      onClick={onClick}
       type="button"
+      aria-haspopup="menu"
+      aria-label={user ? 'Open user menu' : 'Sign in'}
+      onClick={onClick}
       className={cn(
-        'relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-full',
-        'border border-neutral-300 bg-white shadow',
-        'transition-all hover:bg-neutral-50 active:scale-95 active:shadow-inner'
+        'flex h-10 w-10 items-center justify-center overflow-hidden rounded-full',
+        'border border-zinc-300 bg-white shadow-sm',
+        'transition-all duration-150',
+        'hover:border-zinc-400 hover:shadow-md',
+        'active:scale-95 active:shadow',
+        'focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 focus-visible:outline-none'
       )}
     >
-      <UserImage isLoading={isLoading} user={user} />
+      <UserImage user={user} isLoading={isLoading} />
     </button>
   );
 }
+
+export default UserButton;

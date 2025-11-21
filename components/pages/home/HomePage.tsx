@@ -1,22 +1,25 @@
-'use server';
-import React, { Suspense } from 'react';
-import NewArrival from './sections/newarrival/NewArrival';
+import { Suspense } from 'react';
+
 import ProductCard from '@/components/common/blocks/ProductCard/ProductCard';
-import ExploreSection from './sections/explorecurated/ExploreSection';
 import SearchBar from '@/components/common/SearchBar/SearchBar';
-import { testdatanewarrival } from './sections/newarrival/testdatanewarrival';
 import { fetchProducts } from '@/utils/supabase/server/products';
+
+import NewArrival from './sections/newarrival/NewArrival';
+import ExploreSection from './sections/explorecurated/ExploreSection';
+import { testdatanewarrival } from './sections/newarrival/testdatanewarrival';
 
 /**
  * Home page with:
  * - Search bar
  * - Product grid (first 6 cards with priority for LCP)
  * - New Arrival section (static test data)
- * - Explore curated section
+ * - Explore curated section.
  *
- * Products are fetched via `useProducts` hook with price ascending sort.
+ * @remarks
+ * This is a server component. Products are fetched server-side using `fetchProducts`.
+ * Streaming is enabled via Suspense boundary around the product grid.
  */
-export default async function HomePage() {
+export async function HomePage() {
   return (
     <div className="flex w-full flex-col gap-10 pb-16">
       <SearchBar />
@@ -39,7 +42,7 @@ export default async function HomePage() {
   );
 }
 
-const ProductGridServer = async () => {
+async function ProductGridServer() {
   const { data: products } = await fetchProducts({
     sort: { field: 'current_price', order: 'asc' },
   });
@@ -54,9 +57,9 @@ const ProductGridServer = async () => {
       ))}
     </>
   );
-};
+}
 
-const ProductGridLoading = () => {
+function ProductGridLoading() {
   return (
     <>
       {[...Array(8)].map((_, i) => (
@@ -64,4 +67,6 @@ const ProductGridLoading = () => {
       ))}
     </>
   );
-};
+}
+
+export default HomePage;

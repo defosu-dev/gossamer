@@ -1,13 +1,27 @@
-import React from 'react';
 import * as Icons from 'lucide-react';
+import { type ComponentType } from 'react';
 
-export type FeatureItemProps = {
-  icon: string;
+/**
+ *
+ */
+export interface FeatureItemProps {
+
+  /** Name of the Lucide icon (e.g. "Check", "Shield", "Truck") */
+  icon: keyof typeof Icons;
+
+  /** Feature description text */
   text: string;
-};
+}
 
-const FeatureItem = ({ icon, text }: FeatureItemProps) => {
-  const LucideIcon = (Icons as unknown as Record<string, React.ElementType>)[icon];
+/**
+ * Feature item with a dynamic Lucide icon and accompanying text.
+ *
+ * @remarks
+ * Renders a single feature line using a string-based icon name.
+ * Icon is resolved at runtime from the lucide-react package.
+ */
+export function FeatureItem({ icon, text }: FeatureItemProps) {
+  const LucideIcon = Icons[icon] as ComponentType<{ className?: string }> | undefined;
 
   return (
     <div className="flex flex-col gap-1">
@@ -17,6 +31,6 @@ const FeatureItem = ({ icon, text }: FeatureItemProps) => {
       </div>
     </div>
   );
-};
+}
 
 export default FeatureItem;

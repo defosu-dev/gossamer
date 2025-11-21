@@ -1,19 +1,32 @@
-import React from 'react';
 import { Star, Heart } from 'lucide-react';
+
 import Button from '@/components/common/Button';
 import { ImageWithFallback } from '@/components/common/ImageWithFallback';
-type ImageBlockProps = {
-  src: string;
-  alt: string;
-};
 
-const InfoBlock = ({ src, alt }: ImageBlockProps) => {
+interface InfoBlockProps {
+
+  /** URL of the variant preview image */
+  src: string;
+
+  /** Alt text for the variant preview image */
+  alt: string;
+}
+
+/**
+ * Product information block containing title, rating, pricing, variant selector,
+ * description tabs and add-to-cart action.
+ *
+ * @remarks
+ * Displays static product details alongside interactive elements (variant selection,
+ * wishlist toggle, tab switching). Designed for product detail pages.
+ */
+export function InfoBlock({ src, alt }: InfoBlockProps) {
   return (
     <div className="mx-auto max-w-md rounded-2xl bg-white p-6 shadow-sm">
       {/* Title */}
       <h1 className="mb-2 text-2xl font-bold">Marshall</h1>
 
-      {/* Brand and Rating test*/}
+      {/* Brand and Rating */}
       <div className="mb-4 flex items-center gap-3 text-sm text-gray-500">
         <span className="text-nowrap">
           Brand: <span className="font-medium text-gray-800">Marshall</span>
@@ -23,12 +36,12 @@ const InfoBlock = ({ src, alt }: ImageBlockProps) => {
           <span>4.9 (346 rating)</span>
         </div>
         <div className="ml-auto flex cursor-pointer items-center text-nowrap text-gray-700 hover:text-red-500">
-          <Heart className="mr-1 h-4 w-4" />
+          K <Heart className="mr-1 h-4 w-4" />
           Add to my wish list
         </div>
       </div>
 
-      {/* Price test*/}
+      {/* Price */}
       <div className="mb-4">
         <p className="text-3xl font-semibold text-gray-900">$ 59.99</p>
         <p className="text-gray-400 line-through">100.00 USD</p>
@@ -75,12 +88,12 @@ const InfoBlock = ({ src, alt }: ImageBlockProps) => {
         </ol>
       </div>
 
-      {/* Read More Button */}
+      {/* Action Button */}
       <div className="mt-5 flex w-full flex-col">
         <Button variant="secondary">Add to Cart</Button>
       </div>
     </div>
   );
-};
+}
 
 export default InfoBlock;

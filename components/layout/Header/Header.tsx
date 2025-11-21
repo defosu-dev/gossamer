@@ -1,14 +1,25 @@
-import React from 'react';
+import { cn } from '@/utils/cn';
+
 import Logo from './components/Logo';
 import NavBar from './components/NavBar';
 import SideBar from './components/SideBar';
 
-const Header = () => {
+/**
+ * Main site header containing the logo, primary navigation, and sidebar toggle.
+ *
+ * @remarks
+ * This is a server component. All interactive elements (mobile menu, navigation links)
+ * are delegated to the client components NavBar and SideBar.
+ */
+export function Header() {
   return (
-    <header className="w-full">
+    <header className={cn('w-full bg-white')}>
       <div
-        className="mx-auto mb-1 flex max-w-5xl items-center justify-between rounded-b-2xl border border-zinc-300 bg-white px-8 py-4 shadow-sm"
-        style={{ borderTopLeftRadius: 0, borderTopRightRadius: 0 }}
+        className={cn(
+          'mx-auto flex max-w-6xl items-center justify-between',
+          'border-x border-b border-zinc-300 bg-white px-6 py-4',
+          'rounded-b-2xl shadow-sm'
+        )}
       >
         <Logo />
         <NavBar />
@@ -16,6 +27,6 @@ const Header = () => {
       </div>
     </header>
   );
-};
+}
 
 export default Header;

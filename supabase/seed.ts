@@ -1,6 +1,7 @@
-import { faker } from '@faker-js/faker';
 import fs from 'fs';
 import path from 'path';
+
+import { faker } from '@faker-js/faker';
 
 // ---------------------------------------------------------------------------
 // PATHS
@@ -31,21 +32,21 @@ const ATTRIBUTES = [
   'Display',
   'Camera',
   'Warranty',
-];
+] as const;
 
 // ---------------------------------------------------------------------------
 // HELPERS
 // ---------------------------------------------------------------------------
-function saveJson(table: string, rows: any[]) {
+function saveJson(table: string, rows: unknown[]) {
   const file = path.join(DATA_DIR, `${table}.json`);
   fs.writeFileSync(file, JSON.stringify(rows, null, 2));
   console.log(`Saved ${rows.length} rows → ${table}.json`);
 }
 
-function jsonToSql(tableName: string, rows: any[]): string {
+function jsonToSql(tableName: string, rows: unknown[]): string {
   if (rows.length === 0) return `-- No data for ${tableName}\n`;
 
-  const columns = Object.keys(rows[0]);
+  const columns = Object.keys(rows[0] as object);
   const columnNames = columns.map((col) => `"${col}"`).join(', ');
 
   let sql = `-- Inserting into ${tableName}\n`;
@@ -54,8 +55,8 @@ function jsonToSql(tableName: string, rows: any[]): string {
   const valueRows = rows.map((row) => {
     const values = columns
       .map((col) => {
-        const value = row[col];
-        if (value === null) return 'NULL';
+        const value = (row as any)[col];
+        if (value === null || value === undefined) return 'NULL';
         if (typeof value === 'string') return `'${value.replace(/'/g, "''")}'`;
         if (typeof value === 'number' || typeof value === 'boolean') return value.toString();
         return `'${JSON.stringify(value).replace(/'/g, "''")}'`;
@@ -265,7 +266,7 @@ function createMigration() {
     'product_variant_attributes',
     'discounts',
     'discount_products',
-  ];
+  ] as const;
 
   let fullSql = `-- Auto-generated seed data\n`;
   fullSql += `-- Generated: ${new Date().toISOString()}\n\n`;
@@ -278,7 +279,6 @@ function createMigration() {
     }
   }
 
-  // Create migration file
   const timestamp = new Date()
     .toISOString()
     .replace(/[-:T.]/g, '')

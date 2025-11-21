@@ -1,43 +1,43 @@
 'use client';
 
-import LogoIcon from '@/components/common/LogoIcon';
-import { useAuth } from '@/hooks';
-import { cn } from '@/utils/cn';
+import { useState } from 'react';
 import { useForm } from '@tanstack/react-form';
 import { Eye, EyeOff, Loader2, Lock, Mail, UserRound } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
 import { z } from 'zod';
 
-/**
- * Zod schema for sign-up form validation.
- */
-const signUpSchema = z.object({
-  fullName: z
-    .string()
-    .min(2, 'Full name must be at least 2 characters')
-    .max(50, 'Full name too long'),
-  email: z.string().email('Invalid email address'),
-  password: z
-    .string()
-    .min(8, 'Password must be at least 8 characters')
-    .regex(/[A-Z]/, 'Must contain at least one uppercase letter')
-    .regex(/[a-z]/, 'Must contain at least one lowercase letter')
-    .regex(/[0-9]/, 'Must contain at least one number'),
-  agree: z.boolean().refine((val) => val === true, {
-    message: 'You must accept the terms and conditions',
-  }),
-});
+import { cn } from '@/utils/cn';
+import { useAuth } from '@/hooks';
+import LogoIcon from '@/components/common/LogoIcon';
 
 /**
- * Sign-up page with full validation and preserved original styling.
+ * @remarks
+ * Client-side sign-up page with full validation, password visibility toggle,
+ * and Google OAuth support. Uses TanStack Form and Zod schema.
  */
-const SignUpPage = () => {
+export default function SignUpPage() {
   const { signUp, signInWithGoogle, loading } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string>('');
   const router = useRouter();
+
+  const signUpSchema = z.object({
+    fullName: z
+      .string()
+      .min(2, 'Full name must be at least 2 characters')
+      .max(50, 'Full name too long'),
+    email: z.string().email('Invalid email address'),
+    password: z
+      .string()
+      .min(8, 'Password must be at least 8 characters')
+      .regex(/[A-Z]/, 'Must contain at least one uppercase letter')
+      .regex(/[a-z]/, 'Must contain at least one lowercase letter')
+      .regex(/[0-9]/, 'Must contain at least one number'),
+    agree: z.boolean().refine((val) => val === true, {
+      message: 'You must accept the terms and conditions',
+    }),
+  });
 
   const form = useForm({
     defaultValues: {
@@ -50,10 +50,10 @@ const SignUpPage = () => {
       onSubmit: signUpSchema,
     },
     onSubmit: async ({ value }) => {
+      setError('');
       try {
-        await signUp(value.email, value.password, value.fullName).then(() => {
-          router.push('/auth/sign-in');
-        });
+        await signUp(value.email, value.password, value.fullName);
+        router.push('/auth/sign-in');
       } catch (err) {
         setError((err as Error).message);
       }
@@ -105,7 +105,7 @@ const SignUpPage = () => {
               </div>
               {field.state.meta.errors.map((error, index) => (
                 <p key={index} className="mt-1 ml-2 w-full text-xs text-red-500">
-                  {typeof error === 'string' ? error : (error?.message ?? 'Invalid password')}
+                  {typeof error === 'string' ? error : error?.message}
                 </p>
               ))}
             </>
@@ -137,7 +137,7 @@ const SignUpPage = () => {
               </div>
               {field.state.meta.errors.map((error, index) => (
                 <p key={index} className="mt-1 ml-2 w-full text-xs text-red-500">
-                  {typeof error === 'string' ? error : (error?.message ?? 'Invalid password')}
+                  {typeof error === 'string' ? error : error?.message}
                 </p>
               ))}
             </>
@@ -176,7 +176,7 @@ const SignUpPage = () => {
               </div>
               {field.state.meta.errors.map((error, index) => (
                 <p key={index} className="mt-1 ml-2 w-full text-xs text-red-500">
-                  {typeof error === 'string' ? error : (error?.message ?? 'Invalid password')}
+                  {typeof error === 'string' ? error : error?.message}
                 </p>
               ))}
             </>
@@ -305,6 +305,4 @@ const SignUpPage = () => {
       />
     </form>
   );
-};
-
-export default SignUpPage;
+}

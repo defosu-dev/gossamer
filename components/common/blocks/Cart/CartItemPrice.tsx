@@ -1,13 +1,15 @@
 'use client';
 
+import { memo } from 'react';
+
 import { cn } from '@/utils/cn';
 import formatCurrency from '@/utils/formatCurrency';
-import { memo } from 'react';
 
 /**
  * Props for price display.
  */
 export interface CartItemPriceProps {
+
   /** Current (discounted) price in the smallest currency unit */
   currentPrice: number;
 
@@ -19,7 +21,7 @@ export interface CartItemPriceProps {
 }
 
 /**
- * CartItemPrice
+ * CartItemPrice.
  *
  * Displays current price with optional strikethrough old price.
  * Used in cart items to show pricing with discount indication.
@@ -38,9 +40,9 @@ export function CartItemPrice({ currentPrice, oldPrice = 0, className = '' }: Ca
   return (
     <div className={cn('flex flex-col', className)}>
       {hasDiscount && (
-        <span className="text-gray-500 line-through">{formatCurrency(oldPrice)}</span>
+        <span className={cn('text-gray-500 line-through')}>{formatCurrency(oldPrice)}</span>
       )}
-      <span className="text-lg font-bold">{formatCurrency(currentPrice)}</span>
+      <span className={cn('text-lg font-bold')}>{formatCurrency(currentPrice)}</span>
     </div>
   );
 }

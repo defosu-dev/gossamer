@@ -1,12 +1,23 @@
 import { ImageWithFallback } from '@/components/common/ImageWithFallback';
 
-type ProductImageProps = {
-  src: string;
-  alt: string;
-  priority?: boolean;
-};
+interface ProductImageProps {
 
-const ProductImage = ({ src, alt, priority = false }: ProductImageProps) => {
+  /** Image URL */
+  src: string;
+
+  /** Alt text for accessibility */
+  alt: string;
+
+  /** Set true for LCP images to improve performance */
+  priority?: boolean;
+}
+
+/**
+ * @remarks
+ * Renders a product image with fallback support.
+ * Wraps ImageWithFallback and ensures proper aspect ratio and rounding.
+ */
+export function ProductImage({ src, alt, priority = false }: ProductImageProps) {
   return (
     <div className="relative aspect-square w-full overflow-hidden rounded-lg">
       <ImageWithFallback
@@ -18,6 +29,6 @@ const ProductImage = ({ src, alt, priority = false }: ProductImageProps) => {
       />
     </div>
   );
-};
+}
 
 export default ProductImage;

@@ -1,27 +1,41 @@
 'use server';
+
 import type { ProductWithRelations } from '@/types/IProductsWithRelations';
+
 import { supabaseServer } from '../supabaseServer';
 
-type FetchProductsParams = {
+interface FetchProductsParams {
+
+  /** Page number (1-based). Default: 1 */
   page?: number;
+
+  /** Items per page. Default: 20 */
   limit?: number;
+
+  /** Simple equality filters (e.g. { category_id: 3 }) */
   filters?: Record<string, string | number | boolean>;
+
+  /** Sorting options. Only safe fields are applied server-side */
   sort?: { field: string; order: 'asc' | 'desc' };
-};
+}
 
 /**
- * Fetches paginated products with full relations.
- * - Server-side: filtering, pagination, safe sorting.
+ * Server action: fetches paginated products with full relations.
+ *
+ * @remarks
+ * - Server-side filtering & pagination for security & performance
+ * - Only safe top-level fields are sortable on the server
+ * - Sorting by price is handled client-side (min price across variants)
+ * - Returns exact count for pagination UI
  */
 export const fetchProducts = async ({
   page = 1,
   limit = 20,
   filters = {},
   sort = { field: 'created_at', order: 'desc' },
-}: FetchProductsParams) => {
+}: FetchProductsParams = {}) => {
   const supabase = await supabaseServer();
 
-  // 1. Base query with relations + count
   let query = supabase.from('products').select(
     `
       id,
@@ -37,12 +51,12 @@ export const fetchProducts = async ({
     { count: 'exact' }
   );
 
-  // 2. Apply filters (e.g. category_id, stock)
+  // Apply filters
   for (const [key, value] of Object.entries(filters)) {
     query = query.eq(key, value);
   }
 
-  // 3. Server-side sort — only safe top-level fields
+  // Server-side safe sorting
   type ServerSortableField = 'id' | 'title' | 'created_at' | 'description';
   const serverSortable: ServerSortableField[] = ['id', 'title', 'created_at', 'description'];
 
@@ -50,18 +64,17 @@ export const fetchProducts = async ({
     query = query.order(sort.field, { ascending: sort.order === 'asc' });
   }
 
-  // 4. Pagination
+  // Pagination
   const from = (page - 1) * limit;
   const to = from + limit - 1;
   query = query.range(from, to);
 
-  // 5. Execute
   const { data, error, count } = await query;
   if (error) throw new Error(error.message);
 
   let finalData = data as ProductWithRelations[] | null;
 
-  // 6. Client-side sort by min price (if requested)
+  // Client-side sort by minimum price across variants
   if (finalData && sort.field === 'price') {
     const getMinPrice = (variants: ProductWithRelations['product_variants']) => {
       const prices = variants.map((v) => v.current_price).filter((p): p is number => p !== null);
@@ -75,7 +88,7 @@ export const fetchProducts = async ({
     });
   }
 
-  return { data: finalData ?? [], count };
+  return { data: finalData ?? [], count: count ?? 0 };
 };
 
 export type ProductWithVariant = ProductWithRelations & {
@@ -88,6 +101,12 @@ export type ProductWithVariant = ProductWithRelations & {
   };
 };
 
+/**
+ * Server action: fetches products by a list of variant IDs.
+ *
+ * @remarks
+ * Used in cart/checkout flow to get full product data from variant IDs.
+ */
 export async function getProductsByVariants(variantIds: string[]): Promise<ProductWithVariant[]> {
   if (!variantIds?.length) return [];
 
@@ -101,46 +120,26 @@ export async function getProductsByVariants(variantIds: string[]): Promise<Produ
       name,
       current_price,
       stock,
-      product:
-        product_id (
-          id,
-          title,
-          description,
-          created_at,
-          category:
-            category_id (
-              name,
-              slug
-            ),
-            product_variants (
-              id,
-              name,
-              sku,
-              current_price,
-              old_price,
-              stock,
-              product_images (
-                id,
-                url,
-                alt,
-                position
-              )
-            )
-        ),
-        product_images (
-          id,
-          url,
-          alt
+      product:product_id (
+        id,
+        title,
+        description,
+        created_at,
+        category:category_id ( name, slug ),
+        product_variants (
+          id, name, sku, current_price, old_price, stock,
+          product_images ( id, url, alt, position )
         )
+      ),
+      product_images ( id, url, alt )
     `
     )
     .in('id', variantIds);
 
   if (error) throw error;
 
-  // Перетворюємо варіанти у формат продукт + variant
   const products: ProductWithVariant[] = (data || [])
-    .filter((v) => v.product)
+    .filter((v): v is NonNullable<typeof v> => !!v.product)
     .map((v) => ({
       ...(v.product as ProductWithRelations),
       variant: {
@@ -160,8 +159,16 @@ export async function getProductsByVariants(variantIds: string[]): Promise<Produ
   return products;
 }
 
+/**
+ * Server action: fetches enriched variant data for cart items.
+ *
+ * @remarks
+ * Optimized query for cart rendering — returns variant + full product + all variants + images.
+ * Used by useCart hook for client-side enrichment.
+ */
 export async function getCartEnrichedProducts(variantIds: string[]) {
   if (!variantIds?.length) return [];
+
   const orFilter = variantIds.map((id) => `id.eq.${id}`).join(',');
   const supabase = await supabaseServer();
 
@@ -187,7 +194,7 @@ export async function getCartEnrichedProducts(variantIds: string[]) {
         title,
         description,
         created_at,
-        category:category_id (name, slug),
+        category:category_id ( name, slug ),
         product_variants!product_id (
           id,
           name,
@@ -200,8 +207,8 @@ export async function getCartEnrichedProducts(variantIds: string[]) {
     `
     )
     .or(orFilter);
-  console.log('Supabase fetch cart products:', data);
+
   if (error) throw error;
 
-  return data;
+  return data ?? [];
 }

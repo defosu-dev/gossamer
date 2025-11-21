@@ -1,11 +1,22 @@
-import React from 'react';
-
 import { ImageWithFallback } from '@/components/common/ImageWithFallback';
-type ImageBlockProps = {
+
+interface ProductGalleryProps {
+
+  /** URL of the main product image */
   src: string;
+
+  /** Alt text for the main image */
   alt: string;
-};
-const ProductGallery = ({ src, alt }: ImageBlockProps) => {
+}
+
+/**
+ * Product image gallery with main image and thumbnail previews.
+ *
+ * @remarks
+ * Displays a large primary image with category badge and a row of thumbnail
+ * placeholders below. Designed for product detail pages.
+ */
+export function ProductGallery({ src, alt }: ProductGalleryProps) {
   return (
     <div className="rounded-2xl bg-gray-50 p-4">
       {/* Main image */}
@@ -22,7 +33,7 @@ const ProductGallery = ({ src, alt }: ImageBlockProps) => {
         </span>
       </div>
 
-      {/* картинки */}
+      {/* Thumbnails */}
       <div className="flex justify-center gap-3">
         {[1, 2, 3, 4].map((i) => (
           <div
@@ -30,7 +41,7 @@ const ProductGallery = ({ src, alt }: ImageBlockProps) => {
             className="rounded-xl border border-gray-300 p-1 transition hover:border-gray-500"
           >
             <ImageWithFallback
-              src="/img/placeholder.png" // заглушка
+              src="/img/placeholder.png"
               alt={`Placeholder ${i}`}
               width={70}
               height={70}
@@ -41,6 +52,6 @@ const ProductGallery = ({ src, alt }: ImageBlockProps) => {
       </div>
     </div>
   );
-};
+}
 
 export default ProductGallery;

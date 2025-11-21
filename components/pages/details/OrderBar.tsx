@@ -1,16 +1,31 @@
 'use client';
-import { useState } from 'react';
-import Button from '@/components/common/Button';
-import { ImageWithFallback, ImageWithFallbackProps } from '@/components/common/ImageWithFallback';
 
-export default function OrderBar({ src, alt }: ImageWithFallbackProps) {
+import { useState } from 'react';
+
+import Button from '@/components/common/Button';
+import {
+  ImageWithFallback,
+  type ImageWithFallbackProps,
+} from '@/components/common/ImageWithFallback';
+
+/**
+ * OrderBar.
+ *
+ * Product order controls with quantity selector, price calculation,
+ * and add-to-cart / buy-now actions.
+ *
+ * @remarks
+ * Client component required for local quantity state management.
+ * Displays current variant preview, stock info and dynamic subtotal.
+ */
+export function OrderBar({ src, alt }: ImageWithFallbackProps) {
   const [quantity, setQuantity] = useState(1);
   const price = 59.99;
   const oldPrice = 100;
   const stock = 14;
 
   const handleDecrease = () => setQuantity((q) => Math.max(1, q - 1));
-  const handleIncrease = () => setQuantity((q) => q + 1); // для теста
+  const handleIncrease = () => setQuantity((q) => q + 1);
 
   return (
     <div className="w-full max-w-sm rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
@@ -60,3 +75,5 @@ export default function OrderBar({ src, alt }: ImageWithFallbackProps) {
     </div>
   );
 }
+
+export default OrderBar;

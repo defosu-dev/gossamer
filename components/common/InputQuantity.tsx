@@ -1,13 +1,15 @@
 'use client';
 
-import { cn } from '@/utils/cn';
 import { Minus, Plus } from 'lucide-react';
 import { memo, useCallback } from 'react';
+
+import { cn } from '@/utils/cn';
 
 /**
  * Props for InputQuantity.
  */
 export interface InputQuantityProps {
+
   /** Current quantity value */
   quantity: number;
 
@@ -19,7 +21,7 @@ export interface InputQuantityProps {
 }
 
 /**
- * InputQuantity
+ * InputQuantity.
  *
  * Compact +/- quantity control for cart items.
  * Prevents quantity from going below 1.
@@ -48,13 +50,15 @@ export function InputQuantity({ quantity, onChange, className }: InputQuantityPr
         type="button"
         onClick={decrement}
         aria-label="Decrease quantity"
-        className="flex w-8 cursor-pointer items-center justify-center transition-colors hover:bg-neutral-100"
+        className={cn(
+          'flex w-8 cursor-pointer items-center justify-center transition-colors hover:bg-neutral-100'
+        )}
       >
-        <Minus className="size-3" />
+        <Minus className={cn('size-3')} />
       </button>
 
       <span
-        className="flex w-8 items-center justify-center text-sm font-semibold"
+        className={cn('flex w-8 items-center justify-center text-sm font-semibold')}
         aria-live="polite"
       >
         {quantity}
@@ -64,9 +68,11 @@ export function InputQuantity({ quantity, onChange, className }: InputQuantityPr
         type="button"
         onClick={increment}
         aria-label="Increase quantity"
-        className="flex w-8 cursor-pointer items-center justify-center transition-colors hover:bg-neutral-100"
+        className={cn(
+          'flex w-8 cursor-pointer items-center justify-center transition-colors hover:bg-neutral-100'
+        )}
       >
-        <Plus className="size-3" />
+        <Plus className={cn('size-3')} />
       </button>
     </div>
   );

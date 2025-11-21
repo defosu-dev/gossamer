@@ -1,56 +1,113 @@
-import React from 'react';
 import Link from 'next/link';
 
-const List = () => {
+import { cn } from '@/utils/cn';
+
+/**
+ * Footer navigation section containing two link groups: "About" and "Support".
+ *
+ * @remarks
+ * Renders static navigation links with hover transitions. All interactivity is handled
+ * natively by Next.js Link component. This is a server component.
+ */
+export function List() {
   return (
-    <div className="mb-6 flex gap-16 md:mb-0">
+    <nav className={cn('mb-6 flex gap-16 md:mb-0')} aria-label="Footer navigation">
+      {/* About Section */}
       <div>
-        <h4 className="mb-2 text-lg font-semibold text-zinc-800">About</h4>
-        <ul className="space-y-1">
+        <h4 className={cn('mb-3 text-sm font-semibold tracking-wider text-zinc-600 uppercase')}>
+          About
+        </h4>
+        <ul className={cn('space-y-2')}>
           <li>
-            <Link href="#" className="text-zinc-500 transition-colors hover:text-black">
+            <Link
+              href="/blog"
+              className={cn(
+                'text-zinc-500 transition-colors duration-200',
+                'hover:text-zinc-900 focus-visible:text-zinc-900 focus-visible:outline-none'
+              )}
+            >
               Blog
             </Link>
           </li>
           <li>
-            <Link href="#" className="text-zinc-500 transition-colors hover:text-black">
+            <Link
+              href="/team"
+              className={cn(
+                'text-zinc-500 transition-colors duration-200',
+                'hover:text-zinc-900 focus-visible:text-zinc-900 focus-visible:outline-none'
+              )}
+            >
               Meet The Team
             </Link>
           </li>
           <li>
-            <Link href="#" className="text-zinc-500 transition-colors hover:text-black">
+            <Link
+              href="/contact"
+              className={cn(
+                'text-zinc-500 transition-colors duration-200',
+                'hover:text-zinc-900 focus-visible:text-zinc-900 focus-visible:outline-none'
+              )}
+            >
               Contact Us
             </Link>
           </li>
         </ul>
       </div>
+
+      {/* Support Section */}
       <div>
-        <h4 className="mb-2 text-lg font-semibold text-zinc-800">Support</h4>
-        <ul className="space-y-1">
+        <h4 className={cn('mb-3 text-sm font-semibold tracking-wider text-zinc-600 uppercase')}>
+          Support
+        </h4>
+        <ul className={cn('space-y-2')}>
           <li>
-            <Link href="#" className="text-zinc-500 transition-colors hover:text-black">
+            <Link
+              href="/contact"
+              className={cn(
+                'text-zinc-500 transition-colors duration-200',
+                'hover:text-zinc-900 focus-visible:text-zinc-900 focus-visible:outline-none'
+              )}
+            >
               Contact Us
             </Link>
           </li>
           <li>
-            <Link href="#" className="text-zinc-500 transition-colors hover:text-black">
+            <Link
+              href="/shipping"
+              className={cn(
+                'text-zinc-500 transition-colors duration-200',
+                'hover:text-zinc-900 focus-visible:text-zinc-900 focus-visible:outline-none'
+              )}
+            >
               Shipping
             </Link>
           </li>
           <li>
-            <Link href="#" className="text-zinc-500 transition-colors hover:text-black">
-              Return
+            <Link
+              href="/returns"
+              className={cn(
+                'text-zinc-500 transition-colors duration-200',
+                'hover:text-zinc-900 focus-visible:text-zinc-900 focus-visible:outline-none'
+              )}
+            >
+              Returns
             </Link>
           </li>
           <li>
-            <Link href="#" className="text-zinc-500 transition-colors hover:text-black">
+            <Link
+              href="/faq"
+              className={cn(
+                'text-zinc-500 transition-colors duration-200',
+                'hover:text-zinc-900 focus-visible:text-zinc-900 focus-visible:outline-none'
+              )}
+            >
               FAQ
             </Link>
           </li>
         </ul>
       </div>
-    </div>
+    </nav>
   );
-};
+}
 
 export default List;

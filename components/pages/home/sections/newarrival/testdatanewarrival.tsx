@@ -1,4 +1,4 @@
-import { FeatureItemProps } from './FeatureItem'; // любые иконки
+import type { FeatureItemProps } from './FeatureItem'; // любые иконки
 
 export const testdatanewarrival = {
   label: 'NEW ON ASSORTIMENT',

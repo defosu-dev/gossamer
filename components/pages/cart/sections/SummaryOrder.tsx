@@ -1,13 +1,12 @@
 'use client';
 
-import Button from '@/components/common/Button';
-import formatCurrency from '@/utils/formatCurrency';
 import { memo } from 'react';
 
-/**
- * Props for the SummaryOrder component.
- */
-export interface SummaryOrderProps {
+import Button from '@/components/common/Button';
+import formatCurrency from '@/utils/formatCurrency';
+
+interface SummaryOrderProps {
+
   /** Total price in the smallest currency unit */
   totalPrice: number;
 
@@ -16,7 +15,7 @@ export interface SummaryOrderProps {
 }
 
 /**
- * SummaryOrder
+ * SummaryOrder.
  *
  * Sticky cart summary showing subtotal and buy button.
  * Optionally displays item count in the button.
@@ -26,9 +25,6 @@ export interface SummaryOrderProps {
  * - Responsive: full width on mobile, fixed width on md+.
  * - Button includes item count only if `totalItems > 0`.
  * - Uses `formatCurrency` for consistent formatting.
- * - **Exported in two forms**:
- *   - `SummaryOrder` — original function (for tests, HOC)
- *   - `default export` — memoized version (for production)
  */
 export function SummaryOrder({ totalPrice, totalItems = 0 }: SummaryOrderProps) {
   return (

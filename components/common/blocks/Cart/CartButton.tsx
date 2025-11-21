@@ -1,13 +1,15 @@
 'use client';
 
 import { ShoppingCart } from 'lucide-react';
-import { cn } from '@/utils/cn';
 import { memo } from 'react';
+
+import { cn } from '@/utils/cn';
 
 /**
  * Props for the CartButton component.
  */
 export interface CartButtonProps {
+
   /** Whether the cart dropdown is currently open */
   open: boolean;
 
@@ -19,7 +21,7 @@ export interface CartButtonProps {
 }
 
 /**
- * CartButton
+ * CartButton.
  *
  * A compact, accessible button that opens the cart dropdown.
  * Displays item count badge when cart is not empty.
@@ -48,7 +50,11 @@ export function CartButton({ open, count, onClick }: CartButtonProps) {
     >
       <ShoppingCart className="size-4.5 text-gray-700" />
       {count > 0 && (
-        <div className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 ring ring-white">
+        <div
+          className={cn(
+            'absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 ring ring-white'
+          )}
+        >
           <span className="text-[10px] font-medium text-red-100">{count}</span>
         </div>
       )}

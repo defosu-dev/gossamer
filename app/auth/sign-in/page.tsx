@@ -1,32 +1,32 @@
 'use client';
 
-import LogoIcon from '@/components/common/LogoIcon';
-import { useAuth } from '@/hooks';
-import { cn } from '@/utils/cn';
+import { useState } from 'react';
 import { useForm } from '@tanstack/react-form';
 import { Eye, EyeOff, Loader2, Lock, UserRound } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
 import { z } from 'zod';
 
-/**
- * Zod schema for sign-in form validation.
- */
-const signInSchema = z.object({
-  email: z.string().email('Invalid email address'),
-  password: z.string().min(1, 'Password is required'),
-  remember: z.boolean(),
-});
+import { cn } from '@/utils/cn';
+import { useAuth } from '@/hooks';
+import LogoIcon from '@/components/common/LogoIcon';
 
 /**
- * Sign-in page with full validation and preserved original styling.
+ * @remarks
+ * Client-side sign-in page with form validation and authentication handling.
+ * Supports email/password sign-in and Google OAuth.
  */
-const SignInPage = () => {
+export default function SignInPage() {
   const { signIn, signInWithGoogle, loading } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string>('');
   const router = useRouter();
+
+  const signInSchema = z.object({
+    email: z.string().email('Invalid email address'),
+    password: z.string().min(1, 'Password is required'),
+    remember: z.boolean(),
+  });
 
   const form = useForm({
     defaultValues: {
@@ -38,7 +38,7 @@ const SignInPage = () => {
       onSubmit: signInSchema,
     },
     onSubmit: async ({ value }) => {
-      setError(null);
+      setError('');
       try {
         await signIn(value.email, value.password).then(() => {
           router.push('/');
@@ -248,6 +248,4 @@ const SignInPage = () => {
       />
     </form>
   );
-};
-
-export default SignInPage;
+}

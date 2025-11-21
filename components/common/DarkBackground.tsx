@@ -1,25 +1,22 @@
 import { cn } from '@/utils/cn';
 
-type DarkBackgroundProps = {
+interface DarkBackgroundProps {
+
   /** Whether the backdrop is visible */
   open: boolean;
 
-  /**
-   * Called when user clicks the backdrop.
-   * Typically closes the parent modal/dropdown.
-   */
+  /** Callback triggered when the backdrop is clicked */
   onClose: () => void;
-};
+}
 
 /**
  * Semi-transparent backdrop used behind modals or dropdowns.
  *
- * @component
- * @accessibility
- * - Uses `aria-hidden` to indicate its visibility.
- * - Does not trap focus; only closes on click.
+ * @remarks
+ * Covers the entire viewport and closes the parent component when clicked.
+ * Uses smooth opacity transition and disables pointer events when hidden.
  */
-const DarkBackground = ({ open, onClose }: DarkBackgroundProps) => {
+function DarkBackground({ open, onClose }: DarkBackgroundProps) {
   return (
     <div
       role="presentation"
@@ -32,6 +29,6 @@ const DarkBackground = ({ open, onClose }: DarkBackgroundProps) => {
       aria-hidden={!open}
     />
   );
-};
+}
 
 export default DarkBackground;

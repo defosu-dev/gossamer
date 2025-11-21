@@ -1,42 +1,60 @@
-// app/api/stripe/webhook/route.ts
-import { stripe } from '@/utils/stripe';
-import { updatePaymentStatusByOrderId } from '@/utils/supabase/server/payments';
 import { NextResponse } from 'next/server';
 import type { Stripe } from 'stripe';
 
+import { stripe } from '@/utils/stripe';
+import { updatePaymentStatusByOrderId } from '@/utils/supabase/server/payments';
+
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
+/**
+ * @remarks
+ * Handles Stripe webhook events.
+ * Updates the payment status in the database based on the event type.
+ * Errors are collected and returned in the response instead of using console.
+ */
 export async function POST(req: Request) {
-  const sig = req.headers.get('stripe-signature')!;
+  const sig = req.headers.get('stripe-signature');
+  if (sig === null || sig.trim() === '') {
+    return NextResponse.json({ error: 'Missing Stripe signature' }, { status: 400 });
+  }
+
   const body = await req.text();
+  const errors: string[] = [];
 
   let event: Stripe.Event;
 
   try {
     event = stripe.webhooks.constructEvent(body, sig, endpointSecret);
   } catch (err) {
-    const error = err as Error;
-    console.error('Webhook signature error:', error.message);
-    return NextResponse.json({ error: 'Invalid signature' }, { status: 400 });
+    const error = err instanceof Error ? err.message : 'Unknown signature error';
+    return NextResponse.json({ error }, { status: 400 });
   }
 
-  if (event.type === 'payment_intent.succeeded') {
-    const paymentIntent = event.data.object as Stripe.PaymentIntent;
+  try {
+    if (event.type === 'payment_intent.succeeded') {
+      const paymentIntent = event.data.object as Stripe.PaymentIntent;
+      const { error } = await updatePaymentStatusByOrderId(
+        paymentIntent.metadata.order_id ?? '',
+        'succeeded'
+      );
+      if (error) errors.push(`Update succeeded error: ${error.message ?? error}`);
+    }
 
-    const { error } = await updatePaymentStatusByOrderId(
-      paymentIntent.metadata.order_id,
-      'succeeded'
-    );
-
-    if (error) console.error('Update succeeded error:', error);
+    if (event.type === 'payment_intent.payment_failed') {
+      const paymentIntent = event.data.object as Stripe.PaymentIntent;
+      const { error } = await updatePaymentStatusByOrderId(
+        paymentIntent.metadata.order_id ?? '',
+        'failed'
+      );
+      if (error) errors.push(`Update failed error: ${error.message ?? error}`);
+    }
+  } catch (err) {
+    const error = err instanceof Error ? err.message : 'Unknown processing error';
+    errors.push(error);
   }
 
-  if (event.type === 'payment_intent.payment_failed') {
-    const paymentIntent = event.data.object as Stripe.PaymentIntent;
-
-    const { error } = await updatePaymentStatusByOrderId(paymentIntent.metadata.order_id, 'failed');
-
-    if (error) console.error('Update failed error:', error);
+  if (errors.length > 0) {
+    return NextResponse.json({ received: true, errors }, { status: 500 });
   }
 
   return NextResponse.json({ received: true });

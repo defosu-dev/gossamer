@@ -1,8 +1,15 @@
-import React from 'react';
-import Slider from '../../../../common/Slider';
+import Slider from '@/components/common/Slider';
+
 import { categories } from './testdataexplore';
 
-const ExploreSection = () => {
+/**
+ * Explore curated categories section with horizontal slider.
+ *
+ * @remarks
+ * This is a server component. All interactivity is delegated to the client-side
+ * Slider component. Uses static test data from `testdataexplore`.
+ */
+export function ExploreSection() {
   return (
     <section className="mx-auto max-w-7xl px-6 py-12">
       <div className="max-w-7xl">
@@ -10,6 +17,6 @@ const ExploreSection = () => {
       </div>
     </section>
   );
-};
+}
 
 export default ExploreSection;

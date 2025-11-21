@@ -1,31 +1,44 @@
-// hooks/useWishlist.ts
+'use client';
+
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { fetchWishlist, updateWishlist } from '@/utils/supabase/client/wishlist';
-import { useAuth } from './useAuth';
-import { useStore } from '@/store';
 import { useEffect } from 'react';
+
+import { fetchWishlist, updateWishlist } from '@/utils/supabase/client/wishlist';
+import { useStore } from '@/store';
+
+import { useAuth } from './useAuth';
+
+interface UseWishlistReturn {
+
+  /** Current wishlist items (product/variant IDs) */
+  wishlist: string[];
+
+  /** Add item to wishlist (instant UI + background sync) */
+  addToWishlist: (item: string) => void;
+
+  /** Remove item from wishlist (instant UI + background sync) */
+  removeFromWishlist: (item: string) => void;
+
+  /** Loading state for auth or wishlist data */
+  isLoading: boolean;
+
+  /** Whether user is authenticated */
+  isAuthenticated: boolean;
+}
 
 /**
  * Custom hook for managing the user's wishlist.
  *
- * - Returns data from Zustand store (prevents UI flickering).
- * - Synchronizes wishlist with Supabase via React Query.
- * - Automatically loads wishlist on user authentication.
- * - Local mutations (add/remove) are instant in UI.
- * - Changes are persisted to Supabase in the background.
- *
- * @returns {Object} Wishlist state and actions
- * @returns {string[]} .wishlist - Current wishlist items (from Zustand)
- * @returns {(item: string) => void} .addToWishlist - Add item to wishlist
- * @returns {(item: string) => void} .removeFromWishlist - Remove item from wishlist
- * @returns {boolean} .isLoading - True if auth or data is loading
- * @returns {boolean} .isAuthenticated - True if user is logged in
+ * @remarks
+ * Client-side only hook. Combines local Zustand state for instant UI updates
+ * with background synchronization to Supabase for authenticated users.
+ * Automatically loads server wishlist on login when local state is empty.
  */
-
-export const useWishlist = () => {
+export function useWishlist(): UseWishlistReturn {
   const { user, loading: authLoading } = useAuth();
   const userId = user?.id;
   const queryClient = useQueryClient();
+
   const {
     wishlist,
     setWishlist,
@@ -40,12 +53,14 @@ export const useWishlist = () => {
     staleTime: 1000 * 60 * 5,
   });
 
+  // Sync server wishlist → local store when loaded
   useEffect(() => {
     if (data !== undefined) {
       setWishlist(data);
     }
   }, [data, setWishlist]);
 
+  // Background sync mutation
   const { mutate: syncWishlist } = useMutation({
     mutationFn: (items: string[]) => updateWishlist(userId!, items),
     onSuccess: () => {
@@ -56,13 +71,13 @@ export const useWishlist = () => {
   const addToWishlist = (item: string) => {
     const newList = [...wishlist, item];
     addLocal(item);
-    syncWishlist(newList);
+    if (userId) syncWishlist(newList);
   };
 
   const removeFromWishlist = (item: string) => {
     const newList = wishlist.filter((i) => i !== item);
     removeLocal(item);
-    syncWishlist(newList);
+    if (userId) syncWishlist(newList);
   };
 
   return {
@@ -72,4 +87,6 @@ export const useWishlist = () => {
     isLoading: queryLoading || authLoading,
     isAuthenticated: !!user,
   };
-};
+}
+
+export default useWishlist;

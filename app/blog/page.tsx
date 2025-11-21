@@ -1,7 +1,11 @@
 import React from 'react';
 
-const page = () => {
-  return <div>page</div>;
-};
-
-export default page;
+/**
+ * Blog page placeholder.
+ *
+ * @remarks
+ * Client-side route for /blog.
+ */
+export default function Page() {
+  return <div>Blog page</div>;
+}

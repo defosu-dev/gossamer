@@ -4,27 +4,25 @@ import Link from 'next/link';
 import { memo } from 'react';
 
 /**
- * Props for the Breadcrumbs component.
+ * Props for Breadcrumbs component.
  */
 export interface BreadcrumbsProps {
+
   /** Array of breadcrumb items with label and navigation link */
   items: { label: string; href: string }[];
 }
 
 /**
- * Breadcrumbs
+ * Breadcrumbs component.
  *
- * Navigation aid showing the user's current location in the site hierarchy.
- * Highlights the current page and provides clickable links to ancestors.
+ * Shows a navigation path for the user, highlighting the current page
+ * and providing links to ancestor pages.
  *
  * @remarks
  * - Uses `nav` with `aria-label="breadcrumb"` for accessibility.
- * - Last item is bold and not followed by a separator.
- * - Separator is a simple `/` with spacing.
- * - Responsive: works on mobile and desktop.
- * - **Exported in two forms**:
- *   - `Breadcrumbs` — original function (for tests, HOC)
- *   - `default export` — memoized version (for production)
+ * - The last breadcrumb is bold and not followed by a separator.
+ * - Separator is `/` with spacing.
+ * - Responsive design works for mobile and desktop.
  */
 export function Breadcrumbs({ items }: BreadcrumbsProps) {
   return (

@@ -1,7 +1,18 @@
 import React from "react";
 import Form from "./Form";
 
-const DistributionBlock = () => {
+const DistributionBlock = ({ visible = false }) => {
+  // ЕСЛИ БЛОК СКРЫТ — показываем сообщение
+  if (!visible) {
+    return (
+      <div className="bg-zinc-100 rounded-2xl  text-center mt-8">
+        <p className="text-zinc-700 text-lg font-semibold">
+          We already received your email!
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-700 rounded-2xl p-8 flex flex-col md:flex-row justify-between items-start md:items-center mb-8 mx-4 md:mx-16 mt-3">
       <div className="flex-1">
@@ -10,6 +21,7 @@ const DistributionBlock = () => {
         </h2>
         <Form />
       </div>
+
       <div className="mt-6 md:mt-0 md:ml-8 max-w-xs">
         <span className="block text-white font-semibold mb-2">
           Gossamer for Homes and Needs

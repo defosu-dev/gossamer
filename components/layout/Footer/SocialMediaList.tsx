@@ -1,7 +1,10 @@
 import Link from 'next/link';
-import { Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
 
 import { cn } from '@/utils/cn';
+import InstagramMediaIcon from "@/components/common/icons/InstagramMediaIcon";
+import YoutubeMediaIcon from "@/components/common/icons/YoutubeMediaIcon";
+import FacebookMediaIcon from "@/components/common/icons/FacebookMediaIcon";
+import WhatsappMediaIcon from "@/components/common/icons/WhatsappMediaIcon";
 
 /**
  * Footer section displaying links to the company's official social media profiles.
@@ -17,32 +20,6 @@ export function SocialMediaList() {
 
       <div className={cn('flex justify-center gap-5 md:justify-end')}>
         <Link
-          href="https://facebook.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Visit our Facebook page"
-          className={cn(
-            'text-zinc-700 transition-all duration-200',
-            'rounded hover:scale-110 hover:text-zinc-900 focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:outline-none'
-          )}
-        >
-          <Facebook size={24} strokeWidth={1.5} />
-        </Link>
-
-        <Link
-          href="https://twitter.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Visit our X/Twitter profile"
-          className={cn(
-            'text-zinc-700 transition-all duration-200',
-            'rounded hover:scale-110 hover:text-zinc-900 focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:outline-none'
-          )}
-        >
-          <Twitter size={24} strokeWidth={1.5} />
-        </Link>
-
-        <Link
           href="https://instagram.com"
           target="_blank"
           rel="noopener noreferrer"
@@ -52,20 +29,46 @@ export function SocialMediaList() {
             'rounded hover:scale-110 hover:text-zinc-900 focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:outline-none'
           )}
         >
-          <Instagram size={24} strokeWidth={1.5} />
+           <InstagramMediaIcon />
         </Link>
 
         <Link
-          href="https://linkedin.com"
+          href="https://youtube.com"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Visit our LinkedIn page"
+          aria-label="Visit our YouTube channel"
           className={cn(
             'text-zinc-700 transition-all duration-200',
             'rounded hover:scale-110 hover:text-zinc-900 focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:outline-none'
           )}
         >
-          <Linkedin size={24} strokeWidth={1.5} />
+          <YoutubeMediaIcon />
+        </Link>
+
+        <Link
+          href="https://facebook.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Visit our Facebook profile"
+          className={cn(
+            'text-zinc-700 transition-all duration-200',
+            'rounded hover:scale-110 hover:text-zinc-900 focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:outline-none'
+          )}
+        >
+           <FacebookMediaIcon />
+        </Link>
+
+        <Link
+          href="https://whatsapp.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Visit our whatsapp channel"
+          className={cn(
+            'text-zinc-700 transition-all duration-200',
+            'rounded hover:scale-110 hover:text-zinc-900 focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:outline-none'
+          )}
+        >
+           <WhatsappMediaIcon />
         </Link>
       </div>
     </div>

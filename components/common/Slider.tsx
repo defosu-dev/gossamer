@@ -51,7 +51,7 @@ function Slider({ categories }: CategorySliderProps) {
             className={cn('rounded-full bg-gray-100 p-2 transition hover:bg-gray-200')}
             aria-label="Scroll left"
           >
-            <ArrowLeft className="h-5 w-5" />
+            <ArrowLeft className="size-5" />
           </button>
           <button
             type="button"
@@ -59,7 +59,7 @@ function Slider({ categories }: CategorySliderProps) {
             className={cn('rounded-full bg-gray-100 p-2 transition hover:bg-gray-200')}
             aria-label="Scroll right"
           >
-            <ArrowRight className="h-5 w-5" />
+            <ArrowRight className="size-5" />
           </button>
         </div>
       </div>

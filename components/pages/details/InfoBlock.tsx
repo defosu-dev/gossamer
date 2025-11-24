@@ -31,11 +31,11 @@ export function InfoBlock({ src, alt }: InfoBlockProps) {
           Brand: <span className="font-medium text-gray-800">Marshall</span>
         </span>
         <div className="flex items-center text-nowrap">
-          <Star className="mr-1 h-4 w-4 text-yellow-400" />
+          <Star className="size-4 text-yellow-400 mr-1" />
           <span>4.9 (346 rating)</span>
         </div>
-        <div className="ml-auto flex cursor-pointer items-center text-nowrap text-gray-700 hover:text-red-500">
-          K <Heart className="mr-1 h-4 w-4" />
+        <div className="flex items-center ml-auto text-gray-700 cursor-pointer hover:text-red-500 text-nowrap">
+          <Heart className="size-4 mr-1" />
           Add to my wish list
         </div>
       </div>

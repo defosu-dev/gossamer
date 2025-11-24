@@ -43,17 +43,17 @@ export function FaqPage() {
           <h2 className="mb-6 text-sm font-semibold text-gray-800 uppercase">General Questions</h2>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             <FaqCard
-              icon={<User className="h-6 w-6 text-gray-700" />}
+              icon={<User className="size-6 text-gray-700" />}
               title="How to Register & Login"
               text="Registering for a Stuffus account is even easier with a choice of various ways..."
             />
             <FaqCard
-              icon={<Lock className="h-6 w-6 text-gray-700" />}
+              icon={<Lock className="size-6 text-gray-700" />}
               title="Login Constraints"
               text="Registering for a Stuffus account is even easier with a choice of various ways..."
             />
             <FaqCard
-              icon={<Settings className="h-6 w-6 text-gray-700" />}
+              icon={<Settings className="size-6 text-gray-700" />}
               title="Set Up Account"
               text="Registering for a Stuffus account is even easier with a choice of various ways..."
             />
@@ -65,17 +65,17 @@ export function FaqPage() {
           <h2 className="mb-6 text-sm font-semibold text-gray-800 uppercase">Sales Support</h2>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             <FaqCard
-              icon={<Users className="h-6 w-6 text-gray-700" />}
+              icon={<Users className="size-6 text-gray-700" />}
               title="How to Manage My Employee"
               text="Registering for a Stuffus account is even easier with a choice of various ways..."
             />
             <FaqCard
-              icon={<DollarSign className="h-6 w-6 text-gray-700" />}
+              icon={<DollarSign className="size-6 text-gray-700" />}
               title="How does back pricing work?"
               text="Registering for a Stuffus account is even easier with a choice of various ways..."
             />
             <FaqCard
-              icon={<Bell className="h-6 w-6 text-gray-700" />}
+              icon={<Bell className="size-6 text-gray-700" />}
               title="Notify Stuffus Admin"
               text="Registering for a Stuffus account is even easier with a choice of various ways..."
             />
@@ -89,10 +89,10 @@ export function FaqPage() {
             <Category
               title="Shipping"
               sub={[
-                { label: 'For Home', icon: <Home className="h-4 w-4" /> },
-                { label: 'For Music', icon: <Music className="h-4 w-4" /> },
-                { label: 'For Phone', icon: <Phone className="h-4 w-4" /> },
-                { label: 'For Storage', icon: <Archive className="h-4 w-4" /> },
+                { label: "For Home", icon: <Home className="size-4" /> },
+                { label: "For Music", icon: <Music className="size-4" /> },
+                { label: "For Phone", icon: <Phone className="size-4" /> },
+                { label: "For Storage", icon: <Archive className="size-4" /> },
               ]}
             />
             <Category

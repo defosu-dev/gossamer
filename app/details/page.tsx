@@ -1,12 +1,14 @@
+import Container from "@/components/common/Container";
 import DetailsPage from "@/components/pages/details/DetailsPage";
+import { cn } from "@/utils/cn";
 import React from "react";
 
-const page = () => {
+const Page = () => {
   return (
-    <div>
+    <div className={cn("w-full")}>
       <DetailsPage />
     </div>
   );
 };
 
-export default page;
+export default Page;

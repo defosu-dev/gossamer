@@ -1,0 +1,62 @@
+[
+  {
+    "id": "033ede70-8f4a-4c1f-b4ca-f0dc7dc43b77",
+    "name": "Color",
+    "slug": "color",
+    "category_id": "9726c674-4a66-4cf2-a6b2-bae320bfe55a"
+  },
+  {
+    "id": "0eff22e5-6e2e-46fe-9629-bdf50bf4d7ed",
+    "name": "Size",
+    "slug": "size",
+    "category_id": "9726c674-4a66-4cf2-a6b2-bae320bfe55a"
+  },
+  {
+    "id": "4b0149b2-cf42-4c59-aeef-1dea8e7a0e33",
+    "name": "Storage",
+    "slug": "storage",
+    "category_id": "f1ca49a8-c490-46a6-b9b0-579cbcb95373"
+  },
+  {
+    "id": "a9f355c5-912f-4df8-b708-5bbd1742e439",
+    "name": "Battery",
+    "slug": "battery",
+    "category_id": "f1ca49a8-c490-46a6-b9b0-579cbcb95373"
+  },
+  {
+    "id": "a8f7108d-28f2-4645-a065-8445fcc05610",
+    "name": "Weight",
+    "slug": "weight",
+    "category_id": "9726c674-4a66-4cf2-a6b2-bae320bfe55a"
+  },
+  {
+    "id": "92c399aa-5698-41da-b393-4264e5926c76",
+    "name": "Material",
+    "slug": "material",
+    "category_id": "f1ca49a8-c490-46a6-b9b0-579cbcb95373"
+  },
+  {
+    "id": "5c467846-c6c3-42ea-ab8d-77019523916a",
+    "name": "Connectivity",
+    "slug": "connectivity",
+    "category_id": "9726c674-4a66-4cf2-a6b2-bae320bfe55a"
+  },
+  {
+    "id": "d7e9cad5-4fec-4a38-b327-eaf8bda79d25",
+    "name": "Display",
+    "slug": "display",
+    "category_id": "759ab0b3-593a-47f2-a63d-3a9688da0191"
+  },
+  {
+    "id": "2754bdd2-f128-4b44-a258-c66d61ab42b7",
+    "name": "Camera",
+    "slug": "camera",
+    "category_id": "c522aa0c-4aa2-42c6-bcb9-123f84661e63"
+  },
+  {
+    "id": "812ba3c4-bc92-467d-9d97-f59603209bff",
+    "name": "Warranty",
+    "slug": "warranty",
+    "category_id": "f1ca49a8-c490-46a6-b9b0-579cbcb95373"
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "id": "89833974-7b10-4a70-a359-b6e42925c484",
+    "code": "WELCOME10",
+    "description": "10% off for new customers",
+    "discount_type": "percentage",
+    "value": 10,
+    "active": true
+  },
+  {
+    "id": "17ad72e2-e6d3-40e8-be4d-9bf0ecfff913",
+    "code": "SUMMER50",
+    "description": "50 USD off on orders over 500",
+    "discount_type": "fixed",
+    "value": 50,
+    "active": true
+  }
+]

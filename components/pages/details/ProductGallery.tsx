@@ -1,15 +1,25 @@
-import React from "react";
+import { ImageWithFallback } from '@/components/common/ImageWithFallback';
 
-import { ImageWithFallback } from "@/components/common/ImageWithFallback";
-type ImageBlockProps = {
+interface ProductGalleryProps {
+  /** URL of the main product image */
   src: string;
+
+  /** Alt text for the main image */
   alt: string;
-};
-const ProductGallery = ({ src, alt }: ImageBlockProps) => {
+}
+
+/**
+ * Product image gallery with main image and thumbnail previews.
+ *
+ * @remarks
+ * Displays a large primary image with category badge and a row of thumbnail
+ * placeholders below. Designed for product detail pages.
+ */
+export function ProductGallery({ src, alt }: ProductGalleryProps) {
   return (
-    <div className="bg-gray-50 rounded-2xl p-4">
+    <div className="rounded-2xl bg-gray-50 p-4">
       {/* Main image */}
-      <div className="relative bg-white rounded-2xl overflow-hidden mb-4 flex justify-center items-center">
+      <div className="relative mb-4 flex items-center justify-center overflow-hidden rounded-2xl bg-white">
         <ImageWithFallback
           src={src}
           alt={alt}
@@ -17,20 +27,20 @@ const ProductGallery = ({ src, alt }: ImageBlockProps) => {
           height={400}
           className="object-contain"
         />
-        <span className="absolute top-3 right-3 bg-white border text-gray-700 text-sm px-3 py-1 rounded-full">
+        <span className="absolute top-3 right-3 rounded-full border bg-white px-3 py-1 text-sm text-gray-700">
           Music
         </span>
       </div>
 
-      {/* картинки */}
+      {/* Thumbnails */}
       <div className="flex justify-center gap-3">
         {[1, 2, 3, 4].map((i) => (
           <div
             key={i}
-            className="rounded-xl border border-gray-300 hover:border-gray-500 transition p-1"
+            className="rounded-xl border border-gray-300 p-1 transition hover:border-gray-500"
           >
             <ImageWithFallback
-              src="/img/placeholder.png" // заглушка
+              src="/img/placeholder.png"
               alt={`Placeholder ${i}`}
               width={70}
               height={70}
@@ -41,6 +51,6 @@ const ProductGallery = ({ src, alt }: ImageBlockProps) => {
       </div>
     </div>
   );
-};
+}
 
 export default ProductGallery;

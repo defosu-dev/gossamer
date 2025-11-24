@@ -1,10 +1,14 @@
-"use client";
-import { useState, useEffect, CSSProperties } from "react";
-import Image from "next/image";
-import { Image as ImageIcon, Loader2 } from "lucide-react";
-import { cn } from "@/utils/cn";
+'use client';
+import { Image as ImageIcon, Loader2 } from 'lucide-react';
+import Image from 'next/image';
+import { memo, useEffect, useState, type CSSProperties } from 'react';
 
-export type ImageWithFallbackProps = {
+import { cn } from '@/utils/cn';
+
+/**
+ * Props for ImageWithFallback.
+ */
+export interface ImageWithFallbackProps {
   src: string;
   alt: string;
   width?: number;
@@ -13,24 +17,20 @@ export type ImageWithFallbackProps = {
   className?: string;
   style?: CSSProperties;
   iconSize?: number;
-};
+  sizes?: string;
+  priority?: boolean;
+}
+
 /**
- * ImageWithFallback
+ * ImageWithFallback.
  *
- * A responsive Next.js Image component with:
- * - Loading spinner while fetching the image
- * - Fallback icon if the image fails to load or exceeds a loading timeout
- * - Optional width, height, CSS classes, inline styles, and icon size
+ * A responsive Next.js Image component with fallback support.
  *
- * Props:
- * @param src       - Image URL (required)
- * @param alt       - Alt text for accessibility (required)
- * @param width     - Optional width in pixels (default: 100%)
- * @param height    - Optional height in pixels (default: 100%)
- * @param timeout   - Optional loading timeout in ms (default: 5000)
- * @param className - Optional extra classes for the container
- * @param style     - Optional inline styles for the container
- * @param iconSize  - Optional Tailwind size units for the loader/fallback icon (default: 4)
+ * @remarks
+ * - Shows a loading spinner while the image is loading.
+ * - Shows a fallback icon if the image fails to load or exceeds the timeout.
+ * - Accepts optional width, height, className, inline styles, icon size, responsive sizes, and priority.
+ * - Fully compatible with Next.js Image optimizations.
  */
 export function ImageWithFallback({
   src,
@@ -41,69 +41,59 @@ export function ImageWithFallback({
   className,
   style,
   iconSize = 4,
+  sizes = '(max-width: 768px) 100vw, 33vw',
+  priority = false,
 }: ImageWithFallbackProps) {
-  const [status, setStatus] = useState<"loading" | "error" | "loaded">(
-    "loading"
-  );
+  const [status, setStatus] = useState<'loading' | 'error' | 'loaded'>('loading');
 
   useEffect(() => {
-    if (status === "loading") {
-      const timer = setTimeout(() => setStatus("error"), timeout);
+    if (status === 'loading' && src) {
+      const timer = setTimeout(() => setStatus('error'), timeout);
       return () => clearTimeout(timer);
     }
-  }, [status, timeout]);
+  }, [status, src, timeout]);
 
   const containerStyle: CSSProperties = {
-    width: width ?? "100%",
-    height: height ?? "100%",
-    position: "relative",
+    width: width ?? '100%',
+    height: height ?? '100%',
+    position: 'relative',
+    overflow: 'hidden',
+    borderRadius: 'inherit',
     ...style,
   };
 
-  const baseContainerClasses =
-    "flex items-center justify-center bg-neutral-200/40 rounded-lg";
+  const overlayClasses = cn(
+    'flex items-center justify-center bg-neutral-100 absolute inset-0 rounded-[inherit]'
+  );
 
-  if (status === "error") {
-    return (
-      <div
-        style={containerStyle}
-        className={cn(baseContainerClasses, className)}
-        aria-label={`Failed to load: ${alt}`}
-      >
-        <ImageIcon
-          className={cn(`w-${iconSize} h-${iconSize} text-gray-500`)}
-        />
-      </div>
-    );
-  }
-
-  if (status === "loading") {
-    return (
-      <div
-        style={containerStyle}
-        className={cn(baseContainerClasses, className)}
-        aria-label={`Loading image: ${alt}`}
-      >
-        <Loader2
-          className={cn(
-            `w-${iconSize} h-${iconSize} animate-spin text-gray-500`
-          )}
-        />
-      </div>
-    );
-  }
+  const iconSizeClasses = `size-${iconSize}`;
 
   return (
-    <div style={containerStyle} className={className}>
+    <div style={containerStyle} className={cn(className)}>
       <Image
         src={src}
         alt={alt}
         fill
-        className="object-cover rounded-lg"
-        sizes="100vw"
-        onLoad={() => setStatus("loaded")}
-        onError={() => setStatus("error")}
+        sizes={sizes}
+        priority={priority}
+        onLoad={() => setStatus('loaded')}
+        onError={() => setStatus('error')}
+        className={cn('rounded-[inherit] object-cover')}
       />
+
+      {status === 'loading' && (
+        <div className={overlayClasses} aria-label={`Loading image: ${alt}`}>
+          <Loader2 className={cn(iconSizeClasses, 'animate-spin text-gray-500')} />
+        </div>
+      )}
+
+      {status === 'error' && (
+        <div className={overlayClasses} aria-label={`Failed to load: ${alt}`}>
+          <ImageIcon className={cn(iconSizeClasses, 'text-gray-500')} />
+        </div>
+      )}
     </div>
   );
 }
+
+export default memo(ImageWithFallback);

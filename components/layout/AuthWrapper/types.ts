@@ -1,3 +1,3 @@
-import { IChildren } from "@/types/IChildren";
+import type { IChildren } from '@/types/IChildren';
 
-export type IAuthWrapper = IChildren
+export type IAuthWrapper = IChildren;

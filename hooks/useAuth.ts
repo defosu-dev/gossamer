@@ -1,18 +1,40 @@
-import { supabaseBrowser } from "@/utils/supabase/supabaseBrowser";
-import { useEffect, useState } from "react";
-import { User } from "@supabase/supabase-js";
-import {
-  signUp,
-  signIn,
-  signInWithGoogle,
-  signOut,
-} from "@/utils/supabase/client/auth";
+'use client';
+
+import { useEffect, useState, useCallback } from 'react';
+import type { User } from '@supabase/supabase-js';
+
+import { supabaseBrowser } from '@/utils/supabase/supabaseBrowser';
+import { signUp, signIn, signInWithGoogle, signOut } from '@/utils/supabase/client/auth';
+
+interface UseAuthReturn {
+  /** Currently authenticated user or null if not signed in */
+  user: User | null;
+
+  /** Loading state for initial auth check and auth actions */
+  loading: boolean;
+
+  /** Sign up with email, password and full name */
+  signUp: (email: string, password: string, fullName: string) => Promise<void>;
+
+  /** Sign in with email and password */
+  signIn: (email: string, password: string) => Promise<void>;
+
+  /** Sign in with Google OAuth */
+  signInWithGoogle: () => Promise<void>;
+
+  /** Sign out current user */
+  signOut: () => Promise<void>;
+}
 
 /**
  * Custom hook for Supabase authentication.
- * Provides user state, loading, and auth actions.
+ *
+ * @remarks
+ * Client-side only hook that manages user session, loading state,
+ * and provides wrapped auth actions with consistent loading handling.
+ * Subscribes to Supabase auth state changes for real-time updates.
  */
-export const useAuth = () => {
+export function useAuth(): UseAuthReturn {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -37,48 +59,44 @@ export const useAuth = () => {
     };
   }, []);
 
-  const handleSignUp = async (
-    email: string,
-    password: string,
-    fullName: string
-  ): Promise<void> => {
-    setLoading(true);
-    try {
-      await signUp(email, password, fullName);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const handleSignUp = useCallback(
+    async (email: string, password: string, fullName: string): Promise<void> => {
+      setLoading(true);
+      try {
+        await signUp(email, password, fullName);
+      } finally {
+        setLoading(false);
+      }
+    },
+    []
+  );
 
-  const handleSignIn = async (
-    email: string,
-    password: string
-  ): Promise<void> => {
+  const handleSignIn = useCallback(async (email: string, password: string): Promise<void> => {
     setLoading(true);
     try {
       await signIn(email, password);
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  const handleGoogleSignIn = async (): Promise<void> => {
+  const handleGoogleSignIn = useCallback(async (): Promise<void> => {
     setLoading(true);
     try {
       await signInWithGoogle();
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  const handleSignOut = async (): Promise<void> => {
+  const handleSignOut = useCallback(async (): Promise<void> => {
     setLoading(true);
     try {
       await signOut();
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   return {
     user,
@@ -88,4 +106,4 @@ export const useAuth = () => {
     signInWithGoogle: handleGoogleSignIn,
     signOut: handleSignOut,
   } as const;
-};
+}

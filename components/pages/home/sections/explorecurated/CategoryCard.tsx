@@ -1,22 +1,32 @@
-import React from "react";
-import { ImageWithFallback } from "@/components/common/ImageWithFallback";
+import { ImageWithFallback } from '@/components/common/ImageWithFallback';
 
-export type Category = {
-  label: string;
+/**
+ *
+ */
+export interface CategoryCardProps {
+  /** URL of the category image */
   image: string;
-};
 
-const CategoryCard = ({ image, label }: Category) => {
+  /** Category label displayed in the overlay */
+  label: string;
+}
+
+/**
+ * Category card with background image and overlay label.
+ *
+ * @remarks
+ * Pure presentational component used in horizontal scrollable lists
+ * or grids. Supports hover states via Tailwind group classes.
+ */
+export function CategoryCard({ image, label }: CategoryCardProps) {
   return (
-    <div className="relative flex-shrink-0 w-120 h-110 rounded-xl overflow-hidden shadow-md group border cursor-pointer">
+    <div className="group relative h-110 w-120 flex-shrink-0 cursor-pointer overflow-hidden rounded-xl border shadow-md">
       <ImageWithFallback src={image} alt={label} />
       <div className="absolute bottom-3 left-3">
-        <span className="bg-white px-3 py-1 rounded-full text-sm font-medium shadow">
-          {label}
-        </span>
+        <span className="rounded-full bg-white px-3 py-1 text-sm font-medium shadow">{label}</span>
       </div>
     </div>
   );
-};
+}
 
 export default CategoryCard;

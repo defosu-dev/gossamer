@@ -1,0 +1,32 @@
+[
+  {
+    "id": "c522aa0c-4aa2-42c6-bcb9-123f84661e63",
+    "name": "Sports",
+    "slug": "sports"
+  },
+  {
+    "id": "57003d8b-7005-4bba-b658-2234692eb456",
+    "name": "Movies",
+    "slug": "movies"
+  },
+  {
+    "id": "0c1fb844-2e91-4af9-be00-84217b5b6124",
+    "name": "Books",
+    "slug": "books"
+  },
+  {
+    "id": "9726c674-4a66-4cf2-a6b2-bae320bfe55a",
+    "name": "Outdoors",
+    "slug": "outdoors"
+  },
+  {
+    "id": "759ab0b3-593a-47f2-a63d-3a9688da0191",
+    "name": "Kids",
+    "slug": "kids"
+  },
+  {
+    "id": "f1ca49a8-c490-46a6-b9b0-579cbcb95373",
+    "name": "Industrial",
+    "slug": "industrial"
+  }
+]

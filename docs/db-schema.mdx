@@ -12,13 +12,13 @@ This document describes the database structure for our Supabase-based e-commerce
 
 Table: `users`
 
-| Column      | Type      | Notes                                      |
-|------------|----------|-------------------------------------------|
-| id         | uuid     | PK, references `auth.users.id`            |
-| email      | text     | unique, not null                           |
-| name       | text     | optional                                   |
-| avatar_url | text     | optional                                   |
-| created_at | timestamp | default `now()`                            |
+| Column     | Type      | Notes                          |
+| ---------- | --------- | ------------------------------ |
+| id         | uuid      | PK, references `auth.users.id` |
+| email      | text      | unique, not null               |
+| name       | text      | optional                       |
+| avatar_url | text      | optional                       |
+| created_at | timestamp | default `now()`                |
 
 **RLS Policy:** Only the user can access their own profile.
 
@@ -28,13 +28,13 @@ Table: `users`
 
 Table: `categories`
 
-| Column | Type | Notes |
-|--------|------|-------|
-| id     | uuid | PK |
+| Column | Type | Notes            |
+| ------ | ---- | ---------------- |
+| id     | uuid | PK               |
 | name   | text | unique, not null |
 | slug   | text | unique, not null |
 
-**Purpose:** Categories help group products (e.g., laptops, headphones, TVs).  
+**Purpose:** Categories help group products (e.g., laptops, headphones, TVs).
 
 **RLS Policy:** Public read access.
 
@@ -44,15 +44,15 @@ Table: `categories`
 
 Table: `products`
 
-| Column      | Type | Notes |
-|------------|------|-------|
-| id         | uuid | PK |
-| title      | text | not null |
-| description| text | optional |
-| category_id| uuid | FK → `categories.id` |
-| created_at | timestamp | default `now()` |
+| Column      | Type      | Notes                |
+| ----------- | --------- | -------------------- |
+| id          | uuid      | PK                   |
+| title       | text      | not null             |
+| description | text      | optional             |
+| category_id | uuid      | FK → `categories.id` |
+| created_at  | timestamp | default `now()`      |
 
-**RLS Policy:** Public read access.  
+**RLS Policy:** Public read access.
 
 ---
 
@@ -60,19 +60,19 @@ Table: `products`
 
 Table: `product_variants`
 
-| Column       | Type       | Notes |
-|-------------|-----------|------|
-| id          | uuid      | PK |
-| product_id  | uuid      | FK → `products.id` |
-| name        | text      | e.g., "16GB RAM, 512GB SSD" |
-| sku         | text      | unique |
-| current_price | numeric(10,2) | Price after discount |
-| old_price   | numeric(10,2) | Original price |
-| stock       | int       | Quantity in stock |
-| created_at  | timestamp | default `now()` |
-| updated_at  | timestamp | auto update on change |
+| Column        | Type          | Notes                       |
+| ------------- | ------------- | --------------------------- |
+| id            | uuid          | PK                          |
+| product_id    | uuid          | FK → `products.id`          |
+| name          | text          | e.g., "16GB RAM, 512GB SSD" |
+| sku           | text          | unique                      |
+| current_price | numeric(10,2) | Price after discount        |
+| old_price     | numeric(10,2) | Original price              |
+| stock         | int           | Quantity in stock           |
+| created_at    | timestamp     | default `now()`             |
+| updated_at    | timestamp     | auto update on change       |
 
-**RLS Policy:** Public read access.  
+**RLS Policy:** Public read access.
 
 ---
 
@@ -80,13 +80,13 @@ Table: `product_variants`
 
 Table: `product_images`
 
-| Column     | Type | Notes |
-|------------|------|------|
-| id         | uuid | PK |
+| Column     | Type | Notes                      |
+| ---------- | ---- | -------------------------- |
+| id         | uuid | PK                         |
 | variant_id | uuid | FK → `product_variants.id` |
-| url        | text | Image URL |
+| url        | text | Image URL                  |
 | alt        | text | Alt text for accessibility |
-| position   | int  | Order of image display |
+| position   | int  | Order of image display     |
 
 **RLS Policy:** Public read access.
 
@@ -96,18 +96,18 @@ Table: `product_images`
 
 Tables: `attributes`, `attribute_values`
 
-| Column       | Type | Notes |
-|-------------|------|------|
-| id          | uuid | PK |
-| name        | text | unique, not null |
-| slug        | text | unique, not null |
+| Column      | Type | Notes                |
+| ----------- | ---- | -------------------- |
+| id          | uuid | PK                   |
+| name        | text | unique, not null     |
+| slug        | text | unique, not null     |
 | category_id | uuid | FK → `categories.id` |
 
-| Column       | Type | Notes |
-|-------------|------|------|
-| id          | uuid | PK |
-| attribute_id| uuid | FK → `attributes.id` |
-| value       | text | e.g., "RTX 5060" |
+| Column       | Type | Notes                |
+| ------------ | ---- | -------------------- |
+| id           | uuid | PK                   |
+| attribute_id | uuid | FK → `attributes.id` |
+| value        | text | e.g., "RTX 5060"     |
 
 **RLS Policy:** Public read access.
 
@@ -117,17 +117,17 @@ Tables: `attributes`, `attribute_values`
 
 Table: `product_variant_attributes`
 
-| Column             | Type | Notes |
-|-------------------|------|------|
-| variant_id         | uuid | FK → `product_variants.id` |
-| attribute_value_id | uuid | FK → `attribute_values.id` |
-| PK                | (variant_id, attribute_value_id) | Composite PK |
+| Column             | Type                             | Notes                      |
+| ------------------ | -------------------------------- | -------------------------- |
+| variant_id         | uuid                             | FK → `product_variants.id` |
+| attribute_value_id | uuid                             | FK → `attribute_values.id` |
+| PK                 | (variant_id, attribute_value_id) | Composite PK               |
 
 ---
 
 ## Carts & Cart Items
 
-- Carts can belong to a user or a guest session (`session_id`).  
+- Carts can belong to a user or a guest session (`session_id`).
 - Cart Items link a cart to product variants and quantity.
 
 **RLS Policy:** Only the owner (user or session) can read/write their cart.
@@ -136,8 +136,8 @@ Table: `product_variant_attributes`
 
 ## Wishlists & Wishlist Items
 
-- Wishlists are linked to users.  
-- Wishlist Items link to product variants.  
+- Wishlists are linked to users.
+- Wishlist Items link to product variants.
 
 **RLS Policy:** Only the owner can access their wishlist.
 
@@ -145,7 +145,7 @@ Table: `product_variant_attributes`
 
 ## Orders & Order Items
 
-- Orders can be placed by logged-in users or guests (`session_id`).  
+- Orders can be placed by logged-in users or guests (`session_id`).
 - Order Items store purchased product variants, quantity, and price.
 
 **RLS Policy:** Only the owner can access their orders and items.
@@ -154,8 +154,8 @@ Table: `product_variant_attributes`
 
 ## Payments
 
-- Stores Stripe payment information.  
-- Linked to orders, and optionally to users or guest sessions.  
+- Stores Stripe payment information.
+- Linked to orders, and optionally to users or guest sessions.
 
 **RLS Policy:** Only the owner (user) can access payment info.
 
@@ -163,8 +163,8 @@ Table: `product_variant_attributes`
 
 ## Reviews
 
-- Users who purchased a product can leave a review.  
-- Fields: rating (1–5), comment, approved.  
+- Users who purchased a product can leave a review.
+- Fields: rating (1–5), comment, approved.
 
 **RLS Policy:** Only the user who made the review can manage it.
 
@@ -172,8 +172,8 @@ Table: `product_variant_attributes`
 
 ## Discounts
 
-- Can be applied to orders or specific products.  
-- Fields: type, value, active, validity dates.  
+- Can be applied to orders or specific products.
+- Fields: type, value, active, validity dates.
 
 **RLS Policy:** Public read access.
 
@@ -181,7 +181,7 @@ Table: `product_variant_attributes`
 
 ## Discount Products
 
-- Links discounts to products.  
+- Links discounts to products.
 - Optional table for product-specific discounts.
 
 ---
@@ -196,3 +196,4 @@ users → wishlists → wishlist_items → product_variants
 discounts → discount_products → products
 orders → discount_id → discounts
 payments → orders
+```

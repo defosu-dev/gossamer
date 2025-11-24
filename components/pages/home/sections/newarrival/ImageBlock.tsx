@@ -1,17 +1,28 @@
-import React from "react";
-import { ImageWithFallback } from "@/components/common/ImageWithFallback";
+import { ImageWithFallback } from '@/components/common/ImageWithFallback';
 
-type ImageBlockProps = {
+interface ImageBlockProps {
+  /** Image source URL */
   src: string;
-  alt: string;
-};
 
-const ImageBlock = ({ src, alt }: ImageBlockProps) => {
+  /** Alt text for accessibility */
+  alt: string;
+}
+
+/**
+ * ImageBlock.
+ *
+ * Simple responsive image container with fallback support.
+ *
+ * @remarks
+ * Pure presentational component used for displaying product or category images.
+ * Includes rounded corners, shadow and loading fallback via ImageWithFallback.
+ */
+export function ImageBlock({ src, alt }: ImageBlockProps) {
   return (
-    <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-lg bg-zinc-200 cursor-pointer">
+    <div className="relative h-full w-full cursor-pointer overflow-hidden rounded-2xl bg-zinc-200 shadow-lg">
       <ImageWithFallback src={src} alt={alt} />
     </div>
   );
-};
+}
 
 export default ImageBlock;

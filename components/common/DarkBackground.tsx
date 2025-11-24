@@ -1,24 +1,33 @@
-import { cn } from "@/utils/cn";
+import { cn } from '@/utils/cn';
 
-type IDarkBackground = {
+interface DarkBackgroundProps {
+  /** Whether the backdrop is visible */
   open: boolean;
-  setOpen: () => void;
-};
 
-const DarkBackground = ({ open, setOpen }: IDarkBackground) => {
+  /** Callback triggered when the backdrop is clicked */
+  onClose: () => void;
+}
+
+/**
+ * Semi-transparent backdrop used behind modals or dropdowns.
+ *
+ * @remarks
+ * Covers the entire viewport and closes the parent component when clicked.
+ * Uses smooth opacity transition and disables pointer events when hidden.
+ */
+function DarkBackground({ open, onClose }: DarkBackgroundProps) {
   return (
     <div
+      role="presentation"
       className={cn(
-        "fixed inset-0 z-40 bg-black/30 shadow-2xl",
-        "transition-opacity duration-1000",
-        open
-          ? "opacity-100 pointer-events-auto"
-          : "opacity-0 pointer-events-none"
+        'fixed inset-0 z-40 bg-black/30',
+        'transition-opacity duration-300',
+        open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
       )}
-      onClick={setOpen}
-      aria-hidden
+      onClick={onClose}
+      aria-hidden={!open}
     />
   );
-};
+}
 
 export default DarkBackground;

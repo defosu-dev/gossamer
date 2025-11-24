@@ -1,16 +1,16 @@
-import React from "react";
-
 interface FacebookMediaIconProps {
   size?: number;
   className?: string;
-  title?: string;
 }
 
-function FacebookMediaIcon({
-  size = 28,
-  className = "",
-  title = "Facebook Logo",
-}: FacebookMediaIconProps) {
+/**
+ * Facebook "f" logo icon (filled square style)
+ *
+ * @remarks
+ * Renders a 24×24 Facebook icon. Default size is 28px.
+ * Use `size` prop to change dimensions and `className` for custom styling/color.
+ */
+function FacebookMediaIcon({ size = 28, className = '' }: FacebookMediaIconProps) {
   return (
     <svg
       width={size}
@@ -18,6 +18,7 @@ function FacebookMediaIcon({
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <path
         fillRule="evenodd"

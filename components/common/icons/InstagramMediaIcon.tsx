@@ -1,16 +1,16 @@
-import React from "react";
-
 interface InstagramMediaIconProps {
   size?: number;
   className?: string;
-  title?: string;
 }
 
-function InstagramMediaIcon({
-  size = 28,
-  className = "",
-  title = "Instagram Logo",
-}: InstagramMediaIconProps) {
+/**
+ * Instagram camera logo icon (rounded square style)
+ *
+ * @remarks
+ * Renders a 24×24 Instagram icon. Default size is 28px.
+ * Use `size` prop to scale and `className` to override color/styling.
+ */
+function InstagramMediaIcon({ size = 28, className = '' }: InstagramMediaIconProps) {
   return (
     <svg
       width={size}
@@ -18,6 +18,7 @@ function InstagramMediaIcon({
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <path
         fillRule="evenodd"

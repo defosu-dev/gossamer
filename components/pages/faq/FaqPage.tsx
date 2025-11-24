@@ -89,10 +89,10 @@ export function FaqPage() {
             <Category
               title="Shipping"
               sub={[
-                { label: "For Home", icon: <Home className="size-4" /> },
-                { label: "For Music", icon: <Music className="size-4" /> },
-                { label: "For Phone", icon: <Phone className="size-4" /> },
-                { label: "For Storage", icon: <Archive className="size-4" /> },
+                { label: 'For Home', icon: <Home className="size-4" /> },
+                { label: 'For Music', icon: <Music className="size-4" /> },
+                { label: 'For Phone', icon: <Phone className="size-4" /> },
+                { label: 'For Storage', icon: <Archive className="size-4" /> },
               ]}
             />
             <Category

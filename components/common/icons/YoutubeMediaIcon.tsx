@@ -1,16 +1,16 @@
-import React from "react";
-
 interface YoutubeMediaIconProps {
   size?: number;
   className?: string;
-  title?: string;
 }
 
-function YoutubeMediaIcon({
-  size = 28,
-  className = "",
-  title = "YouTube Logo",
-}: YoutubeMediaIconProps) {
+/**
+ * YouTube logo icon with play button
+ *
+ * @remarks
+ * Renders a 24×24 YouTube icon. Default size is 28px.
+ * Use `className` to change color (e.g., text-red-600).
+ */
+function YoutubeMediaIcon({ size = 28, className = '' }: YoutubeMediaIconProps) {
   return (
     <svg
       width={size}
@@ -18,6 +18,7 @@ function YoutubeMediaIcon({
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <path
         fillRule="evenodd"

@@ -1,10 +1,10 @@
 import Link from 'next/link';
 
 import { cn } from '@/utils/cn';
-import InstagramMediaIcon from "@/components/common/icons/InstagramMediaIcon";
-import YoutubeMediaIcon from "@/components/common/icons/YoutubeMediaIcon";
-import FacebookMediaIcon from "@/components/common/icons/FacebookMediaIcon";
-import WhatsappMediaIcon from "@/components/common/icons/WhatsappMediaIcon";
+import InstagramMediaIcon from '@/components/common/icons/InstagramMediaIcon';
+import YoutubeMediaIcon from '@/components/common/icons/YoutubeMediaIcon';
+import FacebookMediaIcon from '@/components/common/icons/FacebookMediaIcon';
+import WhatsappMediaIcon from '@/components/common/icons/WhatsappMediaIcon';
 
 /**
  * Footer section displaying links to the company's official social media profiles.
@@ -29,7 +29,7 @@ export function SocialMediaList() {
             'rounded hover:scale-110 hover:text-zinc-900 focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:outline-none'
           )}
         >
-           <InstagramMediaIcon />
+          <InstagramMediaIcon />
         </Link>
 
         <Link
@@ -55,7 +55,7 @@ export function SocialMediaList() {
             'rounded hover:scale-110 hover:text-zinc-900 focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:outline-none'
           )}
         >
-           <FacebookMediaIcon />
+          <FacebookMediaIcon />
         </Link>
 
         <Link
@@ -68,7 +68,7 @@ export function SocialMediaList() {
             'rounded hover:scale-110 hover:text-zinc-900 focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:outline-none'
           )}
         >
-           <WhatsappMediaIcon />
+          <WhatsappMediaIcon />
         </Link>
       </div>
     </div>

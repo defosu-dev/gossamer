@@ -1,63 +1,78 @@
-// components/PaymentForm.tsx
-"use client";
+'use client';
 
-import { useState } from "react";
-import { loadStripe } from "@stripe/stripe-js";
-import {
-  Elements,
-  CardElement,
-  useStripe,
-  useElements,
-} from "@stripe/react-stripe-js";
-import { useAuth } from "@/hooks";
-import { Loader2 } from "lucide-react";
+import { CardElement, Elements, useElements, useStripe } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import { Loader2 } from 'lucide-react';
+import { type FormEvent, useState } from 'react';
 
-const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
-);
+import { useAuth } from '@/hooks';
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
 const FIXED_AMOUNT = 50; // $50.00
 
 const CARD_ELEMENT_OPTIONS = {
   style: {
     base: {
-      fontSize: "16px",
-      color: "#1f2937",
-      fontFamily: "ui-sans-serif, system-ui, sans-serif",
-      "::placeholder": { color: "#9ca3af" },
-      lineHeight: "1.5",
+      fontSize: '16px',
+      color: '#1f2937',
+      fontFamily: 'ui-sans-serif, system-ui, sans-serif',
+      '::placeholder': { color: '#9ca3af' },
+      lineHeight: '1.5',
     },
-    invalid: { color: "#dc2626", iconColor: "#dc2626" },
+    invalid: { color: '#dc2626', iconColor: '#dc2626' },
   },
   hidePostalCode: true,
 };
 
-const CheckoutForm = () => {
+/**
+ * CheckoutForm.
+ *
+ * Handles Stripe payment form logic for a fixed amount.
+ *
+ * @remarks
+ * - Requires user to be logged in (`useAuth`).
+ * - Uses Stripe Elements and CardElement for secure card input.
+ * - Handles errors and success messages with inline alerts.
+ * - Shows loading spinner while processing payment.
+ * - Amount is fixed in this example but can be parameterized.
+ */
+function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
   const { user } = useAuth();
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string>('');
   const [success, setSuccess] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!stripe || !elements || !user) return;
+
+    if (!stripe || !elements) return;
+
+    if (user == null) {
+      setError('You must be logged in to make a payment.');
+      return;
+    }
 
     const card = elements.getElement(CardElement);
-    if (!card) return;
+
+    if (card == null) {
+      setError('Card input is not available. Please refresh the page.');
+      return;
+    }
 
     setLoading(true);
-    setError(null);
+    setError('');
     setSuccess(false);
 
     try {
-      const res = await fetch("/api/create-payment-intent", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const res = await fetch('/api/create-payment-intent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          amount: FIXED_AMOUNT,
+          amount: FIXED_AMOUNT * 100,
           userId: user.id,
           email: user.email,
         }),
@@ -65,7 +80,7 @@ const CheckoutForm = () => {
 
       if (!res.ok) {
         const err = await res.json();
-        throw new Error(err.error || "Payment failed");
+        throw new Error(err.error ?? 'Payment intent creation failed');
       }
 
       const { clientSecret } = await res.json();
@@ -75,62 +90,58 @@ const CheckoutForm = () => {
       });
 
       if (result.error) {
-        setError(result.error.message || "Payment failed");
-      } else {
+        setError(result.error.message ?? 'Payment failed');
+      } else if (result.paymentIntent?.status === 'succeeded') {
         setSuccess(true);
       }
     } catch (err) {
-      setError((err as Error).message);
+      const message = err instanceof Error ? err.message : 'An unexpected error occurred';
+      setError(message);
     } finally {
       setLoading(false);
     }
   };
 
-  if (!user) {
-    return (
-      <p className="text-red-500 text-center">You must be logged in to pay</p>
-    );
+  if (user == null) {
+    return <p className="text-center text-red-500">You must be logged in to pay</p>;
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 w-full max-w-md mx-auto">
-      {/* Сума */}
+    <form onSubmit={handleSubmit} className="mx-auto w-full max-w-md space-y-6">
+      {/* Amount */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Amount
-        </label>
-        <div className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-lg font-semibold text-gray-900">
+        <label className="mb-1 block text-sm font-medium text-gray-700">Amount</label>
+        <div className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-lg font-semibold text-gray-900">
           ${FIXED_AMOUNT.toFixed(2)}
         </div>
       </div>
 
-      {/* Картка */}
+      {/* Card input */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Card Details
-        </label>
-        <div className="p-4 border border-gray-300 rounded-lg bg-white focus-within:border-neutral-500 focus-within:ring-2 focus-within:ring-neutral-200 transition-all">
+        <label className="mb-1 block text-sm font-medium text-gray-700">Card Details</label>
+        <div className="rounded-lg border border-gray-300 bg-white p-4 transition-all focus-within:border-neutral-500 focus-within:ring-2 focus-within:ring-neutral-200">
           <CardElement options={CARD_ELEMENT_OPTIONS} />
         </div>
       </div>
 
-      {/* Помилки */}
+      {/* Error message */}
       {error && (
-        <p className="text-sm text-red-600 bg-red-50 p-3 rounded-lg border border-red-200">
+        <p className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-600">
           {error}
         </p>
       )}
 
+      {/* Success message */}
       {success && (
-        <p className="text-sm text-green-600 bg-green-50 p-3 rounded-lg border border-green-200">
-          Payment successful!
+        <p className="rounded-lg border border-green-200 bg-green-50 p-3 text-sm text-green-600">
+          Payment successful! Thank you!
         </p>
       )}
 
       <button
         type="submit"
         disabled={!stripe || loading}
-        className="w-full py-3 bg-neutral-900 text-white rounded-full font-semibold disabled:opacity-50 flex items-center justify-center gap-2 transition-all hover:shadow-lg"
+        className="flex w-full items-center justify-center gap-2 rounded-full bg-neutral-900 py-3 font-semibold text-white transition-all hover:shadow-lg disabled:opacity-50"
       >
         {loading ? (
           <>
@@ -143,8 +154,17 @@ const CheckoutForm = () => {
       </button>
     </form>
   );
-};
+}
 
+/**
+ * PaymentForm.
+ *
+ * Wraps the CheckoutForm with Stripe Elements provider.
+ *
+ * @remarks
+ * - Must be used client-side (`'use client'`).
+ * - Stripe public key is read from environment variable.
+ */
 export default function PaymentForm() {
   return (
     <Elements stripe={stripePromise}>

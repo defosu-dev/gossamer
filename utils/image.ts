@@ -1,4 +1,4 @@
-import type { ProductWithRelations } from "@/types/IProductsWithRelations";
+import type { ProductWithRelations } from '@/types/IProductsWithRelations';
 
 /**
  * Returns the primary image from all product variants.
@@ -7,7 +7,7 @@ import type { ProductWithRelations } from "@/types/IProductsWithRelations";
  * - Guarantees `url` and `alt` are strings (empty if missing).
  */
 export const getPrimaryImage = (
-  variants: ProductWithRelations["product_variants"]
+  variants: ProductWithRelations['product_variants']
 ): { url: string; alt: string } | null => {
   const allImages = variants
     .flatMap((v) => v.product_images ?? [])
@@ -15,12 +15,10 @@ export const getPrimaryImage = (
 
   if (allImages.length === 0) return null;
 
-  const primary = allImages.sort(
-    (a, b) => (a.position ?? 0) - (b.position ?? 0)
-  )[0];
+  const primary = allImages.sort((a, b) => (a.position ?? 0) - (b.position ?? 0))[0];
 
   return {
-    url: primary.url ?? "",
-    alt: primary.alt ?? "",
+    url: primary.url ?? '',
+    alt: primary.alt ?? '',
   };
 };

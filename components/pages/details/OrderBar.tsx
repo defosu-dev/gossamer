@@ -1,34 +1,46 @@
-"use client";
-import { useState } from "react";
-import Button from "@/components/common/Button";
+'use client';
+
+import { useState } from 'react';
+
+import Button from '@/components/common/Button';
 import {
   ImageWithFallback,
-  ImageWithFallbackProps,
-} from "@/components/common/ImageWithFallback";
+  type ImageWithFallbackProps,
+} from '@/components/common/ImageWithFallback';
 
-export default function OrderBar({ src, alt }: ImageWithFallbackProps) {
+/**
+ * OrderBar.
+ *
+ * Product order controls with quantity selector, price calculation,
+ * and add-to-cart / buy-now actions.
+ *
+ * @remarks
+ * Client component required for local quantity state management.
+ * Displays current variant preview, stock info and dynamic subtotal.
+ */
+export function OrderBar({ src, alt }: ImageWithFallbackProps) {
   const [quantity, setQuantity] = useState(1);
   const price = 59.99;
   const oldPrice = 100;
   const stock = 14;
 
   const handleDecrease = () => setQuantity((q) => Math.max(1, q - 1));
-  const handleIncrease = () => setQuantity((q) => q + 1); // для теста
+  const handleIncrease = () => setQuantity((q) => q + 1);
 
   return (
-    <div className="max-w-sm w-full rounded-2xl border border-gray-200 p-5 shadow-sm bg-white">
-      <h2 className="text-lg font-semibold mb-3">Organize adding to cart</h2>
+    <div className="w-full max-w-sm rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+      <h2 className="mb-3 text-lg font-semibold">Organize adding to cart</h2>
 
       <div className="flex items-center gap-4 p-2">
-        <div className=" flex min-w-10 h-10 rounded-lg overflow-hidden aspect-square ">
+        <div className="flex aspect-square h-10 min-w-10 overflow-hidden rounded-lg">
           <ImageWithFallback src={src} alt={alt} />
         </div>
-        <p className="font-medium text-sm text-gray-800 w-full">Marshall</p>
+        <p className="w-full text-sm font-medium text-gray-800">Marshall</p>
       </div>
 
       {/* Quantity controls */}
-      <div className="flex items-center mt-4">
-        <div className="flex items-center border rounded-full px-3 py-1 w-fit">
+      <div className="mt-4 flex items-center">
+        <div className="flex w-fit items-center rounded-full border px-3 py-1">
           <button
             onClick={handleDecrease}
             className="px-2 text-lg font-semibold text-gray-600 hover:text-black"
@@ -43,16 +55,14 @@ export default function OrderBar({ src, alt }: ImageWithFallbackProps) {
             +
           </button>
         </div>
-        <p className="text-xs text-gray-500 pl-5">Stock: {stock}</p>
+        <p className="pl-5 text-xs text-gray-500">Stock: {stock}</p>
       </div>
 
       {/* Price */}
       <div className="mt-5">
         <p className="text-sm text-gray-500">Subtotal:</p>
         <div className="flex items-baseline gap-2">
-          <p className="text-2xl font-semibold">
-            ${(price * quantity).toFixed(2)}
-          </p>
+          <p className="text-2xl font-semibold">${(price * quantity).toFixed(2)}</p>
           <p className="text-sm text-gray-400 line-through">${oldPrice}</p>
         </div>
       </div>
@@ -65,3 +75,5 @@ export default function OrderBar({ src, alt }: ImageWithFallbackProps) {
     </div>
   );
 }
+
+export default OrderBar;

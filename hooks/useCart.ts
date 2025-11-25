@@ -1,16 +1,20 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { fetchCart, updateCart } from "@/utils/supabase/client/cart";
-import { getCartEnrichedProducts } from "@/utils/supabase/server/products";
-import { useAuth } from "./useAuth";
-import { useStore } from "@/store";
-import { useEffect, useMemo, useCallback, useRef } from "react";
-import { CartItem } from "@/store/slices/cartSlice";
+'use client';
+
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
+import toast from 'react-hot-toast';
+
+import { useStore } from '@/store';
+import { type CartItem } from '@/store/slices/cartSlice';
+import { fetchCart, updateCart } from '@/utils/supabase/client/cart';
+import { getCartEnrichedProducts } from '@/utils/supabase/server/products';
+
+import { useAuth } from './useAuth';
 
 /**
  * Extended cart item that includes full product and variant details.
  */
 export type CartItemWithProduct = CartItem & {
-  /** Full variant information */
   variant: {
     id: string;
     name: string | null;
@@ -20,7 +24,6 @@ export type CartItemWithProduct = CartItem & {
     stock: number;
     images: { id: string; url: string; alt: string | null; position: number }[];
   };
-  /** Full product information */
   product: {
     id: string;
     title: string;
@@ -38,52 +41,48 @@ export type CartItemWithProduct = CartItem & {
   };
 };
 
-/**
- * Custom hook for managing a shopping cart with local persistence and server synchronization.
- *
- * Features:
- * - Local state via Zustand for immediate UI updates
- * - Server sync for authenticated users (Supabase)
- * - Automatic enrichment of cart items with product/variant data
- * - Debounced server sync to reduce network load
- * - Real-time calculation of totals
- *
- * Operates in two modes:
- * - **Guest**: fully local
- * - **Authenticated**: synced with server
- *
- * @returns Cart management API
- */
-export const useCart = (): {
-  /** Enriched cart items with full product/variant data */
+interface UseCartReturn {
   cart: CartItemWithProduct[];
-  /** Add item to cart with optional quantity */
   addToCart: (variantId: string, qty?: number) => void;
-  /** Remove item from cart */
   removeFromCart: (variantId: string) => void;
-  /** Update item quantity (removes if <= 0) */
   updateQuantity: (variantId: string, qty: number) => void;
-  /** Clear all items from cart */
   clearCart: () => void;
-  /** Loading state for any cart-related data */
   isLoading: boolean;
-  /** Whether user is authenticated and cart is synced */
   isAuthenticated: boolean;
-  /** Any error from cart or product queries */
   error: unknown;
-  /** Manually refetch server cart */
   refetchCart: () => void;
-  /** Total number of items (sum of quantities) */
   totalItems: number;
-  /** Total price (sum of price × quantity) */
   totalPrice: number;
-} => {
+}
+
+/**
+ * Custom React hook for managing shopping cart state with optional server sync.
+ *
+ * @remarks
+ * - Works for both guest users (local state only) and authenticated users (Supabase sync).
+ * - Enriches cart items with full product and variant details.
+ * - Debounces server updates to reduce requests.
+ *
+ * @returns An object containing:
+ * - `cart`: Array of enriched cart items.
+ * - `addToCart(variantId, qty?)`: Adds item to cart.
+ * - `removeFromCart(variantId)`: Removes item from cart.
+ * - `updateQuantity(variantId, qty)`: Updates item quantity.
+ * - `clearCart()`: Clears the cart.
+ * - `isLoading`: Whether cart or product data is loading.
+ * - `isAuthenticated`: Whether user is authenticated and cart is synced.
+ * - `error`: Any error from cart or product queries.
+ * - `refetchCart()`: Refetch server cart.
+ * - `totalItems`: Total number of items.
+ * - `totalPrice`: Total price of items.
+ */
+export function useCart(): UseCartReturn {
   const { user, loading: authLoading } = useAuth();
-  const userId = user?.id;
-  const isAuthenticated = !!userId && !authLoading;
+  const userId = user?.id ?? undefined;
+  const isAuthenticated = userId !== undefined && userId !== null && !authLoading;
 
   const queryClient = useQueryClient();
-  const syncTimer = useRef<NodeJS.Timeout | null>(null);
+  const syncTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const {
     cart: localCart,
@@ -100,35 +99,35 @@ export const useCart = (): {
     error: cartError,
     refetch,
   } = useQuery({
-    queryKey: ["cart", userId],
+    queryKey: ['cart', userId],
     queryFn: () => fetchCart(userId!),
     enabled: isAuthenticated,
-    staleTime: 5 * 60 * 1000, // 5 minutes
+    staleTime: 5 * 60 * 1000,
   });
 
-  // Sync server cart to local state on first load (if local is empty)
+  // Sync server cart to local state on first load if local is empty
   useEffect(() => {
-    if (isAuthenticated && serverCart !== undefined && localCart.length === 0) {
-      setCart(serverCart ?? []);
+    if (isAuthenticated && serverCart && localCart.length === 0) {
+      setCart(serverCart);
     }
   }, [serverCart, localCart.length, setCart, isAuthenticated]);
 
   // Extract variant IDs for product enrichment
   const variantIds = useMemo(
-    () => localCart.map((i) => i.variant_id).filter(Boolean) as string[],
+    () => localCart.map((i) => i.variant_id).filter((v): v is string => !!v),
     [localCart]
   );
 
-  // Fetch enriched product/variant data for cart items
+  // Fetch enriched product/variant data
   const {
     data: enrichedData = [],
     isLoading: productsLoading,
     error: productsError,
   } = useQuery({
-    queryKey: ["cart-products", ...variantIds],
+    queryKey: ['cart-products', ...variantIds],
     queryFn: () => getCartEnrichedProducts(variantIds),
     enabled: variantIds.length > 0,
-    staleTime: 10 * 60 * 1000, // 10 minutes
+    staleTime: 10 * 60 * 1000,
   });
 
   // Enrich local cart with full product and variant data
@@ -162,16 +161,14 @@ export const useCart = (): {
             description: variantData.product.description,
             created_at: variantData.product.created_at,
             category: variantData.product.category,
-            product_variants: (variantData.product.product_variants ?? []).map(
-              (v) => ({
-                id: v.id,
-                name: v.name,
-                sku: v.sku,
-                current_price: v.current_price,
-                old_price: v.old_price,
-                stock: v.stock,
-              })
-            ),
+            product_variants: (variantData.product.product_variants ?? []).map((v) => ({
+              id: v.id,
+              name: v.name,
+              sku: v.sku,
+              current_price: v.current_price,
+              old_price: v.old_price,
+              stock: v.stock,
+            })),
           },
         };
       })
@@ -181,11 +178,9 @@ export const useCart = (): {
   // Mutation to sync cart with server
   const { mutate: syncCart } = useMutation({
     mutationFn: (items: CartItem[]) => updateCart(userId!, items),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["cart", userId] });
-    },
-    onError: (error) => {
-      console.error("Cart sync failed:", error);
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['cart', userId] }),
+    onError: () => {
+      toast.error('Failed to sync cart');
     },
   });
 
@@ -200,7 +195,7 @@ export const useCart = (): {
 
   // Add item to cart with stock check
   const addToCart = useCallback(
-    (variantId: string, quantity: number = 1) => {
+    (variantId: string, quantity = 1) => {
       if (productsLoading) return;
 
       const existing = enrichedCart.find((i) => i.variant.id === variantId);
@@ -248,16 +243,10 @@ export const useCart = (): {
     if (isAuthenticated) syncCart([]);
   }, [setCart, isAuthenticated, syncCart]);
 
-  // Calculate total items
-  const totalItems = useMemo(
-    () => localCart.reduce((sum, i) => sum + i.quantity, 0),
-    [localCart]
-  );
+  const totalItems = useMemo(() => localCart.reduce((sum, i) => sum + i.quantity, 0), [localCart]);
 
-  // Calculate total price
   const totalPrice = useMemo(
-    () =>
-      enrichedCart.reduce((sum, i) => sum + i.variant.price * i.quantity, 0),
+    () => enrichedCart.reduce((sum, i) => sum + i.variant.price * i.quantity, 0),
     [enrichedCart]
   );
 
@@ -274,4 +263,4 @@ export const useCart = (): {
     totalItems,
     totalPrice,
   };
-};
+}

@@ -1,15 +1,21 @@
+'use client';
+
+import { supabaseBrowser } from '../supabaseBrowser';
 
 /**
- * updateSessionBrowser
+ * Server action (client-side): forces Supabase auth session refresh.
  *
- * Refreshes Supabase session on the client side.
- * Useful after login, logout, or when user revisits the site
- * without a full page reload.
+ * @remarks
+ * Calls `getUser()` which triggers a silent token refresh if the session is still valid.
+ * Useful after client-side sign-in/out to immediately update `supabase.auth.getSession()`
+ * and trigger `onAuthStateChange` listeners without page reload.
+ *
+ * Typically used:
+ * - After OAuth redirect (Google, etc.)
+ * - After password/email login
+ * - When you need to ensure the latest user data is available
  */
-
-import { supabaseBrowser } from "../supabaseBrowser"
-
 export async function updateSessionBrowser() {
-  const supabase = supabaseBrowser
-  await supabase.auth.getUser()
+  const supabase = supabaseBrowser;
+  await supabase.auth.getUser();
 }

@@ -1,5 +1,7 @@
 'use client';
 
+import { memo, useCallback, useState } from 'react';
+
 import Button from '@/components/common/Button';
 import Container from '@/components/common/Container';
 import { cn } from '@/utils/cn';
@@ -7,11 +9,11 @@ import Breadcrumbs from '@/components/common/Breadcrumbs';
 import CartItem from '@/components/common/blocks/Cart/CartItem';
 import { useCart } from '@/hooks';
 import Checkbox from '@/components/common/Checkbox';
+
 import { SummaryOrder } from './sections/SummaryOrder';
-import { memo, useCallback, useState } from 'react';
 
 /**
- * CartPage
+ * CartPage.
  *
  * Full cart page displaying all items, selection controls, and order summary.
  * Integrates with `useCart` hook for state management.
@@ -22,9 +24,6 @@ import { memo, useCallback, useState } from 'react';
  * - Empty state with centered message.
  * - Breadcrumbs for navigation.
  * - Sticky summary on larger screens.
- * - **Exported in two forms**:
- *   - `CartPage` — original function (for tests, HOC)
- *   - `default export` — memoized version (for production)
  */
 export function CartPage() {
   const { cart, totalPrice, totalItems, updateQuantity } = useCart();
@@ -74,12 +73,11 @@ export function CartPage() {
           {/* Cart Items List */}
           <div className="flex w-full flex-1 flex-col gap-6">
             {/* Selection Controls */}
-            <div className="flex items-center justify-between rounded-lg border border-neutral-200 px-3 py-2">
+            <div className="border-neutral etc flex items-center justify-between rounded-lg border">
               <Checkbox
                 checked={allSelected}
                 onCheckedChange={toggleAll}
                 label="Select All"
-                // Indeterminate state for partial selection
                 className={someSelected ? 'indeterminate' : ''}
               />
               <Button onClick={handleDeleteSelected} disabled={selectedIds.size === 0}>
@@ -98,7 +96,7 @@ export function CartPage() {
                   <CartItem
                     key={item.variant_id}
                     variantId={item.variant_id}
-                    title={item.variant.name || item.product.title || 'Unnamed Product'}
+                    title={item.variant.name ?? item.product.title ?? 'Unnamed Product'}
                     image={item.variant.images[0]?.url ?? ''}
                     price={{
                       currentPrice: item.variant.price,

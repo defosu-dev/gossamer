@@ -20,9 +20,9 @@ export function Copyright() {
         <Link href="#" className={cn('transition hover:text-black')}>
           Terms of Service
         </Link>
-        <a href="#" className={cn('transition hover:text-black')}>
+        <Link href="#" className="hover:text-black transition">
           Privacy Policy
-        </a>
+        </Link>
       </div>
     </div>
   );

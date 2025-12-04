@@ -5,6 +5,7 @@ import {
   forgotPasswordSchema,
   updatePasswordSchema,
 } from '@/lib/validator/auth';
+import type { UserDTO } from '@/types/api';
 
 type LoginInput = z.infer<typeof loginSchema>;
 type RegisterInput = z.infer<typeof registerSchema>;
@@ -50,5 +51,20 @@ export const authService = {
     });
     if (!res.ok) throw await res.json();
     return res.json();
+  },
+
+  getMe: async (): Promise<UserDTO | null> => {
+    const res = await fetch('/api/auth/me', {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+      cache: 'no-store',
+    });
+
+    if (!res.ok) {
+      return null;
+    }
+
+    const data = await res.json();
+    return data.user; 
   },
 };

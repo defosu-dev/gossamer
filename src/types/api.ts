@@ -122,3 +122,17 @@ export interface WishlistItemDTO {
   inStock: boolean;
   addedAt: string;
 }
+
+
+export interface UserDTO {
+  id: string;
+  email: string;
+  name: string | null;
+  avatar_url: string | null;
+  phone: string | null;
+}
+
+export interface ApiError {
+  error: string;
+  details?: unknown;
+}

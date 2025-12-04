@@ -1,73 +1,73 @@
-import type { StateCreator } from 'zustand';
+import { type StateCreator } from 'zustand';
+import type { CartSlice, LocalCartItem } from '@/types/store';
+import type { Store } from '@/store';
 
-/**
- *
- */
-export interface CartItem {
-  /** Variant ID from the product_variants table */
-  variant_id: string;
+const calculateTotals = (items: LocalCartItem[]) => {
+  const totalQuantity = items.reduce((acc, item) => acc + item.quantity, 0);
+  const totalPrice = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  return { totalQuantity, totalPrice };
+};
 
-  /** Quantity of this variant in the cart */
-  quantity: number;
-}
+export const createCartSlice: StateCreator<
+  Store,
+  [['zustand/devtools', never], ['zustand/persist', unknown]],
+  [],
+  CartSlice
+> = (set, get) => ({
+  items: [],
+  totalPrice: 0,
+  totalQuantity: 0,
 
-/**
- *
- */
-export interface CartSlice {
-  /** Current cart items */
-  cart: CartItem[];
+  addItem: (newItem) => {
+    set((state: Store) => {
+      const existingItemIndex = state.items.findIndex((i: LocalCartItem) => i.variantId === newItem.variantId);
+      
+      let updatedItems;
 
-  /** Add variant to cart (increments quantity if already exists) */
-  addToCart: (variantId: string, quantity?: number) => void;
-
-  /** Remove variant completely from cart */
-  removeFromCart: (variantId: string) => void;
-
-  /** Update variant quantity (does not remove if ≤ 0) */
-  updateQuantity: (variantId: string, quantity: number) => void;
-
-  /** Clear entire cart */
-  clearCart: () => void;
-
-  /** Replace cart contents (used for server sync) */
-  setCart: (items: CartItem[]) => void;
-}
-
-/**
- * Zustand slice for cart management.
- *
- * @remarks
- * Pure client-side slice used with Zustand + persist middleware.
- * Provides optimistic, immediate UI updates.
- * Designed to work for both guest and authenticated users.
- */
-export const createCartSlice: StateCreator<CartSlice> = (set) => ({
-  cart: [],
-  addToCart: (variantId, quantity = 1) =>
-    set((state) => {
-      const existing = state.cart.find((item) => item.variant_id === variantId);
-      if (existing) {
-        return {
-          cart: state.cart.map((item) =>
-            item.variant_id === variantId ? { ...item, quantity: item.quantity + quantity } : item
-          ),
+      if (existingItemIndex > -1) {
+        updatedItems = [...state.items];
+        const item = updatedItems[existingItemIndex];
+        updatedItems[existingItemIndex] = {
+          ...item,
+          quantity: item.quantity + newItem.quantity,
         };
+      } else {
+        updatedItems = [...state.items, newItem];
       }
-      return { cart: [...state.cart, { variant_id: variantId, quantity }] };
-    }),
-  removeFromCart: (variantId) =>
-    set((state) => ({
-      cart: state.cart.filter((item) => item.variant_id !== variantId),
-    })),
-  updateQuantity: (variantId, quantity) =>
-    set((state) => ({
-      cart: state.cart.map((item) =>
-        item.variant_id === variantId ? { ...item, quantity } : item
-      ),
-    })),
-  clearCart: () => set({ cart: [] }),
-  setCart: (items) => set({ cart: items }),
-});
 
-export default createCartSlice;
+      return {
+        items: updatedItems,
+        ...calculateTotals(updatedItems),
+      };
+    }, false, 'cart/addItem');
+  },
+
+  removeItem: (variantId) => {
+    set((state: Store) => {
+      const updatedItems = state.items.filter((i: LocalCartItem) => i.variantId !== variantId);
+      return {
+        items: updatedItems,
+        ...calculateTotals(updatedItems),
+      };
+    }, false, 'cart/removeItem');
+  },
+
+  updateQuantity: (variantId, quantity) => {
+    set((state: Store) => {
+      if (quantity <= 0) return state;
+
+      const updatedItems = state.items.map((item: LocalCartItem) =>
+        item.variantId === variantId ? { ...item, quantity } : item
+      );
+
+      return {
+        items: updatedItems,
+        ...calculateTotals(updatedItems),
+      };
+    }, false, 'cart/updateQuantity');
+  },
+
+  clearCart: () => {
+    set({ items: [], totalPrice: 0, totalQuantity: 0 }, false, 'cart/clear');
+  },
+});

@@ -88,7 +88,6 @@ export async function GET() {
         slug: product.slug,
         price: variant.current_price ?? 0,
         oldPrice: variant.old_price,
-        // 👇 ВИПРАВЛЕННЯ 1: Якщо quantity null, ставимо 0 (або 1)
         quantity: item.quantity ?? 1,
         stock: variant.stock ?? 0,
         imageUrl: image,
@@ -149,7 +148,6 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (existingItem) {
-      // 👇 ВИПРАВЛЕННЯ 2: Безпечне додавання. Якщо null, вважаємо 0.
       const currentQty = existingItem.quantity ?? 0;
 
       const { error } = await supabase

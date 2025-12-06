@@ -10,3 +10,5 @@ export const searchProducts = async (query: string, category?: string) => {
 
   return res.json();
 };
+
+

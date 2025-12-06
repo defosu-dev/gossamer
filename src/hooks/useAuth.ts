@@ -1,4 +1,4 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 import { z } from 'zod';
@@ -7,42 +7,14 @@ import { authService } from '@/services/api/auth';
 import { cartService } from '@/services/api/cart';
 import { useStore } from '@/store';
 import { loginSchema, registerSchema, forgotPasswordSchema, updatePasswordSchema } from '@/lib/validator/auth';
-import type { ApiError, UserDTO } from '@/types/api';
 import { queryKeys } from '@/config/queryKeys';
 import { to } from '@/config/routes';
+import { getErrorMessage } from '@/lib/utils/getErrorMessage';
 
 type LoginInput = z.infer<typeof loginSchema>;
 type RegisterInput = z.infer<typeof registerSchema>;
 type ForgotPasswordInput = z.infer<typeof forgotPasswordSchema>;
 type UpdatePasswordInput = z.infer<typeof updatePasswordSchema>;
-
-
-function getErrorMessage(error: unknown): string {
-  if (typeof error === 'object' && error !== null && 'error' in error) {
-    return (error as ApiError).error;
-  }
-  if (error instanceof Error) {
-    return error.message;
-  }
-  return 'An unexpected error occurred';
-}
-
-
-export const useUser = () => {
-  const { data, isLoading, error } = useQuery<UserDTO | null, Error>({
-    queryKey: queryKeys.user.profile(),
-    queryFn: authService.getMe,
-    staleTime: 1000 * 60 * 10,
-    retry: false,
-  });
-
-  return {
-    user: data,
-    isLoading,
-    isAuthenticated: !!data,
-    error,
-  };
-};
 
 export const useLogin = () => {
   const router = useRouter();
@@ -51,11 +23,7 @@ export const useLogin = () => {
   const getLocalItems = () => useStore.getState().items;
   const clearLocalCart = useStore.getState().clearCart;
 
-  return useMutation<
-    { success: boolean }, 
-    unknown,              
-    LoginInput            
-  >({
+  return useMutation<{ success: boolean }, unknown, LoginInput>({
     mutationFn: authService.login,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: queryKeys.user.profile() });
@@ -88,26 +56,19 @@ export const useLogin = () => {
       router.refresh(); 
     },
     onError: (error) => {
-      const message = getErrorMessage(error);
-      toast.error(message);
+      toast.error(getErrorMessage(error));
     },
   });
 };
 
-
 export const useRegister = () => {
-  return useMutation<
-    { success: boolean }, 
-    unknown, 
-    RegisterInput
-  >({
+  return useMutation<{ success: boolean }, unknown, RegisterInput>({
     mutationFn: authService.register,
     onSuccess: () => {
       toast.success('Account created! Please check your email to confirm.');
     },
     onError: (error) => {
-      const message = getErrorMessage(error);
-      toast.error(message);
+      toast.error(getErrorMessage(error));
     },
   });
 };
@@ -120,7 +81,7 @@ export const useLogout = () => {
   return useMutation<void, unknown, void>({
     mutationFn: authService.logout,
     onSuccess: () => {
-      queryClient.clear(); 
+      queryClient.clear();
       clearLocalCart(); 
       
       toast.success('Logged out successfully');
@@ -128,25 +89,19 @@ export const useLogout = () => {
       router.refresh();
     },
     onError: (error) => {
-      const message = getErrorMessage(error);
-      toast.error(message);
+      toast.error(getErrorMessage(error));
     },
   });
 };
 
 export const useForgotPassword = () => {
-  return useMutation<
-    { success: boolean }, 
-    unknown, 
-    ForgotPasswordInput
-  >({
+  return useMutation<{ success: boolean }, unknown, ForgotPasswordInput>({
     mutationFn: authService.forgotPassword,
     onSuccess: () => {
       toast.success('If an account exists, a reset link has been sent.');
     },
     onError: (error) => {
-      const message = getErrorMessage(error);
-      toast.error(message);
+      toast.error(getErrorMessage(error));
     },
   });
 };
@@ -154,19 +109,14 @@ export const useForgotPassword = () => {
 export const useUpdatePassword = () => {
   const router = useRouter();
 
-  return useMutation<
-    { success: boolean }, 
-    unknown, 
-    UpdatePasswordInput
-  >({
+  return useMutation<{ success: boolean }, unknown, UpdatePasswordInput>({
     mutationFn: authService.updatePassword,
     onSuccess: () => {
       toast.success('Password updated successfully');
       router.push(to.profile());
     },
     onError: (error) => {
-      const message = getErrorMessage(error);
-      toast.error(message);
+      toast.error(getErrorMessage(error));
     },
   });
 };

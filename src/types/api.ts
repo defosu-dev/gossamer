@@ -136,3 +136,16 @@ export interface ApiError {
   error: string;
   details?: unknown;
 }
+
+export interface AddressDTO {
+  id: string;
+  title: string | null;
+  addressLine1: string;
+  addressLine2: string | null;
+  city: string;
+  state: string | null;
+  zipCode: string | null;
+  country: string | null;
+  phone: string | null;
+  isDefault: boolean;
+}

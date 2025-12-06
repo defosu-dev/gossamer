@@ -1,48 +1,60 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { ShoppingBag } from 'lucide-react';
 
 import { cn } from '@/lib/utils/cn';
-
-import Button from '../../ui/Button';
-import { useCart } from '@/lib/hooks/useCart';
 import { to } from '@/config/routes';
+import Button from '@/components/ui/Button';
 
 interface ProductActionsProps {
-  /** Variant ID of the product */
-  variantId: string;
-
-  /** Optional additional class names */
+  onAddToCart: () => void;
   className?: string;
+  isCompact?: boolean;
 }
 
-/**
- * ProductActions.
- *
- * @remarks
- * Renders "Add to Cart" and "Buy Now" buttons for a product variant.
- * Integrates with useCart hook and Next.js router for navigation.
- * Client component due to useCart and useRouter usage.
- */
-export function ProductActions({ variantId, className }: ProductActionsProps) {
-  const { addToCart } = useCart();
+export function ProductActions({ onAddToCart, className, isCompact = false }: ProductActionsProps) {
   const router = useRouter();
 
-  const handleAddToCart = () => {
-    addToCart(variantId);
-  };
-
-  const handleBuyNow = () => {
-    addToCart(variantId);
+  const handleBuyNow = (e: React.MouseEvent) => {
+    e.preventDefault();
+    onAddToCart();
     router.push(to.checkout());
   };
 
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    onAddToCart();
+  };
+
+  if (isCompact) {
+    return (
+      <Button
+        variant="secondary"
+        className={cn('w-full', className)}
+        onClick={() => handleAddToCart}
+      >
+        <ShoppingBag className="mr-2 h-4 w-4" /> Add
+      </Button>
+    );
+  }
+
   return (
-    <div className={cn('flex items-center justify-between', className)}>
-      <Button variant="secondary" onClick={handleAddToCart}>
+    <div className={cn('flex items-center gap-2', className)}>
+      <Button
+        variant="secondary"
+        className="flex-1"
+        onClick={() => handleAddToCart}
+        aria-label="Add to cart"
+      >
         Add to Cart
       </Button>
-      <Button variant="primary" onClick={handleBuyNow}>
+      <Button
+        variant="primary"
+        className="flex-1"
+        onClick={() => handleBuyNow}
+        aria-label="Buy now"
+      >
         Buy Now
       </Button>
     </div>

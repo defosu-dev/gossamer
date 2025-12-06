@@ -1,6 +1,6 @@
 import type { CartItemDTO } from '@/types/api';
 
-export interface LocalCartItem extends Omit<CartItemDTO, 'id' | 'oldPrice' | 'stock'> {
+export interface LocalCartItem extends Omit<CartItemDTO, 'id' | 'stock'> {
   id: string; 
   stock?: number; 
 }

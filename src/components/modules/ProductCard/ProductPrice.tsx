@@ -2,42 +2,47 @@ import { cn } from '@/lib/utils/cn';
 import formatCurrency from '@/lib/utils/formatCurrency';
 
 interface ProductPriceProps {
-  /** Lowest current price across variants. `null` means no price available. */
-  minPrice: number | null;
+  /** The main display price (usually current price of default variant). */
+  price: number;
 
-  /** Highest old price (for discount). Optional. */
-  maxOldPrice?: number | null;
+  /** The old price (for discount comparison). Optional. */
+  oldPrice?: number | null;
 
-  /** If `true`, shows old price when `maxOldPrice > minPrice`. */
-  showDiscount?: boolean;
+  /** Optional styling class. */
+  className?: string;
 }
 
 /**
+ * ProductPrice.
  *
  * @remarks
- * Renders product price with optional discount display.
- * - Uses `Intl.NumberFormat` for USD currency formatting.
- * - Main price styled as `text-xl font-bold text-gray-900`.
- * - Shows strikethrough old price (`text-sm text-gray-500 line-through`) if discount applies.
- * - Falls back to "Price unavailable" if no current price.
+ * Renders the product price. Automatically shows the old price if it exists and is higher than the current price.
  */
-export function ProductPrice({ minPrice, maxOldPrice, showDiscount = false }: ProductPriceProps) {
-  if (minPrice == null) {
-    return <p className={cn('text-xl font-bold text-gray-900')}>Price unavailable</p>;
+export function ProductPrice({ price, oldPrice, className }: ProductPriceProps) {
+  if (price === null || price === undefined) {
+    return <p className="text-lg font-bold text-gray-900">Unavailable</p>;
   }
 
-  const formattedMin = formatCurrency(minPrice);
+  const formattedPrice = formatCurrency(price);
 
-  const formattedOld = maxOldPrice != null ? formatCurrency(maxOldPrice) : null;
-
-  const hasDiscount = showDiscount && maxOldPrice != null && maxOldPrice > minPrice;
+  const isDiscounted = oldPrice != null && oldPrice > price;
+  const formattedOldPrice = isDiscounted ? formatCurrency(oldPrice) : null;
 
   return (
-    <div className={cn('flex flex-col-reverse items-center gap-x-2')}>
-      <p className={cn('text-xl font-bold text-gray-900')}>{formattedMin}</p>
-      {hasDiscount && formattedOld != null && (
-        <p className={cn('text-sm text-gray-500 line-through')}>{formattedOld}</p>
+    <div className={cn('flex flex-col items-end', className)}>
+      {isDiscounted && (
+        <span className="mb-0.5 text-xs text-gray-400 line-through">{formattedOldPrice}</span>
       )}
+
+      <span
+        className={cn(
+          'font-bold text-gray-900',
+          isDiscounted ? 'text-red-600' : 'text-gray-900',
+          'text-lg'
+        )}
+      >
+        {formattedPrice}
+      </span>
     </div>
   );
 }

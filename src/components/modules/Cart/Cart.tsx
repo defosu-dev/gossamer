@@ -3,37 +3,24 @@
 import { memo, useCallback, useEffect, useState } from 'react';
 
 import { cn } from '@/lib/utils/cn';
+import { useCart } from '@/hooks/useCart'; // Новий шлях
 
 import CartDropdown from './CartDropdown';
 import CartButton from './CartButton';
 import DarkBackground from '@/components/ui/DarkBackground';
-import { useCart } from '@/lib/hooks/useCart';
 
 /**
- * Cart.
- *
- * Root component for the shopping cart UI in the header.
- * Manages dropdown visibility, integrates with `useCart` hook, and handles
- * keyboard accessibility (Escape key).
- *
- * @remarks
- * - Controls open/close state locally.
- * - Uses `useCart` for cart data: items, total, quantity updates.
- * - Closes on `Escape` key when open.
- * - Renders `DarkBackground` overlay for modal-like behavior.
- * - Composes `CartButton` and `CartDropdown`.
- * - **Exported in two forms**:
- *   - `Cart` — original function (for tests, HOC)
- *   - `default export` — memoized version (for production)
+ * Cart Container Component.
+ * Integrates the new useCart hook with the UI.
  */
 export function Cart() {
   const [open, setOpen] = useState(false);
-  const { totalItems, cart, totalPrice, updateQuantity } = useCart();
+
+  const { items, totalQuantity, totalPrice, updateQuantity, removeItem, isLoading } = useCart();
 
   const toggle = useCallback(() => setOpen((v) => !v), []);
   const closeCart = useCallback(() => setOpen(false), []);
 
-  // Close on Escape key
   useEffect(() => {
     if (!open) return;
 
@@ -47,16 +34,18 @@ export function Cart() {
 
   return (
     <div className={cn('relative')}>
-      <CartButton onClick={toggle} open={open} count={totalItems} />
+      <CartButton onClick={toggle} open={open} count={totalQuantity} isLoading={isLoading} />
 
       <DarkBackground open={open} onClose={closeCart} />
 
       <CartDropdown
         open={open}
         onClose={closeCart}
-        items={cart}
+        items={items}
         total={totalPrice}
         onQuantityChange={updateQuantity}
+        onRemoveItem={removeItem}
+        isLoading={isLoading}
       />
     </div>
   );

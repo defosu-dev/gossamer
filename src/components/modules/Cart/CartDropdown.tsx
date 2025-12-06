@@ -2,69 +2,41 @@
 
 import Link from 'next/link';
 import { memo, useRef } from 'react';
-import { X } from 'lucide-react';
+import { X, ShoppingBag } from 'lucide-react';
 
 import { cn } from '@/lib/utils/cn';
-import type { CartItemWithProduct } from '@/src/hooks/useCart';
 import formatCurrency from '@/lib/utils/formatCurrency';
-
-import { CartItem } from './CartItem';
 import { to } from '@/config/routes';
 
-/**
- * Props for the CartDropdown component.
- *
- * @remarks
- * - Controls visibility, item list, total price, and quantity change callbacks.
- */
+// Імпортуємо правильні типи
+import type { CartItemDTO } from '@/types/api';
+import type { LocalCartItem } from '@/types/store';
+
+// Об'єднаний тип для елемента інтерфейсу
+type UIItem = CartItemDTO | LocalCartItem;
+
+// Імпорт компонента елемента списку (переконайтеся, що він теж оновлений)
+import { CartItem } from './CartItem';
+import Button from '@/components/ui/Button';
+
 export interface CartDropdownProps {
-  /**
-   * Controls whether the dropdown is visible.
-   *
-   * @default false
-   */
   open: boolean;
-
-  /**
-   * Callback to close the dropdown.
-   */
   onClose: () => void;
-
-  /**
-   * Array of cart items with full product and variant data.
-   */
-  items: CartItemWithProduct[];
-
-  /**
-   * Total price of all items in the cart (in the smallest currency unit).
-   */
+  items: UIItem[];
   total: number;
-
-  /**
-   * Handler for quantity changes or item removal (quantity = 0).
-   *
-   * @param variantId Unique identifier of the product variant.
-   * @param quantity New quantity (0 means remove).
-   */
-  onQuantityChange: (variantId: string, quantity: number) => void;
+  isLoading?: boolean;
+  onQuantityChange: (variantId: string, quantity: number, id?: string) => void;
+  onRemoveItem: (variantId: string, id?: string) => void;
 }
 
-/**
- * CartDropdown.
- *
- * A floating cart summary that appears on hover/click, showing cart contents,
- * total, and quick controls.
- *
- * @remarks
- * - Uses `role="dialog"` with proper ARIA attributes for screen readers.
- * - Smooth open/close animation via Tailwind `transition-all`.
- * - Scrollable item list with `max-h-96` and smooth scrolling.
- * - Optimistic updates via `CartItem` (debounced quantity sync).
- * - Mobile-first responsive: `w-xs` → `w-lg` on medium screens.
- * - Clicking outside or "Close" button triggers `onClose`.
- * - Fully memoized for performance.
- */
-export function CartDropdown({ open, onClose, items, total, onQuantityChange }: CartDropdownProps) {
+export function CartDropdown({
+  open,
+  onClose,
+  items,
+  total,
+  onQuantityChange,
+  onRemoveItem,
+}: CartDropdownProps) {
   const dialogId = 'cart-dropdown';
   const listRef = useRef<HTMLUListElement>(null);
 
@@ -75,72 +47,91 @@ export function CartDropdown({ open, onClose, items, total, onQuantityChange }: 
       aria-modal="true"
       aria-labelledby={`${dialogId}-title`}
       className={cn(
-        'absolute right-0 z-50 mt-2 flex w-xs origin-top-right flex-col overflow-hidden rounded-xl border border-neutral-300 bg-white shadow-xl transition-all duration-200 md:w-lg',
+        'absolute right-0 z-50 mt-3 flex w-[90vw] max-w-sm origin-top-right flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-2xl transition-all duration-200 sm:w-96',
         open
           ? 'pointer-events-auto translate-y-0 scale-100 opacity-100'
-          : 'pointer-events-none -translate-y-1 scale-95 opacity-0'
+          : 'pointer-events-none -translate-y-2 scale-95 opacity-0'
       )}
     >
       {/* Header */}
-      <div className={cn('flex items-center justify-between px-3 py-2')}>
-        <h3 id={`${dialogId}-title`} className={cn('text-sm font-semibold')}>
-          Your cart
+      <div className="flex items-center justify-between border-b border-neutral-100 bg-neutral-50/50 px-4 py-3">
+        <h3 id={`${dialogId}-title`} className="text-sm font-semibold text-neutral-900">
+          Shopping Cart ({items.length})
         </h3>
         <button
           type="button"
           onClick={onClose}
           aria-label="Close cart"
-          className={cn(
-            'cursor-pointer rounded-full p-1 text-sm opacity-70 transition-opacity hover:opacity-100 focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:outline-none'
-          )}
+          className="group rounded-full p-1 text-neutral-400 transition-colors hover:bg-neutral-100 hover:text-neutral-600"
         >
-          <X className={cn('size-4')} aria-hidden="true" />
+          <X className="size-4" />
         </button>
       </div>
 
-      {/* Cart Items List */}
-      <ul
-        ref={listRef}
-        tabIndex={-1}
-        className={cn('max-h-96 divide-y divide-gray-200 overflow-y-auto scroll-smooth')}
-      >
+      {/* Items List */}
+      <ul ref={listRef} className="max-h-[60vh] space-y-4 overflow-y-auto scroll-smooth p-4">
         {items.length === 0 ? (
-          <li className={cn('p-4 text-center text-sm text-gray-600')}>Your cart is empty</li>
+          <li className="flex flex-col items-center justify-center py-8 text-center">
+            <div className="mb-3 rounded-full bg-neutral-50 p-4">
+              <ShoppingBag className="size-8 text-neutral-300" />
+            </div>
+            <p className="text-sm font-medium text-neutral-900">Your cart is empty</p>
+            <p className="mt-1 max-w-[150px] text-xs text-neutral-500">
+              Looks like you haven't added anything yet.
+            </p>
+            <Button className="mt-4 w-full" onClick={onClose}>
+              Start Shopping
+            </Button>
+          </li>
         ) : (
-          items.map((item) => (
-            <CartItem
-              key={item.variant_id}
-              variantId={item.variant_id}
-              title={item.variant.name ?? item.product.title ?? 'Unnamed Product'}
-              image={item.variant.images[0]?.url ?? ''}
-              price={{
-                currentPrice: item.variant.price,
-                oldPrice: item.variant.old_price ?? 0,
-              }}
-              quantity={item.quantity}
-              attributes={[]}
-              onChange={onQuantityChange}
-            />
-          ))
+          items.map((item) => {
+            // Визначаємо ID запису (якщо це серверний товар)
+            const dbId = 'id' in item ? item.id : undefined;
+
+            return (
+              <CartItem
+                key={item.variantId}
+                variantId={item.variantId}
+                // Наші типи тепер плоскі, без вкладеностей variant/product
+                title={item.title}
+                image={item.imageUrl ?? ''}
+                price={{
+                  currentPrice: item.price,
+                  oldPrice: item.oldPrice ?? undefined,
+                }}
+                quantity={item.quantity}
+                // Передаємо рядок атрибутів або порожній масив, залежно від того, що приймає CartItem
+                // Якщо CartItem очікує string:
+                attributesDescription={item.attributesDescription}
+                onChange={(q) => onQuantityChange(item.variantId, q, dbId)}
+                onRemove={() => onRemoveItem(item.variantId, dbId)}
+              />
+            );
+          })
         )}
       </ul>
 
-      {/* Footer: Total + View All */}
-      <div
-        className={cn('flex items-center justify-between gap-4 border-t border-gray-200 px-3 py-2')}
-      >
-        <Link
-          href={to.cart()}
-          onClick={onClose}
-          className={cn(
-            'text-sm font-semibold underline transition hover:no-underline focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:outline-none'
-          )}
-        >
-          All products
-        </Link>
+      {/* Footer */}
+      {items.length > 0 && (
+        <div className="space-y-3 border-t border-neutral-100 bg-neutral-50 p-4">
+          <div className="flex items-center justify-between text-sm">
+            <span className="text-neutral-600">Subtotal</span>
+            <span className="text-base font-bold text-neutral-900">{formatCurrency(total)}</span>
+          </div>
 
-        <span className={cn('text-sm font-semibold')}>Total: {formatCurrency(total)}</span>
-      </div>
+          <Link href={to.checkout()} onClick={onClose} className="block w-full">
+            <Button className="w-full justify-center">Checkout</Button>
+          </Link>
+
+          <Link
+            href={to.cart()}
+            onClick={onClose}
+            className="block text-center text-xs font-medium text-neutral-500 transition-colors hover:text-neutral-900"
+          >
+            View full cart
+          </Link>
+        </div>
+      )}
     </div>
   );
 }

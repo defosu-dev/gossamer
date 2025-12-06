@@ -5,20 +5,23 @@ import { cartService } from '@/services/api/cart';
 import { toast } from 'react-hot-toast';
 import type { LocalCartItem } from '@/types/store';
 import { queryKeys } from '@/config/queryKeys';
-import { useUser } from './useAuth';
+import { useUser } from './useUser';
 
 export const useCart = () => {
   const queryClient = useQueryClient();
-  const { user } = useUser();   
+  const { user } = useUser();
+  
+  // --- ZUSTAND: Отримуємо дані (Це ок) ---
   const localItems = useStore((s) => s.items);
   const localTotal = useStore((s) => s.totalPrice);
   const localQty = useStore((s) => s.totalQuantity);
-  const localActions = useStore((s) => ({ 
-    addItem: s.addItem, 
-    removeItem: s.removeItem, 
-    updateQuantity: s.updateQuantity,
-    clearCart: s.clearCart 
-  }));
+
+  // --- ZUSTAND: Отримуємо дії (ВИПРАВЛЕНО) ---
+  // Ми беремо кожну функцію окремо, щоб уникнути створення нового об'єкта на кожному рендері
+  const localAddItem = useStore((s) => s.addItem);
+  const localRemoveItem = useStore((s) => s.removeItem);
+  const localUpdateQuantity = useStore((s) => s.updateQuantity);
+  const localClearCart = useStore((s) => s.clearCart);
 
   const cartQuery = useQuery({
     queryKey: queryKeys.cart.all,
@@ -30,7 +33,8 @@ export const useCart = () => {
   const syncMutation = useMutation({
     mutationFn: cartService.sync,
     onSuccess: () => {
-      localActions.clearCart();
+      // Використовуємо окрему функцію замість localActions.clearCart()
+      localClearCart();
       queryClient.invalidateQueries({ queryKey: queryKeys.cart.all });
       toast.success('Cart synchronized');
     },
@@ -45,7 +49,8 @@ export const useCart = () => {
         localItems.map(i => ({ variantId: i.variantId, quantity: i.quantity }))
       );
     }
-  }, [user, localItems.length]); 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, localItems.length]); // Додано залежність (але be careful with loops here too)
 
 
   const addItem = (item: LocalCartItem) => {
@@ -55,7 +60,7 @@ export const useCart = () => {
         .catch(() => toast.error('Error adding to cart'));
     } else {
       // Guest: Zustand
-      localActions.addItem(item);
+      localAddItem(item);
       toast.success('Added to cart');
     }
   };
@@ -65,7 +70,7 @@ export const useCart = () => {
       cartService.remove(itemId)
         .then(() => queryClient.invalidateQueries({ queryKey: queryKeys.cart.all }));
     } else {
-      localActions.removeItem(variantId);
+      localRemoveItem(variantId);
     }
   };
 
@@ -74,7 +79,7 @@ export const useCart = () => {
       cartService.update(itemId, quantity)
         .then(() => queryClient.invalidateQueries({ queryKey: queryKeys.cart.all }));
     } else {
-      localActions.updateQuantity(variantId, quantity);
+      localUpdateQuantity(variantId, quantity);
     }
   };
   

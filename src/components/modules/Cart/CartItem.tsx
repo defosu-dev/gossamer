@@ -1,103 +1,92 @@
 'use client';
 
 import { memo, useCallback } from 'react';
+import Link from 'next/link';
 
 import { cn } from '@/lib/utils/cn';
+import { to } from '@/config/routes';
 
-import CartDescription from './CartDescription';
+// UI Components
 import CartItemPrice from './CartItemPrice';
 import Checkbox from '@/components/ui/Checkbox';
 import DeleteButton from '@/components/ui/DeleteButton';
 import ImageWithFallback from '@/components/ui/ImageWithFallback';
 import InputQuantity from '@/components/ui/InputQuantity';
 import Badge from '@/components/ui/Badge';
-import { to } from '@/config/routes';
 
 /**
- * Props for a single cart item in the dropdown.
+ * Props for a single cart item.
  */
 export interface CartItemProps {
   /** Unique product variant identifier */
   variantId: string;
 
-  /** Product display title */
+  /** Product title */
   title: string;
 
-  /** Main image URL for the product */
+  /** Product slug for linking */
+  slug?: string;
+
+  /** Main image URL */
   image: string;
 
-  /** Pricing information */
+  /** Pricing info */
   price: {
-    /** Current sale price */
     currentPrice: number;
-
-    /** Original price (crossed out) */
-    oldPrice: number;
+    oldPrice?: number;
   };
 
-  /** Current quantity from parent/store */
+  /** Current quantity */
   quantity: number;
 
-  /** Optional list of product attributes like color, size, etc. */
-  attributes?: { label: string; value: string }[];
+  /** Formatted attributes string (e.g. "Color: Red, Size: M") */
+  attributesDescription?: string;
 
   /**
-   * Handler for quantity changes or removal.
-   * - If quantity = 0, the item is removed.
+   * Handler for quantity changes.
+   * Only called with positive integers > 0.
    */
-  onChange: (variantId: string, quantity: number) => void;
+  onChange: (quantity: number) => void;
 
-  /** Whether the item is currently selected */
+  /**
+   * Handler for item removal.
+   */
+  onRemove: () => void;
+
+  /** Selection state (optional) */
   selected?: boolean;
-
-  /** Callback when selection state changes */
   onSelect?: (variantId: string, selected: boolean) => void;
-
-  /** Controls whether the checkbox is rendered */
   showCheckbox?: boolean;
 }
 
 /**
  * CartItem component.
  *
- * Represents a single item in the shopping cart dropdown.
- * Fully controlled: quantity and selection are passed from the parent.
- *
- * @remarks
- * - Does not maintain internal state for quantity or selection.
- * - Does not debounce changes; calls `onChange` immediately.
- * - Fully accessible: images with alt, focus-visible styling on interactive elements.
- * - Designed for Tailwind `group` usage for hover effects.
- * - Optional checkbox for selection (controlled via `showCheckbox` prop).
- * - Memoized for performance.
+ * Renders a single row in the cart dropdown or cart page.
  */
 export function CartItem({
   variantId,
   title,
+  slug,
   image,
   price,
   quantity,
-  attributes = [],
+  attributesDescription,
   onChange,
+  onRemove,
   selected = false,
   onSelect,
   showCheckbox = false,
 }: CartItemProps) {
-  /** Called when the quantity changes */
   const handleQuantityChange = useCallback(
     (newQty: number) => {
+      // Захист від 0 або від'ємних чисел. Видалення йде через onRemove.
       if (newQty < 1) return;
-      onChange(variantId, newQty);
+      onChange(newQty);
     },
-    [onChange, variantId]
+    [onChange]
   );
 
-  /** Called when the item is deleted (quantity set to 0) */
-  const handleDelete = useCallback(() => {
-    onChange(variantId, 0);
-  }, [onChange, variantId]);
-
-  /** Called when the selection checkbox changes */
   const handleSelectChange = useCallback(
     (checked: boolean) => {
       onSelect?.(variantId, checked);
@@ -106,9 +95,10 @@ export function CartItem({
   );
 
   return (
-    <li className="group flex gap-3 p-3">
+    <li className="group flex gap-3 rounded-lg p-3 transition-colors hover:bg-neutral-50/50">
+      {/* Optional Checkbox */}
       {showCheckbox && (
-        <div className={cn('flex items-start pt-1')}>
+        <div className="flex items-start pt-1">
           <Checkbox
             checked={selected}
             onCheckedChange={handleSelectChange}
@@ -117,38 +107,50 @@ export function CartItem({
         </div>
       )}
 
-      <div className={cn('grid flex-1 grid-cols-4 gap-3', showCheckbox && 'ml-0')}>
-        <div className="relative col-span-1 aspect-square w-full overflow-hidden rounded-lg shadow">
-          <ImageWithFallback
-            src={image}
-            alt={title}
-            sizes="(max-width: 400px) 100vw, (max-width: 700px) 50vw, 282px"
-            iconSize={6}
-          />
+      <div className={cn('grid flex-1 grid-cols-[auto_1fr_auto] gap-4', showCheckbox && 'ml-0')}>
+        {/* 1. Image */}
+        <div className="relative aspect-square w-20 overflow-hidden rounded-md border border-neutral-200 bg-white">
+          <ImageWithFallback src={image} alt={title} className="object-cover" sizes="80px" />
         </div>
 
-        <div className="col-span-2 flex flex-col">
-          <Badge as="link" href={to.products()} className={cn('self-start')}>
-            Product
-          </Badge>
+        {/* 2. Info */}
+        <div className="flex min-w-0 flex-col justify-between">
+          <div>
+            {slug ? (
+              <Link href={to.product(slug)} className="group-hover:underline">
+                <h4 className="line-clamp-2 text-sm font-semibold text-neutral-900" title={title}>
+                  {title}
+                </h4>
+              </Link>
+            ) : (
+              <h4 className="line-clamp-2 text-sm font-semibold text-neutral-900" title={title}>
+                {title}
+              </h4>
+            )}
 
-          <div className="mt-2 truncate font-bold text-gray-800" title={title}>
-            {title}
+            {/* Attributes */}
+            {attributesDescription && (
+              <p className="mt-1 line-clamp-1 text-xs text-neutral-500">{attributesDescription}</p>
+            )}
+
+            {/* Optional Badge if needed */}
+            {/* <Badge variant="outline" className="mt-2 w-fit text-[10px] h-5 px-1.5">
+               In Stock
+             </Badge> */}
           </div>
-
-          <CartDescription items={attributes} className={cn('mt-1')} />
         </div>
 
-        <div className="col-span-1 flex flex-col items-end">
+        {/* 3. Actions & Price */}
+        <div className="flex flex-col items-end justify-between">
           <CartItemPrice
             currentPrice={price.currentPrice}
-            oldPrice={price.oldPrice}
-            className={cn('text-end')}
+            oldPrice={price.oldPrice ?? 0}
+            className="text-right"
           />
 
-          <div className="mt-auto flex items-center gap-4">
-            <DeleteButton onDelete={handleDelete} />
+          <div className="mt-2 flex items-center gap-3">
             <InputQuantity quantity={quantity} onChange={handleQuantityChange} />
+            <DeleteButton onDelete={onRemove} />
           </div>
         </div>
       </div>

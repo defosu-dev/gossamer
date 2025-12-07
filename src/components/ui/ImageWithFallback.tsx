@@ -49,7 +49,11 @@ export function ImageWithFallback({
   useEffect(() => {
     if (src) {
       setStatus('loading');
-      const timer = setTimeout(() => setStatus('error'), timeout);
+
+      const timer = setTimeout(() => {
+        setStatus((prevStatus) => (prevStatus === 'loading' ? 'error' : prevStatus));
+      }, timeout);
+
       return () => clearTimeout(timer);
     } else {
       setStatus('error');

@@ -1,56 +1,81 @@
-import { getUserPayments } from '@/lib/fetchers/server/getUserPayments.server';
+'use client';
+
+import { Loader2, Package } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
+import { useOrders } from '@/hooks/user';
+import formatCurrency from '@/lib/utils/formatCurrency';
 
 /**
- * PaymentHistory.
+ * PaymentHistory (Orders History).
  *
- * Displays a list of payments made by the current authenticated user.
- *
- * @remarks
- * - Fetches user from Supabase server-side auth.
- * - Shows error message if user is unauthorized.
- * - Renders a fallback message if no payments exist.
- * - Formats amount in USD by default.
+ * Displays a list of user orders fetched via TanStack Query.
  */
-export default async function PaymentHistory() {
-  const supabase = await import('@/lib/supabase/supabaseServer').then((m) => m.supabaseServer());
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+export default function PaymentHistory() {
+  const { data: orders, isLoading, error } = useOrders();
 
-  if (!user) {
-    return <p className={cn('text-red-500')}>Unauthorized</p>;
+  if (isLoading) {
+    return (
+      <div className="flex justify-center py-4">
+        <Loader2 className="h-6 w-6 animate-spin text-gray-400" />
+      </div>
+    );
   }
 
-  const { data: payments, error } = await getUserPayments(user.id);
+  if (error) {
+    return <p className="text-red-500">Failed to load history</p>;
+  }
 
-  if (error || !payments?.length) {
-    return <p className={cn('text-gray-500')}>No payments found</p>;
+  if (!orders || orders.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center rounded-lg border border-dashed border-gray-200 p-8 text-center">
+        <Package className="mb-2 h-8 w-8 text-gray-300" />
+        <p className="text-gray-500">No orders found</p>
+      </div>
+    );
   }
 
   return (
-    <ul className={cn('space-y-3')}>
-      {payments.map((p) => (
-        <li
-          key={p.id}
-          className={cn('rounded-lg border bg-white p-4 shadow-sm', 'transition hover:shadow-md')}
-        >
-          <div className={cn('flex items-center justify-between')}>
+    <div className="space-y-4">
+      <h2 className="text-lg font-semibold text-gray-900">Order History</h2>
+      <ul className="space-y-3">
+        {orders.map((order) => (
+          <li
+            key={order.id}
+            className={cn(
+              'rounded-lg border bg-white p-4 shadow-sm transition hover:shadow-md',
+              'flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between'
+            )}
+          >
             <div>
-              <span className={cn('font-medium')}>
-                ${(p.amount / 100).toFixed(2)} {(p.currency ?? 'USD').toUpperCase()}
+              <div className="flex items-center gap-2">
+                <span className="font-medium text-gray-900">{formatCurrency(order.total)}</span>
+                <span
+                  className={cn(
+                    'rounded-full px-2 py-0.5 text-[10px] font-bold tracking-wide uppercase',
+                    order.status === 'paid' && 'bg-green-100 text-green-700',
+                    order.status === 'pending' && 'bg-yellow-100 text-yellow-700',
+                    order.status === 'cancelled' && 'bg-red-100 text-red-700'
+                  )}
+                >
+                  {order.status}
+                </span>
+              </div>
+              <span className="text-xs text-gray-500">
+                {new Date(order.createdAt).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}
               </span>
-              <span className={cn('ml-2 text-sm text-gray-600')}>— {p.status}</span>
             </div>
-            <div className={cn('text-right')}>
-              <span className={cn('block text-xs text-gray-400')}>
-                {p.created_at != null ? new Date(p.created_at).toLocaleDateString('en-US') : '—'}
-              </span>
-              <span className={cn('text-xs text-gray-400')}>Order: {p.order_id.slice(0, 8)}</span>
+
+            <div className="text-right text-xs text-gray-400">
+              <p>ID: {order.id.slice(0, 8)}...</p>
+              <p>{order.items.length} item(s)</p>
             </div>
-          </div>
-        </li>
-      ))}
-    </ul>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }

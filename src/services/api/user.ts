@@ -1,5 +1,5 @@
 import { addressSchema, updateProfileSchema } from '@/lib/validator/user';
-import type { AddressDTO } from '@/types/api';
+import type { AddressDTO, OrderDTO } from '@/types/api';
 import type { z } from 'zod';
 
 type UpdateProfileInput = z.infer<typeof updateProfileSchema>;
@@ -61,6 +61,18 @@ export const userService = {
     });
 
     if (!res.ok) throw new Error('Failed to delete address');
+    return res.json();
+  },
+
+  getOrders: async (): Promise<OrderDTO[]> => {
+    const res = await fetch('/api/user/orders');
+    if (!res.ok) throw new Error('Failed to fetch orders');
+    return res.json();
+  },
+
+  getOrderById: async (id: string): Promise<OrderDTO> => {
+    const res = await fetch(`/api/user/orders/${id}`);
+    if (!res.ok) throw new Error('Failed to fetch order');
     return res.json();
   },
 };

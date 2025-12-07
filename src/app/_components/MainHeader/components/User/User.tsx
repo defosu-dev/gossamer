@@ -6,12 +6,12 @@ import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils/cn';
 import { to } from '@/config/routes';
 
-import { useUser } from '@/hooks/useUser';
 import { useLogout } from '@/hooks/useAuth';
 
 import UserButton from './UserButton';
 import UserDropdown from './UserDropdown';
 import DarkBackground from '@/components/ui/DarkBackground';
+import { useUser } from '@/hooks/user';
 
 /**
  * User account control in the header.

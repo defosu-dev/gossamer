@@ -1,14 +1,18 @@
 'use client';
 
-import { useAuth } from '@/lib/hooks/useAuth';
+import { useState, type FormEvent } from 'react';
 import { CardElement, Elements, useElements, useStripe } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { Loader2 } from 'lucide-react';
-import { type FormEvent, useState } from 'react';
+import { toast } from 'react-hot-toast';
 
+import { useUser } from '@/hooks/user';
+import { useQueryClient } from '@tanstack/react-query';
+import { queryKeys } from '@/config/queryKeys';
+import Button from '@/components/ui/Button';
+
+// Ініціалізація Stripe
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
-
-const FIXED_AMOUNT = 50; // $50.00
 
 const CARD_ELEMENT_OPTIONS = {
   style: {
@@ -17,153 +21,116 @@ const CARD_ELEMENT_OPTIONS = {
       color: '#1f2937',
       fontFamily: 'ui-sans-serif, system-ui, sans-serif',
       '::placeholder': { color: '#9ca3af' },
-      lineHeight: '1.5',
     },
     invalid: { color: '#dc2626', iconColor: '#dc2626' },
   },
   hidePostalCode: true,
 };
 
-/**
- * CheckoutForm.
- *
- * Handles Stripe payment form logic for a fixed amount.
- *
- * @remarks
- * - Requires user to be logged in (`useAuth`).
- * - Uses Stripe Elements and CardElement for secure card input.
- * - Handles errors and success messages with inline alerts.
- * - Shows loading spinner while processing payment.
- * - Amount is fixed in this example but can be parameterized.
- */
 function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
-  const { user } = useAuth();
+  const { user } = useUser();
+  const queryClient = useQueryClient();
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string>('');
-  const [success, setSuccess] = useState(false);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    if (!stripe || !elements) return;
-
-    if (user == null) {
-      setError('You must be logged in to make a payment.');
+    if (!stripe || !elements || !user) {
+      toast.error('Not ready');
       return;
     }
 
     const card = elements.getElement(CardElement);
-
-    if (card == null) {
-      setError('Card input is not available. Please refresh the page.');
-      return;
-    }
+    if (!card) return;
 
     setLoading(true);
-    setError('');
-    setSuccess(false);
 
     try {
-      const res = await fetch('/api/create-payment-intent', {
+      // 1. Ініціалізація чекауту (створення замовлення з кошика)
+      // Ми відправляємо фейкову адресу для тесту, бо API вимагає валідацію
+      const res = await fetch('/api/checkout/init', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          amount: FIXED_AMOUNT * 100,
-          userId: user.id,
           email: user.email,
+          name: user.name || 'Test User',
+          phone: user.phone || '1234567890',
+          address: 'Test Address Line 1',
         }),
       });
 
+      const data = await res.json();
+
       if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.error ?? 'Payment intent creation failed');
+        throw new Error(data.error || 'Initialization failed');
       }
 
-      const { clientSecret } = await res.json();
+      const { clientSecret } = data;
 
+      // 2. Підтвердження оплати в Stripe
       const result = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: { card },
+        payment_method: {
+          card,
+          billing_details: {
+            name: user.name ?? undefined,
+            email: user.email,
+          },
+        },
       });
 
       if (result.error) {
-        setError(result.error.message ?? 'Payment failed');
-      } else if (result.paymentIntent?.status === 'succeeded') {
-        setSuccess(true);
+        throw new Error(result.error.message);
+      }
+
+      if (result.paymentIntent?.status === 'succeeded') {
+        toast.success('Payment successful!');
+        queryClient.invalidateQueries({ queryKey: queryKeys.orders.list() });
+        queryClient.invalidateQueries({ queryKey: queryKeys.cart.all });
+        card.clear();
       }
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'An unexpected error occurred';
-      setError(message);
+      const message = err instanceof Error ? err.message : 'Payment failed';
+      toast.error(message);
     } finally {
       setLoading(false);
     }
   };
 
-  if (user == null) {
-    return <p className="text-center text-red-500">You must be logged in to pay</p>;
-  }
+  if (!user) return null;
 
   return (
-    <form onSubmit={handleSubmit} className="mx-auto w-full max-w-md space-y-6">
-      {/* Amount */}
-      <div>
-        <label className="mb-1 block text-sm font-medium text-gray-700">Amount</label>
-        <div className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-lg font-semibold text-gray-900">
-          ${FIXED_AMOUNT.toFixed(2)}
-        </div>
+    <form
+      onSubmit={handleSubmit}
+      className="mx-auto w-full max-w-md space-y-6 rounded-xl border border-gray-200 bg-white p-6 shadow-sm"
+    >
+      <div className="space-y-2">
+        <h3 className="font-semibold text-gray-900">Test Payment</h3>
+        <p className="text-sm text-gray-500">
+          This form creates an order from your <strong>current cart</strong> and pays for it.
+        </p>
       </div>
 
-      {/* Card input */}
-      <div>
-        <label className="mb-1 block text-sm font-medium text-gray-700">Card Details</label>
-        <div className="rounded-lg border border-gray-300 bg-white p-4 transition-all focus-within:border-neutral-500 focus-within:ring-2 focus-within:ring-neutral-200">
-          <CardElement options={CARD_ELEMENT_OPTIONS} />
-        </div>
+      <div className="rounded-lg border border-gray-300 bg-white p-3">
+        <CardElement options={CARD_ELEMENT_OPTIONS} />
       </div>
 
-      {/* Error message */}
-      {error && (
-        <p className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-600">
-          {error}
-        </p>
-      )}
-
-      {/* Success message */}
-      {success && (
-        <p className="rounded-lg border border-green-200 bg-green-50 p-3 text-sm text-green-600">
-          Payment successful! Thank you!
-        </p>
-      )}
-
-      <button
-        type="submit"
-        disabled={!stripe || loading}
-        className="flex w-full items-center justify-center gap-2 rounded-full bg-neutral-900 py-3 font-semibold text-white transition-all hover:shadow-lg disabled:opacity-50"
-      >
+      <Button disabled={!stripe || loading} className="w-full">
         {loading ? (
           <>
-            <Loader2 className="size-4 animate-spin" />
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             Processing...
           </>
         ) : (
-          `Pay $${FIXED_AMOUNT.toFixed(2)}`
+          'Pay for Cart'
         )}
-      </button>
+      </Button>
     </form>
   );
 }
 
-/**
- * PaymentForm.
- *
- * Wraps the CheckoutForm with Stripe Elements provider.
- *
- * @remarks
- * - Must be used client-side (`'use client'`).
- * - Stripe public key is read from environment variable.
- */
 export default function PaymentForm() {
   return (
     <Elements stripe={stripePromise}>

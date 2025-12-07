@@ -5,7 +5,7 @@ import { cartService } from '@/services/api/cart';
 import { toast } from 'react-hot-toast';
 import type { LocalCartItem } from '@/types/store';
 import { queryKeys } from '@/config/queryKeys';
-import { useUser } from './useUser';
+import { useUser } from './user';
 
 export const useCart = () => {
   const queryClient = useQueryClient();
@@ -17,7 +17,6 @@ export const useCart = () => {
   const localQty = useStore((s) => s.totalQuantity);
 
   // --- ZUSTAND: Отримуємо дії (ВИПРАВЛЕНО) ---
-  // Ми беремо кожну функцію окремо, щоб уникнути створення нового об'єкта на кожному рендері
   const localAddItem = useStore((s) => s.addItem);
   const localRemoveItem = useStore((s) => s.removeItem);
   const localUpdateQuantity = useStore((s) => s.updateQuantity);
@@ -33,7 +32,6 @@ export const useCart = () => {
   const syncMutation = useMutation({
     mutationFn: cartService.sync,
     onSuccess: () => {
-      // Використовуємо окрему функцію замість localActions.clearCart()
       localClearCart();
       queryClient.invalidateQueries({ queryKey: queryKeys.cart.all });
       toast.success('Cart synchronized');
@@ -49,8 +47,7 @@ export const useCart = () => {
         localItems.map(i => ({ variantId: i.variantId, quantity: i.quantity }))
       );
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, localItems.length]); // Додано залежність (але be careful with loops here too)
+  }, [user, localItems.length]); 
 
 
   const addItem = (item: LocalCartItem) => {

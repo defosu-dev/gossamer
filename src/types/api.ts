@@ -24,9 +24,9 @@ export interface ProductCardDTO {
 
 // --- Product Detail (Full) ---
 export interface VariantAttributeDTO {
-  name: string; // "Color"
-  slug: string; // "color"
-  value: string; // "Red"
+  name: string;
+  slug: string; 
+  value: string;
   valueId: string;
 }
 
@@ -51,8 +51,8 @@ export interface ProductOptionValueDTO {
 }
 
 export interface ProductOptionDTO {
-  slug: string; // "color"
-  name: string; // "Color"
+  slug: string;
+  name: string; 
   values: ProductOptionValueDTO[];
 }
 
@@ -96,7 +96,7 @@ export interface OrderItemDTO {
 
 export interface OrderDTO {
   id: string;
-  number: number; // Якщо є автоінкремент, або просто timestamp/hash
+  number: number; 
   status: 'pending' | 'paid' | 'shipped' | 'cancelled';
   total: number;
   createdAt: string;
@@ -111,7 +111,7 @@ export interface OrderDTO {
 
 // --- Wishlist ---
 export interface WishlistItemDTO {
-  id: string; // ID запису в wishlist_items
+  id: string; 
   variantId: string;
   productId: string;
   title: string;

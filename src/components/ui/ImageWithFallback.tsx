@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils/cn';
  * Props for ImageWithFallback.
  */
 export interface ImageWithFallbackProps {
-  src: string;
+  src: string | null | undefined;
   alt: string;
   width?: number;
   height?: number;
@@ -44,14 +44,17 @@ export function ImageWithFallback({
   sizes = '(max-width: 768px) 100vw, 33vw',
   priority = false,
 }: ImageWithFallbackProps) {
-  const [status, setStatus] = useState<'loading' | 'error' | 'loaded'>('loading');
+  const [status, setStatus] = useState<'loading' | 'error' | 'loaded'>(src ? 'loading' : 'error');
 
   useEffect(() => {
-    if (status === 'loading' && src) {
+    if (src) {
+      setStatus('loading');
       const timer = setTimeout(() => setStatus('error'), timeout);
       return () => clearTimeout(timer);
+    } else {
+      setStatus('error');
     }
-  }, [status, src, timeout]);
+  }, [src, timeout]);
 
   const containerStyle: CSSProperties = {
     width: width ?? '100%',
@@ -70,16 +73,21 @@ export function ImageWithFallback({
 
   return (
     <div style={containerStyle} className={cn(className)}>
-      <Image
-        src={src}
-        alt={alt}
-        fill
-        sizes={sizes}
-        priority={priority}
-        onLoad={() => setStatus('loaded')}
-        onError={() => setStatus('error')}
-        className={cn('rounded-[inherit] object-cover')}
-      />
+      {src && (
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes={sizes}
+          priority={priority}
+          onLoad={() => setStatus('loaded')}
+          onError={() => setStatus('error')}
+          className={cn(
+            'rounded-[inherit] object-cover transition-opacity duration-300',
+            status === 'loaded' ? 'opacity-100' : 'opacity-0'
+          )}
+        />
+      )}
 
       {status === 'loading' && (
         <div className={overlayClasses} aria-label={`Loading image: ${alt}`}>

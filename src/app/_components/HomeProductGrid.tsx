@@ -1,4 +1,6 @@
 import { ProductGrid } from '@/components/modules/ProductGrid/ProductGrid';
+import ProductGridEmpty from '@/components/modules/ProductGrid/ProductGridEmpty';
+import toast from 'react-hot-toast';
 
 export default async function HomeProductGrid() {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
@@ -8,8 +10,8 @@ export default async function HomeProductGrid() {
   });
 
   if (!res.ok) {
-    console.error('API Error:', await res.text());
-    return <div>Failed to load products</div>;
+    toast.error('Failed to load products');
+    return <ProductGridEmpty />;
   }
   const { data } = await res.json();
   return <ProductGrid productList={data} />;

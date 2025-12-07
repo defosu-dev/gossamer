@@ -22,7 +22,7 @@ export function MainFooter() {
   return (
     <footer
       className={cn(
-        'mx-auto mt-8 max-w-6xl overflow-hidden rounded-2xl rounded-b-none',
+        'mx-auto mt-8 w-full max-w-6xl overflow-hidden rounded-2xl rounded-b-none',
         'border border-zinc-300 bg-white shadow-sm'
       )}
     >

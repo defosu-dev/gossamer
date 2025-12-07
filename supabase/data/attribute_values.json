@@ -1,232 +1,167 @@
 [
   {
-    "id": "cab20810-95e0-4a9e-9066-b4900115db9f",
-    "attribute_id": "033ede70-8f4a-4c1f-b4ca-f0dc7dc43b77",
+    "id": "5f1b7cbb-4cdb-4a03-bb03-31e224bf4d36",
+    "attribute_id": "dc8ddd54-a7d4-4d86-9c96-88c553b0d4c9",
     "value": "Black"
   },
   {
-    "id": "a1ae2872-81d3-423b-9777-2ef3b7e631a9",
-    "attribute_id": "033ede70-8f4a-4c1f-b4ca-f0dc7dc43b77",
+    "id": "dcb4c981-08aa-4cf9-b2f4-ef78ede33bcf",
+    "attribute_id": "dc8ddd54-a7d4-4d86-9c96-88c553b0d4c9",
     "value": "White"
   },
   {
-    "id": "974faf19-cc06-4dff-a535-fbe0a16c90b2",
-    "attribute_id": "033ede70-8f4a-4c1f-b4ca-f0dc7dc43b77",
+    "id": "d8dcc675-6b03-4b46-804b-a29813fd522b",
+    "attribute_id": "dc8ddd54-a7d4-4d86-9c96-88c553b0d4c9",
+    "value": "Midnight Blue"
+  },
+  {
+    "id": "259630a4-9471-43b6-9b15-638498f1d6cd",
+    "attribute_id": "dc8ddd54-a7d4-4d86-9c96-88c553b0d4c9",
+    "value": "Space Gray"
+  },
+  {
+    "id": "78f5979f-90ae-4dcd-acc3-537814850e7e",
+    "attribute_id": "dc8ddd54-a7d4-4d86-9c96-88c553b0d4c9",
     "value": "Silver"
   },
   {
-    "id": "0bf03d63-92b0-4a07-bd1d-30386875c42a",
-    "attribute_id": "033ede70-8f4a-4c1f-b4ca-f0dc7dc43b77",
-    "value": "Blue"
-  },
-  {
-    "id": "8a44c6fd-aa54-49e4-9b73-2b027e25bc36",
-    "attribute_id": "033ede70-8f4a-4c1f-b4ca-f0dc7dc43b77",
-    "value": "Red"
-  },
-  {
-    "id": "8fd29425-475f-4b38-8161-313b02c4752c",
-    "attribute_id": "033ede70-8f4a-4c1f-b4ca-f0dc7dc43b77",
-    "value": "Green"
-  },
-  {
-    "id": "f5f12fd5-17a7-475e-89d2-db01b33512a9",
-    "attribute_id": "033ede70-8f4a-4c1f-b4ca-f0dc7dc43b77",
+    "id": "1cd190f6-55b9-423c-ae6c-60868d2e560c",
+    "attribute_id": "dc8ddd54-a7d4-4d86-9c96-88c553b0d4c9",
     "value": "Gold"
   },
   {
-    "id": "b49847ac-09b9-45df-8736-aa62a8aee0b6",
-    "attribute_id": "0eff22e5-6e2e-46fe-9629-bdf50bf4d7ed",
+    "id": "45853fcd-dbb0-4613-af00-a0885ad616fe",
+    "attribute_id": "dc8ddd54-a7d4-4d86-9c96-88c553b0d4c9",
+    "value": "Red"
+  },
+  {
+    "id": "7c71c970-1a09-4146-84e6-c383ba622ac4",
+    "attribute_id": "fc647d12-352a-4bc8-8b14-a8db7447565f",
     "value": "XS"
   },
   {
-    "id": "57f8029b-a3b3-460c-b2a6-bb14172a3ece",
-    "attribute_id": "0eff22e5-6e2e-46fe-9629-bdf50bf4d7ed",
+    "id": "10bd2081-f743-4c61-9a02-3a7405406729",
+    "attribute_id": "fc647d12-352a-4bc8-8b14-a8db7447565f",
     "value": "S"
   },
   {
-    "id": "29c2ef14-7a4b-43b2-8f9a-6c93bf4a5a70",
-    "attribute_id": "0eff22e5-6e2e-46fe-9629-bdf50bf4d7ed",
+    "id": "0223a133-5ce2-47eb-90da-b2c48f4c4618",
+    "attribute_id": "fc647d12-352a-4bc8-8b14-a8db7447565f",
     "value": "M"
   },
   {
-    "id": "6b07c325-34ee-4ae0-b602-69944981a5ce",
-    "attribute_id": "0eff22e5-6e2e-46fe-9629-bdf50bf4d7ed",
+    "id": "17e1db49-bd51-4a2a-bac2-9f38bf8a6a58",
+    "attribute_id": "fc647d12-352a-4bc8-8b14-a8db7447565f",
     "value": "L"
   },
   {
-    "id": "22a931e3-ce93-49b6-96e9-c91b284b2d6d",
-    "attribute_id": "0eff22e5-6e2e-46fe-9629-bdf50bf4d7ed",
+    "id": "731c617c-e85e-40f9-8c41-d1bd5503074f",
+    "attribute_id": "fc647d12-352a-4bc8-8b14-a8db7447565f",
     "value": "XL"
   },
   {
-    "id": "b68e91a2-89d0-4654-9760-f09f8fee0286",
-    "attribute_id": "0eff22e5-6e2e-46fe-9629-bdf50bf4d7ed",
+    "id": "806ab052-3066-4024-a0bc-1b06892b9b4a",
+    "attribute_id": "fc647d12-352a-4bc8-8b14-a8db7447565f",
     "value": "XXL"
   },
   {
-    "id": "9d85f6e7-f711-45fc-a674-50c52b91f967",
-    "attribute_id": "4b0149b2-cf42-4c59-aeef-1dea8e7a0e33",
+    "id": "3daf42d1-41de-4a93-917b-01de4ca8c2d1",
+    "attribute_id": "53903bec-9e0e-4172-a07d-63298b4ffbe2",
     "value": "64GB"
   },
   {
-    "id": "abda64b4-1ccb-4d6f-9cd7-5e561c90f406",
-    "attribute_id": "4b0149b2-cf42-4c59-aeef-1dea8e7a0e33",
+    "id": "5981f921-e2e3-425f-b98c-f78fb945c0e2",
+    "attribute_id": "53903bec-9e0e-4172-a07d-63298b4ffbe2",
     "value": "128GB"
   },
   {
-    "id": "a40dedba-46d6-4e6d-a4ab-144a53ed9d41",
-    "attribute_id": "4b0149b2-cf42-4c59-aeef-1dea8e7a0e33",
+    "id": "d12711bf-8155-4333-9f51-d7e342ef3757",
+    "attribute_id": "53903bec-9e0e-4172-a07d-63298b4ffbe2",
     "value": "256GB"
   },
   {
-    "id": "f01334e8-fcff-4baf-83a0-760e57d89ccc",
-    "attribute_id": "4b0149b2-cf42-4c59-aeef-1dea8e7a0e33",
+    "id": "44632c61-2013-4359-b4ec-f0dce7d3b552",
+    "attribute_id": "53903bec-9e0e-4172-a07d-63298b4ffbe2",
     "value": "512GB"
   },
   {
-    "id": "9e119653-179f-4ad5-9c75-1008d56f9b21",
-    "attribute_id": "4b0149b2-cf42-4c59-aeef-1dea8e7a0e33",
+    "id": "5d411e9d-01f1-4cea-ae64-a4e272bbd8a7",
+    "attribute_id": "53903bec-9e0e-4172-a07d-63298b4ffbe2",
     "value": "1TB"
   },
   {
-    "id": "9854046a-6a19-41e8-b3a9-27ccfd39e1ea",
-    "attribute_id": "a9f355c5-912f-4df8-b708-5bbd1742e439",
-    "value": "3000mAh"
+    "id": "76ba7536-3f86-4701-b524-f98c312ffe69",
+    "attribute_id": "51ae6464-4b57-40b0-ad05-43e26f2b738d",
+    "value": "8GB"
   },
   {
-    "id": "35cc50bc-2f22-4411-aa09-83b2d7b1d742",
-    "attribute_id": "a9f355c5-912f-4df8-b708-5bbd1742e439",
-    "value": "4000mAh"
+    "id": "66fb27e8-f6de-4d81-94e8-e204d0ccd6a8",
+    "attribute_id": "51ae6464-4b57-40b0-ad05-43e26f2b738d",
+    "value": "16GB"
   },
   {
-    "id": "6a7babb9-c32c-4f71-b516-284880456e7b",
-    "attribute_id": "a9f355c5-912f-4df8-b708-5bbd1742e439",
-    "value": "5000mAh"
+    "id": "ded2fa49-49ba-4b69-afde-f853666a6594",
+    "attribute_id": "51ae6464-4b57-40b0-ad05-43e26f2b738d",
+    "value": "32GB"
   },
   {
-    "id": "4744fc85-aa58-4719-ac2b-0913ab0ca8c8",
-    "attribute_id": "a9f355c5-912f-4df8-b708-5bbd1742e439",
-    "value": "6000mAh"
+    "id": "7f01a973-00c5-4de9-bf99-1bbe56ce85d3",
+    "attribute_id": "51ae6464-4b57-40b0-ad05-43e26f2b738d",
+    "value": "64GB"
   },
   {
-    "id": "7035401f-782e-4798-a339-20c73ac5f65a",
-    "attribute_id": "a8f7108d-28f2-4645-a065-8445fcc05610",
-    "value": "120g"
+    "id": "f4bebe72-7f73-4598-9034-0cb4036e6a62",
+    "attribute_id": "a2864550-1d14-44a1-a650-f7653b5f0ab5",
+    "value": "Cotton"
   },
   {
-    "id": "2e88e5c8-dcd2-4acd-9cd0-4685c485f75a",
-    "attribute_id": "a8f7108d-28f2-4645-a065-8445fcc05610",
-    "value": "180g"
+    "id": "9575413a-651e-4371-b2b1-c14b0801a3ef",
+    "attribute_id": "a2864550-1d14-44a1-a650-f7653b5f0ab5",
+    "value": "Polyester"
   },
   {
-    "id": "85077ae5-7293-42e9-8b2b-6fa79f966863",
-    "attribute_id": "a8f7108d-28f2-4645-a065-8445fcc05610",
-    "value": "220g"
+    "id": "1d694d0b-1440-4575-8802-fb45b1563f8e",
+    "attribute_id": "a2864550-1d14-44a1-a650-f7653b5f0ab5",
+    "value": "Leather"
   },
   {
-    "id": "02639e7c-6aaa-41b0-9d98-50ede22b9de3",
-    "attribute_id": "a8f7108d-28f2-4645-a065-8445fcc05610",
-    "value": "300g"
+    "id": "fec645e7-b1ac-4d4f-9cd5-ce490ae66227",
+    "attribute_id": "a2864550-1d14-44a1-a650-f7653b5f0ab5",
+    "value": "Metal"
   },
   {
-    "id": "56644cdf-6b5b-4e10-bfa6-e0faadac008b",
-    "attribute_id": "a8f7108d-28f2-4645-a065-8445fcc05610",
-    "value": "400g"
-  },
-  {
-    "id": "7613e484-3930-4693-aaba-37d3c7685682",
-    "attribute_id": "92c399aa-5698-41da-b393-4264e5926c76",
+    "id": "a8a0f592-9272-40e5-b82e-903e176bb992",
+    "attribute_id": "a2864550-1d14-44a1-a650-f7653b5f0ab5",
     "value": "Plastic"
   },
   {
-    "id": "4091cec0-94ef-4329-bb22-06d7aa819a76",
-    "attribute_id": "92c399aa-5698-41da-b393-4264e5926c76",
-    "value": "Aluminum"
+    "id": "291ed69b-75ef-44a1-9939-095bdcc79ed9",
+    "attribute_id": "54566587-5a86-4bdd-869c-0cfa164ecc9f",
+    "value": "13\""
   },
   {
-    "id": "9a0b5db0-38bb-45ef-819a-ed7a37552781",
-    "attribute_id": "92c399aa-5698-41da-b393-4264e5926c76",
-    "value": "Glass"
+    "id": "bd821613-a0f2-47e8-b58a-d94131cc5d32",
+    "attribute_id": "54566587-5a86-4bdd-869c-0cfa164ecc9f",
+    "value": "14\""
   },
   {
-    "id": "ac57f396-89ec-46f7-a89f-34b5c0ab6627",
-    "attribute_id": "92c399aa-5698-41da-b393-4264e5926c76",
-    "value": "Carbon Fiber"
+    "id": "cbff69b1-cde3-4cb2-9641-7ae92a79f055",
+    "attribute_id": "54566587-5a86-4bdd-869c-0cfa164ecc9f",
+    "value": "15\""
   },
   {
-    "id": "fdaf36f2-4b5d-46b6-a763-11ec247428fb",
-    "attribute_id": "5c467846-c6c3-42ea-ab8d-77019523916a",
-    "value": "WiFi"
+    "id": "ea623226-d7e2-4492-9ec6-872ae04c7421",
+    "attribute_id": "54566587-5a86-4bdd-869c-0cfa164ecc9f",
+    "value": "16\""
   },
   {
-    "id": "46bd0370-2b06-4f56-9265-0cba43383aa9",
-    "attribute_id": "5c467846-c6c3-42ea-ab8d-77019523916a",
-    "value": "Bluetooth"
+    "id": "951d3563-165e-4283-8d53-23efda3c16ce",
+    "attribute_id": "54566587-5a86-4bdd-869c-0cfa164ecc9f",
+    "value": "24\""
   },
   {
-    "id": "3ae018be-e36d-465a-bd06-a7ae90d70f85",
-    "attribute_id": "5c467846-c6c3-42ea-ab8d-77019523916a",
-    "value": "4G"
-  },
-  {
-    "id": "8fac76df-749c-4761-9d21-1bc1fe531b35",
-    "attribute_id": "5c467846-c6c3-42ea-ab8d-77019523916a",
-    "value": "5G"
-  },
-  {
-    "id": "d6c9118c-e320-4352-b0fe-04cffe629ed3",
-    "attribute_id": "d7e9cad5-4fec-4a38-b327-eaf8bda79d25",
-    "value": "LCD 1080p"
-  },
-  {
-    "id": "3b17ef5d-70a0-4d96-9c54-5f4e3ab95f18",
-    "attribute_id": "d7e9cad5-4fec-4a38-b327-eaf8bda79d25",
-    "value": "OLED 1080p"
-  },
-  {
-    "id": "59095829-782d-42ff-a039-832f2ce8371d",
-    "attribute_id": "d7e9cad5-4fec-4a38-b327-eaf8bda79d25",
-    "value": "OLED 1440p"
-  },
-  {
-    "id": "959370e9-08ef-4386-9199-9a70b2e5b08b",
-    "attribute_id": "2754bdd2-f128-4b44-a258-c66d61ab42b7",
-    "value": "12MP"
-  },
-  {
-    "id": "a2e60063-636f-44ea-88e7-c1b273371311",
-    "attribute_id": "2754bdd2-f128-4b44-a258-c66d61ab42b7",
-    "value": "24MP"
-  },
-  {
-    "id": "4886192b-f875-40fb-84ab-7669bdfe629e",
-    "attribute_id": "2754bdd2-f128-4b44-a258-c66d61ab42b7",
-    "value": "48MP"
-  },
-  {
-    "id": "4c12c038-847f-49ae-816d-dc51b0a58631",
-    "attribute_id": "2754bdd2-f128-4b44-a258-c66d61ab42b7",
-    "value": "64MP"
-  },
-  {
-    "id": "1423f8c8-b14a-4446-8611-83b1cfd10505",
-    "attribute_id": "812ba3c4-bc92-467d-9d97-f59603209bff",
-    "value": "6 months"
-  },
-  {
-    "id": "75ad0898-6df4-4ce9-9910-2b69f5639450",
-    "attribute_id": "812ba3c4-bc92-467d-9d97-f59603209bff",
-    "value": "12 months"
-  },
-  {
-    "id": "a1b4f477-2e12-4edb-864d-73e55415fd72",
-    "attribute_id": "812ba3c4-bc92-467d-9d97-f59603209bff",
-    "value": "24 months"
-  },
-  {
-    "id": "1fd0ffae-4c83-468f-82d7-bf7b0ae49f39",
-    "attribute_id": "812ba3c4-bc92-467d-9d97-f59603209bff",
-    "value": "36 months"
+    "id": "c69e0360-61df-4f43-8e87-88d456a07606",
+    "attribute_id": "54566587-5a86-4bdd-869c-0cfa164ecc9f",
+    "value": "27\""
   }
 ]

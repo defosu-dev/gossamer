@@ -1,45 +1,50 @@
 import fs from 'fs';
 import path from 'path';
-
 import { faker } from '@faker-js/faker';
 
 // ---------------------------------------------------------------------------
 // PATHS
 // ---------------------------------------------------------------------------
+// Зберігаємо все (і JSON, і SQL) в папці data
 const DATA_DIR = path.join(process.cwd(), 'supabase', 'data');
-const MIGRATIONS_DIR = path.join(process.cwd(), 'supabase', 'migrations');
 
-fs.mkdirSync(DATA_DIR, { recursive: true });
-fs.mkdirSync(MIGRATIONS_DIR, { recursive: true });
+if (!fs.existsSync(DATA_DIR)) {
+  fs.mkdirSync(DATA_DIR, { recursive: true });
+}
 
 // ---------------------------------------------------------------------------
 // CONFIG
 // ---------------------------------------------------------------------------
-const CATEGORY_COUNT = 6;
+const CATEGORY_COUNT = 8;
 const PRODUCT_COUNT = 50;
-const VARIANTS_MIN = 2;
+const VARIANTS_MIN = 1;
 const VARIANTS_MAX = 3;
-const IMAGES_PER_VARIANT_MIN = 2;
-const IMAGES_PER_VARIANT_MAX = 4;
+const IMAGES_PER_VARIANT_MIN = 1;
+const IMAGES_PER_VARIANT_MAX = 3;
+
 const ATTRIBUTES = [
   'Color',
   'Size',
   'Storage',
-  'Battery',
-  'Weight',
+  'RAM',
   'Material',
-  'Connectivity',
-  'Display',
-  'Camera',
-  'Warranty',
+  'Screen Size'
 ] as const;
 
 // ---------------------------------------------------------------------------
 // HELPERS
 // ---------------------------------------------------------------------------
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)+/g, '');
+}
+
 function saveJson(table: string, rows: unknown[]) {
   const file = path.join(DATA_DIR, `${table}.json`);
   fs.writeFileSync(file, JSON.stringify(rows, null, 2));
+  // console.log(`✅ Saved ${rows.length} rows to ${table}.json`);
 }
 
 function jsonToSql(tableName: string, rows: unknown[]): string {
@@ -49,16 +54,17 @@ function jsonToSql(tableName: string, rows: unknown[]): string {
   const columnNames = columns.map((col) => `"${col}"`).join(', ');
 
   let sql = `-- Inserting into ${tableName}\n`;
-  sql += `INSERT INTO "${tableName}" (${columnNames}) VALUES\n`;
+  sql += `INSERT INTO "public"."${tableName}" (${columnNames}) VALUES\n`;
 
   const valueRows = rows.map((row) => {
     const values = columns
       .map((col) => {
         const value = (row as any)[col];
         if (value === null || value === undefined) return 'NULL';
-        if (typeof value === 'string') return `'${value.replace(/'/g, "''")}'`;
-        if (typeof value === 'number' || typeof value === 'boolean') return value.toString();
-        return `'${JSON.stringify(value).replace(/'/g, "''")}'`;
+        if (typeof value === 'number') return value.toString();
+        if (typeof value === 'boolean') return value ? 'TRUE' : 'FALSE';
+        const strVal = typeof value === 'string' ? value : JSON.stringify(value);
+        return `'${strVal.replace(/'/g, "''")}'`;
       })
       .join(', ');
     return `  (${values})`;
@@ -73,13 +79,15 @@ function jsonToSql(tableName: string, rows: unknown[]): string {
 // GENERATE FAKE DATA
 // ---------------------------------------------------------------------------
 function generateData() {
+  console.log('🚀 Generating data...');
+
   // 1. Categories
   const categories = Array.from({ length: CATEGORY_COUNT }).map(() => {
     const name = faker.commerce.department();
     return {
       id: faker.string.uuid(),
       name,
-      slug: name.toLowerCase().replace(/\s+/g, '-'),
+      slug: slugify(name) + '-' + faker.string.alphanumeric(3),
     };
   });
   saveJson('categories', categories);
@@ -88,52 +96,25 @@ function generateData() {
   const attributes = ATTRIBUTES.map((a) => ({
     id: faker.string.uuid(),
     name: a,
-    slug: a.toLowerCase().replace(/\s+/g, '-'),
+    slug: slugify(a),
     category_id: faker.helpers.arrayElement(categories).id,
   }));
   saveJson('attributes', attributes);
 
   // 3. Attribute Values
   const attribute_values: any[] = [];
+  const attrMap: Record<string, string[]> = {
+    'color': ['Black', 'White', 'Midnight Blue', 'Space Gray', 'Silver', 'Gold', 'Red'],
+    'size': ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    'storage': ['64GB', '128GB', '256GB', '512GB', '1TB'],
+    'ram': ['8GB', '16GB', '32GB', '64GB'],
+    'material': ['Cotton', 'Polyester', 'Leather', 'Metal', 'Plastic'],
+    'screen-size': ['13"', '14"', '15"', '16"', '24"', '27"']
+  };
+
   for (const attr of attributes) {
-    const name = attr.name.toLowerCase();
-    let values: string[] = [];
-
-    switch (name) {
-      case 'color':
-        values = ['Black', 'White', 'Silver', 'Blue', 'Red', 'Green', 'Gold'];
-        break;
-      case 'size':
-        values = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
-        break;
-      case 'storage':
-        values = ['64GB', '128GB', '256GB', '512GB', '1TB'];
-        break;
-      case 'battery':
-        values = ['3000mAh', '4000mAh', '5000mAh', '6000mAh'];
-        break;
-      case 'weight':
-        values = ['120g', '180g', '220g', '300g', '400g'];
-        break;
-      case 'material':
-        values = ['Plastic', 'Aluminum', 'Glass', 'Carbon Fiber'];
-        break;
-      case 'connectivity':
-        values = ['WiFi', 'Bluetooth', '4G', '5G'];
-        break;
-      case 'display':
-        values = ['LCD 1080p', 'OLED 1080p', 'OLED 1440p'];
-        break;
-      case 'camera':
-        values = ['12MP', '24MP', '48MP', '64MP'];
-        break;
-      case 'warranty':
-        values = ['6 months', '12 months', '24 months', '36 months'];
-        break;
-      default:
-        values = Array.from({ length: 5 }).map(() => faker.lorem.word());
-    }
-
+    const key = attr.slug;
+    const values = attrMap[key] || Array.from({ length: 5 }).map(() => faker.word.adjective());
     for (const v of values) {
       attribute_values.push({
         id: faker.string.uuid(),
@@ -145,12 +126,18 @@ function generateData() {
   saveJson('attribute_values', attribute_values);
 
   // 4. Products
-  const products = Array.from({ length: PRODUCT_COUNT }).map(() => ({
-    id: faker.string.uuid(),
-    title: faker.commerce.productName(),
-    description: faker.commerce.productDescription(),
-    category_id: faker.helpers.arrayElement(categories).id,
-  }));
+  const products = Array.from({ length: PRODUCT_COUNT }).map(() => {
+    const title = faker.commerce.productName();
+    return {
+      id: faker.string.uuid(),
+      title,
+      description: faker.commerce.productDescription(),
+      category_id: faker.helpers.arrayElement(categories).id,
+      slug: slugify(title) + '-' + faker.string.alphanumeric(4),
+      average_rating: faker.number.float({ min: 3.5, max: 5.0, fractionDigits: 2 }),
+      reviews_count: faker.number.int({ min: 5, max: 500 }),
+    };
+  });
   saveJson('products', products);
 
   // 5. Product Variants
@@ -158,26 +145,18 @@ function generateData() {
   for (const p of products) {
     const count = faker.number.int({ min: VARIANTS_MIN, max: VARIANTS_MAX });
     for (let i = 0; i < count; i++) {
-      const current_price = parseFloat(faker.commerce.price({ min: 50, max: 2500, dec: 2 }));
-      const old_price =
-        faker.datatype.boolean() && current_price < 2400
-          ? parseFloat(
-              faker.commerce.price({
-                min: current_price + 10,
-                max: current_price + 500,
-                dec: 2,
-              })
-            )
-          : null;
+      const current_price = parseFloat(faker.commerce.price({ min: 20, max: 2000, dec: 2 }));
+      const hasDiscount = faker.datatype.boolean(0.3);
+      const old_price = hasDiscount ? parseFloat((current_price * 1.2).toFixed(2)) : null;
 
       product_variants.push({
         id: faker.string.uuid(),
         product_id: p.id,
-        name: i === 0 ? p.title : `${p.title} — Variant ${i + 1}`,
+        name: i === 0 ? 'Standard' : faker.commerce.productAdjective(),
         sku: faker.string.alphanumeric(10).toUpperCase(),
         current_price,
         old_price,
-        stock: faker.number.int({ min: 0, max: 200 }),
+        stock: faker.number.int({ min: 0, max: 150 }),
       });
     }
   }
@@ -186,33 +165,33 @@ function generateData() {
   // 6. Product Images
   const product_images: any[] = [];
   for (const v of product_variants) {
-    const count = faker.number.int({
-      min: IMAGES_PER_VARIANT_MIN,
-      max: IMAGES_PER_VARIANT_MAX,
-    });
+    const count = faker.number.int({ min: IMAGES_PER_VARIANT_MIN, max: IMAGES_PER_VARIANT_MAX });
     for (let i = 0; i < count; i++) {
       product_images.push({
         id: faker.string.uuid(),
         variant_id: v.id,
-        url: `https://picsum.photos/seed/${faker.string.alphanumeric(8)}/800/800`,
-        alt: `${faker.commerce.productAdjective()} image`,
-        position: i + 1,
+        // picsum.photos дає рандомні зображення, які не зникають
+        url: `https://picsum.photos/seed/${v.id}-${i}/800/800`,
+        alt: `${faker.commerce.productName()} image`,
+        position: i,
       });
     }
   }
   saveJson('product_images', product_images);
 
-  // 7. Product Variant Attributes
+  // 7. Variant Attributes
   const product_variant_attributes: any[] = [];
   for (const v of product_variants) {
-    for (const attr of attributes) {
-      const possible = attribute_values.filter((av) => av.attribute_id === attr.id);
-      if (possible.length === 0) continue;
-      const chosen = faker.helpers.arrayElement(possible);
-      product_variant_attributes.push({
-        variant_id: v.id,
-        attribute_value_id: chosen.id,
-      });
+    const randomAttrs = faker.helpers.arrayElements(attributes, { min: 1, max: 3 });
+    for (const attr of randomAttrs) {
+      const possibleValues = attribute_values.filter(av => av.attribute_id === attr.id);
+      if (possibleValues.length > 0) {
+        const chosenValue = faker.helpers.arrayElement(possibleValues);
+        product_variant_attributes.push({
+          variant_id: v.id,
+          attribute_value_id: chosenValue.id,
+        });
+      }
     }
   }
   saveJson('product_variant_attributes', product_variant_attributes);
@@ -221,36 +200,35 @@ function generateData() {
   const discounts = [
     {
       id: faker.string.uuid(),
-      code: 'WELCOME10',
-      description: '10% off for new customers',
+      code: 'WELCOME2025',
+      description: 'New Year Sale',
       discount_type: 'percentage',
-      value: 10,
+      value: 15,
       active: true,
-    },
-    {
-      id: faker.string.uuid(),
-      code: 'SUMMER50',
-      description: '50 USD off on orders over 500',
-      discount_type: 'fixed',
-      value: 50,
-      active: true,
-    },
+      starts_at: new Date().toISOString(),
+      ends_at: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString()
+    }
   ];
   saveJson('discounts', discounts);
 
   // 9. Discount Products
-  const sampleProducts = faker.helpers.arrayElements(products, Math.min(8, products.length));
-  const discount_products = sampleProducts.map((p) => ({
-    discount_id: discounts[0].id,
-    product_id: p.id,
-  }));
+  const discount_products: any[] = [];
+  const onSaleProducts = faker.helpers.arrayElements(products, 10);
+  onSaleProducts.forEach(p => {
+    discount_products.push({
+      discount_id: discounts[0].id,
+      product_id: p.id
+    });
+  });
   saveJson('discount_products', discount_products);
 }
 
 // ---------------------------------------------------------------------------
-// CREATE MIGRATION WITH SQL DIRECTLY
+// CREATE SQL FILE
 // ---------------------------------------------------------------------------
-function createMigration() {
+function createSeedSql() {
+  console.log('📝 Creating seed.sql...');
+
   const tableOrder = [
     'categories',
     'attributes',
@@ -264,7 +242,8 @@ function createMigration() {
   ] as const;
 
   let fullSql = `-- Auto-generated seed data\n`;
-  fullSql += `-- Generated: ${new Date().toISOString()}\n\n`;
+  fullSql += `-- Generated at: ${new Date().toISOString()}\n`;
+  fullSql += `-- Run this in Supabase SQL Editor to populate your DB\n\n`;
 
   for (const table of tableOrder) {
     const filePath = path.join(DATA_DIR, `${table}.json`);
@@ -274,23 +253,23 @@ function createMigration() {
     }
   }
 
-  const timestamp = new Date()
-    .toISOString()
-    .replace(/[-:T.]/g, '')
-    .slice(0, 14);
-  const migrationName = `seed_data_${timestamp}`;
-  const fileName = `${timestamp}_${migrationName}.sql`;
-  const migrationPath = path.join(MIGRATIONS_DIR, fileName);
-
-  fs.writeFileSync(migrationPath, fullSql);
+  // Зберігаємо як supabase/data/seed.sql
+  const seedPath = path.join(DATA_DIR, 'seed.sql');
+  fs.writeFileSync(seedPath, fullSql);
+  
+  console.log(`🎉 Seed SQL created at: ${seedPath}`);
 }
 
 // ---------------------------------------------------------------------------
 // MAIN
 // ---------------------------------------------------------------------------
 function main() {
-  generateData();
-  createMigration();
+  try {
+    generateData();
+    createSeedSql();
+  } catch (error) {
+    console.error('❌ Error:', error);
+  }
 }
 
 main();

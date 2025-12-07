@@ -1,30 +1,27 @@
 'use client';
 
-import { useState } from 'react';
 import { useForm } from '@tanstack/react-form';
 import { Eye, EyeOff, Loader2, Lock, UserRound } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { z } from 'zod';
 
-import { cn } from '@/lib/utils/cn';
 import LogoIcon from '@/components/ui/LogoIcon';
-import { useAuth } from '@/lib/hooks/useAuth';
 import { to } from '@/config/routes';
+import { cn } from '@/lib/utils/cn';
 
-/**
- * @remarks
- * Client-side sign-in page with form validation and authentication handling.
- * Supports email/password sign-in and Google OAuth.
- */
+import { useGoogleLogin, useLogin } from '@/hooks/useAuth';
+
 export default function SignInPage() {
-  const { signIn, signInWithGoogle, loading } = useAuth();
+  const { mutate: login, isPending } = useLogin();
+  const { mutate: loginWithGoogle, isPending: isGooglePending } = useGoogleLogin();
+
   const [showPassword, setShowPassword] = useState(false);
+
   const [error, setError] = useState<string>('');
-  const router = useRouter();
 
   const signInSchema = z.object({
-    email: z.string().email('Invalid email address'),
+    email: z.email('Invalid email address'),
     password: z.string().min(1, 'Password is required'),
     remember: z.boolean(),
   });
@@ -40,15 +37,27 @@ export default function SignInPage() {
     },
     onSubmit: async ({ value }) => {
       setError('');
-      try {
-        await signIn(value.email, value.password).then(() => {
-          router.push(to.home());
-        });
-      } catch (err) {
-        setError((err as Error).message);
-      }
+      login(
+        {
+          email: value.email,
+          password: value.password,
+        },
+        {
+          onError: (err: unknown) => {
+            if (err instanceof Error) {
+              setError(err.message);
+            } else if (typeof err === 'object' && err !== null && 'error' in err) {
+              setError(String((err as { error: unknown }).error));
+            } else {
+              setError('Failed to sign in');
+            }
+          },
+        }
+      );
     },
   });
+
+  const isLoading = isPending || isGooglePending || form.state.isSubmitting;
 
   return (
     <form
@@ -79,9 +88,11 @@ export default function SignInPage() {
                 <input
                   type="email"
                   placeholder="Your email"
+                  name={field.name}
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
+                  disabled={isLoading}
                   className={cn(
                     'text-sm font-medium text-neutral-900 placeholder-neutral-700',
                     'h-full w-full rounded-full border py-3 pl-9',
@@ -89,13 +100,14 @@ export default function SignInPage() {
                       ? 'border-red-500 focus:ring-red-500'
                       : 'border-neutral-300 focus:ring-neutral-500',
                     'focus:border-transparent focus:ring-2 focus:outline-none',
-                    'transition-all duration-200'
+                    'transition-all duration-200',
+                    'disabled:opacity-50'
                   )}
                 />
               </div>
               {field.state.meta.errors.map((error, index) => (
                 <p key={index} className="mt-1 ml-2 w-full text-xs text-red-500">
-                  {typeof error === 'string' ? error : error?.message}
+                  {typeof error === 'string' ? error : (error as Error)?.message}
                 </p>
               ))}
             </>
@@ -111,9 +123,11 @@ export default function SignInPage() {
                 <input
                   type={showPassword ? 'text' : 'password'}
                   placeholder="Your password"
+                  name={field.name}
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
+                  disabled={isLoading}
                   className={cn(
                     'text-sm font-medium text-neutral-900 placeholder-neutral-700',
                     'h-full w-full rounded-full border py-3 pr-12 pl-9',
@@ -121,20 +135,22 @@ export default function SignInPage() {
                       ? 'border-red-500 focus:ring-red-500'
                       : 'border-neutral-300 focus:ring-neutral-500',
                     'focus:border-transparent focus:ring-2 focus:outline-none',
-                    'transition-all duration-200'
+                    'transition-all duration-200',
+                    'disabled:opacity-50'
                   )}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className={cn('absolute top-1/2 right-3 -translate-y-1/2', 'text-neutral-800')}
+                  disabled={isLoading}
                 >
                   {showPassword ? <EyeOff className="size-4.5" /> : <Eye className="size-4.5" />}
                 </button>
               </div>
               {field.state.meta.errors.map((error, index) => (
                 <p key={index} className="mt-1 ml-2 w-full text-xs text-red-500">
-                  {typeof error === 'string' ? error : error?.message}
+                  {typeof error === 'string' ? error : (error as Error)?.message}
                 </p>
               ))}
             </>
@@ -148,17 +164,24 @@ export default function SignInPage() {
               <div className="flex flex-nowrap items-baseline">
                 <input
                   type="checkbox"
+                  id="remember"
                   checked={field.state.value}
                   onChange={(e) => field.handleChange(e.target.checked)}
+                  disabled={isLoading}
                   className="cursor-pointer"
                 />
-                <label className="ml-2 text-sm font-medium text-neutral-600">Remember me</label>
+                <label
+                  htmlFor="remember"
+                  className="ml-2 cursor-pointer text-sm font-medium text-neutral-600"
+                >
+                  Remember me
+                </label>
               </div>
             )}
           </form.Field>
           <Link
             href={to.forgotPassword()}
-            className="text-sm font-semibold text-nowrap text-neutral-800"
+            className="text-sm font-semibold text-nowrap text-neutral-800 hover:underline"
           >
             Forget Password
           </Link>
@@ -167,7 +190,7 @@ export default function SignInPage() {
         {/* Submit */}
         <button
           type="submit"
-          disabled={loading || form.state.isSubmitting}
+          disabled={isLoading}
           className={cn(
             'mt-6 w-full',
             'bg-neutral-900 font-semibold text-white',
@@ -179,7 +202,7 @@ export default function SignInPage() {
             'flex items-center justify-center gap-2'
           )}
         >
-          {loading || form.state.isSubmitting ? (
+          {isLoading ? (
             <>
               <Loader2 className="size-4 animate-spin" />
               Signing in...
@@ -200,8 +223,8 @@ export default function SignInPage() {
         {/* Google */}
         <button
           type="button"
-          onClick={signInWithGoogle}
-          disabled={loading}
+          onClick={() => loginWithGoogle()}
+          disabled={isLoading}
           className={cn(
             'mt-6 w-full',
             'rounded-full border border-neutral-300',
@@ -209,35 +232,44 @@ export default function SignInPage() {
             'cursor-pointer hover:shadow-lg',
             'active:scale-95',
             'transition-all duration-300',
-            'disabled:opacity-50'
+            'disabled:cursor-not-allowed disabled:opacity-50'
           )}
         >
-          <svg height="24" viewBox="0 0 24 24" width="24">
-            <path
-              d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-              fill="#4285F4"
-            />
-            <path
-              d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-              fill="#34A853"
-            />
-            <path
-              d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-              fill="#FBBC05"
-            />
-            <path
-              d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-              fill="#EA4335"
-            />
-            <path d="M1 1h22v22H1z" fill="none" />
-          </svg>
-          <span className="font-semibold text-neutral-900">Continue with Google</span>
+          {isGooglePending ? (
+            <Loader2 className="size-5 animate-spin text-neutral-600" />
+          ) : (
+            <>
+              <svg height="24" viewBox="0 0 24 24" width="24">
+                <path
+                  d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                  fill="#4285F4"
+                />
+                <path
+                  d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                  fill="#34A853"
+                />
+                <path
+                  d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                  fill="#FBBC05"
+                />
+                <path
+                  d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                  fill="#EA4335"
+                />
+                <path d="M1 1h22v22H1z" fill="none" />
+              </svg>
+              <span className="font-semibold text-neutral-900">Continue with Google</span>
+            </>
+          )}
         </button>
 
         {/* Sign Up Link */}
         <p className={cn('text-sm text-neutral-500', 'mt-4')}>
           Don&apos;t have an account?{' '}
-          <Link href={to.register()} className="text-sm font-semibold text-nowrap text-neutral-800">
+          <Link
+            href={to.register()}
+            className="text-sm font-semibold text-nowrap text-neutral-800 hover:underline"
+          >
             Sign Up
           </Link>
         </p>

@@ -5,7 +5,6 @@ import { NextResponse } from 'next/server';
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get('code');
-  // next = куди редіректити після успіху (напр. /profile або /auth/update-password)
   const next = searchParams.get('next') ?? to.home();
 
   if (code) {
@@ -17,6 +16,5 @@ export async function GET(request: Request) {
     }
   }
 
-  // Якщо помилка або коду немає
-  return NextResponse.redirect(`${origin}/auth/auth-code-error`);
+  return NextResponse.redirect(`${origin}${to.authError()}`);
 }

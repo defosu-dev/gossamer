@@ -1,3 +1,4 @@
+import { to } from '@/config/routes';
 import { supabaseServer } from '@/lib/supabase/supabaseServer';
 import { forgotPasswordSchema } from '@/lib/validator/auth';
 import { NextRequest, NextResponse } from 'next/server';
@@ -11,14 +12,11 @@ export async function POST(request: NextRequest) {
     const supabase = await supabaseServer();
     const origin = request.nextUrl.origin;
 
-    // Вказуємо redirectTo на сторінку зміни пароля
-    // Але через callback, щоб сесія встановилася
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${origin}/api/auth/callback?next=/auth/update-password`,
+      redirectTo: `${origin}/api/auth/callback?next=${to.updatePassword()}`,
     });
 
     if (error) {
-      // Для безпеки краще не показувати, чи існує email, але для DX можна
       return NextResponse.json({ error: error.message }, { status: 400 });
     }
 

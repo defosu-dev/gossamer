@@ -10,6 +10,7 @@ import { loginSchema, registerSchema, forgotPasswordSchema, updatePasswordSchema
 import { queryKeys } from '@/config/queryKeys';
 import { to } from '@/config/routes';
 import { getErrorMessage } from '@/lib/utils/getErrorMessage';
+import { createBrowserClient } from '@supabase/ssr';
 
 type LoginInput = z.infer<typeof loginSchema>;
 type RegisterInput = z.infer<typeof registerSchema>;
@@ -52,7 +53,7 @@ export const useLogin = () => {
 
       await queryClient.invalidateQueries({ queryKey: queryKeys.cart.all });
 
-      router.push(to.profile()); 
+      router.push(to.home()); 
       router.refresh(); 
     },
     onError: (error) => {
@@ -114,6 +115,30 @@ export const useUpdatePassword = () => {
     onSuccess: () => {
       toast.success('Password updated successfully');
       router.push(to.profile());
+    },
+    onError: (error) => {
+      toast.error(getErrorMessage(error));
+    },
+  });
+};
+
+
+export const useGoogleLogin = () => {
+  return useMutation<void, unknown, void>({
+    mutationFn: async () => {
+      const supabase = createBrowserClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      );
+
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/api/auth/callback`,
+        },
+      });
+
+      if (error) throw error;
     },
     onError: (error) => {
       toast.error(getErrorMessage(error));

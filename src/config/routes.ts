@@ -33,6 +33,16 @@ export const ROUTES = {
     auth: 'public',
     to: () => '/auth/forgot-password',
   },
+  updatePassword: {
+    path: '/auth/update-password',
+    auth: 'public', 
+    to: () => '/auth/update-password',
+  },
+  authError: {
+    path: '/auth/auth-code-error',
+    auth: 'public',
+    to: () => '/auth/auth-code-error',
+  },
 
   faq: { path: '/faq', auth: 'public', to: () => '/faq' },
   blog: { path: '/blog', auth: 'public', to: () => '/blog' },
@@ -48,9 +58,13 @@ export const to = {
   payment: ROUTES.payment.to,
   profile: ROUTES.profile.to,
   wishlist: ROUTES.wishlist.to,
+  
   login: ROUTES.login.to,
   register: ROUTES.register.to,
   forgotPassword: ROUTES.forgotPassword.to,
+  updatePassword: ROUTES.updatePassword.to,
+  authError: ROUTES.authError.to,
+
   faq: ROUTES.faq.to,
   blog: ROUTES.blog.to,
   blogPost: ROUTES.blogPost.to,

@@ -1,18 +1,18 @@
 import { ProductGrid } from '@/components/modules/ProductGrid/ProductGrid';
-import { ProductGridLoading } from '@/components/modules/ProductGrid/ProductGridLoading';
-import { fetchProducts } from '@/lib/utils/supabase/server/products';
-import { Suspense } from 'react';
+import ProductGridEmpty from '@/components/modules/ProductGrid/ProductGridEmpty';
+import toast from 'react-hot-toast';
 
 export default async function CatalogProductGrid() {
-  const { data: products } = await fetchProducts({
-    sort: { field: 'current_price', order: 'asc' },
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+
+  const res = await fetch(`${baseUrl}/api/products?page=1&limit=12`, {
+    cache: 'no-store',
   });
-  return (
-    <div>
-      <h2>Product Grid</h2>
-      <Suspense fallback={<ProductGridLoading />}>
-        <ProductGrid productList={products} />
-      </Suspense>
-    </div>
-  );
+
+  if (!res.ok) {
+    toast.error('Failed to load products');
+    return <ProductGridEmpty />;
+  }
+  const { data } = await res.json();
+  return <ProductGrid productList={data} />;
 }

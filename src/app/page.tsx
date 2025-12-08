@@ -1,13 +1,15 @@
 import { ProductGridLoading } from '@/components/modules/ProductGrid/ProductGridLoading';
 import SearchBar from '@/components/modules/SearchBar/SearchBar';
-import { Suspense } from 'react';
 import ExploreSection from './_components/ExploreCurated/ExploreSection';
 import NewArrival from './_components/NewArrival/NewArrival';
 import { testdatanewarrival } from './_components/NewArrival/testdatanewarrival';
-import HomeProductGrid from './_components/HomeProductGrid';
 import CategoryBar from '../components/modules/CategoryBar/CategoryBar';
 import { cn } from '@/lib/utils/cn';
+import dynamic from 'next/dynamic';
 
+const HomeProductGrid = dynamic(() => import('./_components/HomeProductGrid').then(), {
+  loading: () => <ProductGridLoading />,
+});
 /**
  * Home page with:
  * - Search bar
@@ -27,9 +29,7 @@ async function HomePage() {
 
       {/* Product Grid */}
       <section className="container mx-auto max-w-7xl p-1 px-6">
-        <Suspense fallback={<ProductGridLoading />}>
-          <HomeProductGrid />
-        </Suspense>
+        <HomeProductGrid />
       </section>
 
       {/* New Arrival Section */}

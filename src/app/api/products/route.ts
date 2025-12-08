@@ -22,6 +22,7 @@ export async function GET(request: NextRequest) {
       id, title, slug, description, average_rating, reviews_count, created_at,
       categories!inner ( id, name, slug ),
       product_variants (
+        id,
         current_price, old_price, stock,
         product_images ( url, position )
       )
@@ -80,6 +81,7 @@ export async function GET(request: NextRequest) {
       price: firstVariant?.current_price ?? 0,
       oldPrice: firstVariant?.old_price ?? null,
       imageUrl: imageUrl,
+      defaultVariantId: firstVariant?.id, 
     };
   });
 

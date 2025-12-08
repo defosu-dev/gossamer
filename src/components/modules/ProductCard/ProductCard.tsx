@@ -8,14 +8,13 @@ import { useCart } from '@/hooks/useCart';
 import { to } from '@/config/routes';
 import type { ProductCardDTO } from '@/types/api';
 
-// Імпорти ваших під-компонентів (переконайтеся, що вони теж оновлені під пропси)
 import ProductImage from './ProductImage';
 import ProductCategoryBadge from './ProductCategoryBadge';
 import ProductPrice from './ProductPrice';
 import ProductActions from './ProductActions';
 
 interface ProductCardProps {
-  product?: ProductCardDTO; // Може бути undefined при завантаженні
+  product: ProductCardDTO;
   isLoading?: boolean;
   priority?: boolean;
   className?: string;
@@ -58,43 +57,43 @@ export function ProductCard({
 
   // 2. Logic
   const handleAddToCart = () => {
-    // В API ми маємо додати defaultVariantId в DTO,
-    // інакше тут доведеться переходити на сторінку товару.
-    // Припустимо, що product.id це і є variantId для спрощення,
-    // АБО (краще) в DTO приходить defaultVariantId.
-    const variantIdToAdd = (product as any).defaultVariantId || product.id;
+    const variantIdToAdd = product.defaultVariantId;
 
+    if (!variantIdToAdd) {
+      console.error('No variant ID found for product:', product.title);
+      return;
+    }
     addItem({
-      id: crypto.randomUUID(), // Локальний ID для Zustand
+      id: variantIdToAdd,
       variantId: variantIdToAdd,
       productId: product.id,
       title: product.title,
       slug: product.slug,
       price: product.price,
+      oldPrice: product.oldPrice ?? null,
       imageUrl: product.imageUrl,
       quantity: 1,
-      attributesDescription: 'Default', // Можна покращити, якщо API поверне
+      attributesDescription: '',
     });
   };
-
-  // Розрахунок знижки (можна винести в utils)
-  const hasDiscount = product.oldPrice && product.oldPrice > product.price;
 
   return (
     <div
       className={cn(
-        'group flex h-full max-w-sm flex-col overflow-hidden rounded-lg border border-transparent bg-white transition-all duration-300 hover:border-gray-100 hover:shadow-lg',
+        'group flex h-full max-w-sm flex-col overflow-hidden rounded-lg border border-transparent bg-white p-1 transition-all duration-300 hover:border-gray-100 hover:shadow-lg',
         className
       )}
     >
       {/* Upper Part: Image & Badges (Link to Details) */}
-      <Link href={to.product(product.slug)} className="relative block p-1">
-        <ProductImage src={product.imageUrl ?? ''} alt={product.title} priority={priority} />
+      <div className="relative block">
+        <Link href={to.product(product.slug)}>
+          <ProductImage src={product.imageUrl ?? ''} alt={product.title} priority={priority} />
+        </Link>
         {product.category && <ProductCategoryBadge>{product.category.name}</ProductCategoryBadge>}
-      </Link>
+      </div>
 
       {/* Body */}
-      <div className="flex flex-grow flex-col p-4">
+      <div className="flex h-full flex-grow flex-col p-2">
         {/* Title */}
         <Link href={to.product(product.slug)} className="mb-2 block">
           <h3 className="hover:text-primary line-clamp-2 text-lg font-medium text-gray-900 transition-colors">
@@ -103,23 +102,18 @@ export function ProductCard({
         </Link>
 
         {/* Rating & Price */}
-        <div className="mt-auto mb-4 flex items-end justify-between">
+        <div className="mt-auto mb-2 flex items-end justify-between">
           <div className="flex items-center text-sm text-gray-500">
-            <Star className="mr-1 h-4 w-4 fill-amber-400 text-amber-400" />
+            <Star className="mr-1 size-5 text-amber-400" />
             <span className="font-medium text-gray-900">{product.rating}</span>
-            <span className="ml-1">({product.reviewsCount})</span>
+            <span className="ml-1">({product.reviewsCount} Reviews)</span>
           </div>
 
-          <ProductPrice
-            price={product.price}
-            oldPrice={product.oldPrice ?? undefined}
-            // Ваші компоненти ProductPrice самі мають вирішувати, як це малювати,
-            // але ми передаємо вже готові цифри.
-          />
+          <ProductPrice price={product.price} oldPrice={product.oldPrice ?? undefined} />
         </div>
 
         {/* Actions */}
-        <div className="mt-auto border-t border-gray-50 pt-2">
+        <div className="pt-2">
           <ProductActions onAddToCart={handleAddToCart} />
         </div>
       </div>

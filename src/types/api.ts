@@ -20,6 +20,7 @@ export interface ProductCardDTO {
   price: number;
   oldPrice: number | null;
   imageUrl: string | null;
+  defaultVariantId?: string;
 }
 
 // --- Product Detail (Full) ---

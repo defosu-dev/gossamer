@@ -8,7 +8,8 @@
     "start": "next start",
     "format": "eslint . && prettier . --check && tsc --noEmit",
     "format:fix": "eslint . --fix && prettier . --write",
-    "db:seed": "npx ts-node supabase/seed.ts"
+    "db:seed": "npx ts-node supabase/seed.ts",
+    "db:migration:new": "npx supabase migration new" 
   },
   "dependencies": {
     "@stripe/react-stripe-js": "^5.3.0",

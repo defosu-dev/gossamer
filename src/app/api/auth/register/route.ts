@@ -16,9 +16,8 @@ export async function POST(request: NextRequest) {
       password,
       options: {
         data: {
-          full_name: fullName, // Це піде в public.users через тригер
+          full_name: fullName,
         },
-        // Після підтвердження пошти перенаправляємо на callback
         emailRedirectTo: `${origin}/api/auth/callback`,
       },
     });

@@ -1,12 +1,12 @@
 import { supabaseServer } from '@/lib/supabase/supabaseServer';
-import { loginSchema } from '@/lib/validator/auth';
+import { signInSchema } from '@/lib/validator/auth';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { email, password } = loginSchema.parse(body);
+    const { email, password } = signInSchema.parse(body);
 
     const supabase = await supabaseServer();
 

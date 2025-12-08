@@ -16,24 +16,18 @@ interface ProductActionsProps {
 export function ProductActions({ onAddToCart, className, isCompact = false }: ProductActionsProps) {
   const router = useRouter();
 
-  const handleBuyNow = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const handleBuyNow = () => {
     onAddToCart();
     router.push(to.checkout());
   };
 
-  const handleAddToCart = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const handleAddToCart = () => {
     onAddToCart();
   };
 
   if (isCompact) {
     return (
-      <Button
-        variant="secondary"
-        className={cn('w-full', className)}
-        onClick={() => handleAddToCart}
-      >
+      <Button variant="secondary" className={cn('w-full', className)} onClick={handleAddToCart}>
         <ShoppingBag className="mr-2 h-4 w-4" /> Add
       </Button>
     );
@@ -44,17 +38,12 @@ export function ProductActions({ onAddToCart, className, isCompact = false }: Pr
       <Button
         variant="secondary"
         className="flex-1"
-        onClick={() => handleAddToCart}
+        onClick={handleAddToCart}
         aria-label="Add to cart"
       >
         Add to Cart
       </Button>
-      <Button
-        variant="primary"
-        className="flex-1"
-        onClick={() => handleBuyNow}
-        aria-label="Buy now"
-      >
+      <Button variant="primary" className="flex-1" onClick={handleBuyNow} aria-label="Buy now">
         Buy Now
       </Button>
     </div>

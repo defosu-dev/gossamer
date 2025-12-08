@@ -80,7 +80,6 @@ export function CartItem({
 }: CartItemProps) {
   const handleQuantityChange = useCallback(
     (newQty: number) => {
-      // Захист від 0 або від'ємних чисел. Видалення йде через onRemove.
       if (newQty < 1) return;
       onChange(newQty);
     },

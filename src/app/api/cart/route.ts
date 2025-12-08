@@ -45,13 +45,20 @@ export async function GET() {
     `
     )
     .eq('user_id', user.id)
-    .single();
+    .order('id', { referencedTable: 'cart_items', ascending: true });
 
-  type CartQueryType = QueryData<typeof queryBuilder>;
+  type CartQueryResponse = QueryData<typeof queryBuilder>;
 
-  const { data, error } = await queryBuilder;
+  // maybeSingle() не кидає помилку, якщо запису немає, а повертає null
+  const { data, error } = await queryBuilder.maybeSingle();
 
-  if (error && error.code === 'PGRST116') {
+  if (error) {
+    console.error('GET Cart Error:', error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  // Якщо кошика немає - повертаємо пусту структуру
+  if (!data) {
     return NextResponse.json({
       id: '',
       items: [],
@@ -60,18 +67,14 @@ export async function GET() {
     } as CartDTO);
   }
 
-  if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
-  }
-
-  const cartRaw = data as CartQueryType;
+  const cartRaw = data as CartQueryResponse[0];
 
   const items: CartItemDTO[] = cartRaw.cart_items
     .filter((item) => item.product_variants && item.product_variants.deleted_at === null)
     .map((item) => {
       const variant = item.product_variants!;
       const product = variant.products!;
-
+      const firstVariant = Array.isArray(item.product_variants) ? item.product_variants[0] : null;
       const image =
         variant.product_images?.sort((a, b) => (a.position ?? 0) - (b.position ?? 0))[0]?.url ??
         null;
@@ -92,6 +95,7 @@ export async function GET() {
         stock: variant.stock ?? 0,
         imageUrl: image,
         attributesDescription: attributesDesc,
+        defaultVariantId: firstVariant?.id, 
       };
     });
 
@@ -120,12 +124,15 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { variantId, quantity } = addToCartSchema.parse(body);
 
+    // 1. Знаходимо або створюємо кошик
     let cartId: string;
+    
+    // maybeSingle безпечніший
     const { data: cart } = await supabase
       .from('carts')
       .select('id')
       .eq('user_id', user.id)
-      .single();
+      .maybeSingle();
 
     if (cart) {
       cartId = cart.id;
@@ -136,39 +143,51 @@ export async function POST(request: NextRequest) {
         .select('id')
         .single();
 
-      if (createError) throw new Error(createError.message);
+      if (createError) throw new Error(`Create cart error: ${createError.message}`);
       cartId = newCart.id;
     }
 
-    const { data: existingItem } = await supabase
+    // 2. Перевіряємо, чи є вже цей товар в кошику
+    // Використовуємо maybeSingle(), щоб не отримувати помилку PGRST116, якщо товару немає
+    const { data: existingItem, error: fetchItemError } = await supabase
       .from('cart_items')
       .select('id, quantity')
       .eq('cart_id', cartId)
       .eq('variant_id', variantId)
-      .single();
+      .maybeSingle();
+
+    if (fetchItemError) {
+      throw new Error(`Fetch item error: ${fetchItemError.message}`);
+    }
 
     if (existingItem) {
+      // Оновлюємо кількість
       const currentQty = existingItem.quantity ?? 0;
-
       const { error } = await supabase
         .from('cart_items')
         .update({ quantity: currentQty + quantity })
         .eq('id', existingItem.id);
-      if (error) throw error;
+        
+      if (error) throw new Error(`Update item error: ${error.message}`);
     } else {
+      // Додаємо новий
       const { error } = await supabase
         .from('cart_items')
         .insert({ cart_id: cartId, variant_id: variantId, quantity });
-      if (error) throw error;
+        
+      if (error) throw new Error(`Insert item error: ${error.message}`);
     }
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    // 👇 ВИПРАВЛЕННЯ 3: ZodError handling
     if (error instanceof z.ZodError) {
-      // Використовуємо .issues або .flatten(), якщо властивість errors недоступна через версію TS
       return NextResponse.json({ error: error.issues }, { status: 400 });
     }
+    
+    // 👇 ЛОГУВАННЯ ПОМИЛКИ В ТЕРМІНАЛ
+    // Це допоможе вам побачити реальну причину 500 помилки
+    console.error('POST /api/cart Error:', error);
+    
     return NextResponse.json({ error: 'Failed to add item' }, { status: 500 });
   }
 }
@@ -190,13 +209,14 @@ export async function PATCH(request: NextRequest) {
 
     const { error } = await supabase.from('cart_items').update({ quantity }).eq('id', itemId);
 
-    if (error) throw error;
+    if (error) throw new Error(error.message);
 
     return NextResponse.json({ success: true });
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: error.issues }, { status: 400 });
     }
+    console.error('PATCH /api/cart Error:', error);
     return NextResponse.json({ error: 'Failed to update item' }, { status: 500 });
   }
 }
@@ -218,13 +238,14 @@ export async function DELETE(request: NextRequest) {
 
     const { error } = await supabase.from('cart_items').delete().eq('id', itemId);
 
-    if (error) throw error;
+    if (error) throw new Error(error.message);
 
     return NextResponse.json({ success: true });
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: error.issues }, { status: 400 });
     }
+    console.error('DELETE /api/cart Error:', error);
     return NextResponse.json({ error: 'Failed to remove item' }, { status: 500 });
   }
 }

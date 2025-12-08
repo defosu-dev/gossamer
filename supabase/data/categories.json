@@ -1,32 +1,42 @@
 [
   {
-    "id": "c522aa0c-4aa2-42c6-bcb9-123f84661e63",
-    "name": "Sports",
-    "slug": "sports"
+    "id": "7b20137e-966b-4953-95ac-ba5549f63ef7",
+    "name": "Computers",
+    "slug": "computers-ZG3"
   },
   {
-    "id": "57003d8b-7005-4bba-b658-2234692eb456",
+    "id": "33f18346-4fa2-43c4-8a17-8993df3162b7",
+    "name": "Automotive",
+    "slug": "automotive-hSY"
+  },
+  {
+    "id": "ba9eb327-8671-4a10-8fd1-867f5535701d",
+    "name": "Health",
+    "slug": "health-9Se"
+  },
+  {
+    "id": "d2ab8234-2995-459a-a1d2-dcf61aa61e87",
+    "name": "Clothing",
+    "slug": "clothing-Zkh"
+  },
+  {
+    "id": "e70c5948-d5dc-4012-9bbc-6350fd86975b",
     "name": "Movies",
-    "slug": "movies"
+    "slug": "movies-Kqs"
   },
   {
-    "id": "0c1fb844-2e91-4af9-be00-84217b5b6124",
-    "name": "Books",
-    "slug": "books"
+    "id": "8f864a33-9ee7-4c2c-a8ca-9664e1961472",
+    "name": "Garden",
+    "slug": "garden-Xxc"
   },
   {
-    "id": "9726c674-4a66-4cf2-a6b2-bae320bfe55a",
-    "name": "Outdoors",
-    "slug": "outdoors"
+    "id": "7248a29f-f14e-4ec1-b542-5d92e477c883",
+    "name": "Toys",
+    "slug": "toys-g3M"
   },
   {
-    "id": "759ab0b3-593a-47f2-a63d-3a9688da0191",
-    "name": "Kids",
-    "slug": "kids"
-  },
-  {
-    "id": "f1ca49a8-c490-46a6-b9b0-579cbcb95373",
-    "name": "Industrial",
-    "slug": "industrial"
+    "id": "f0f671b8-6ce2-4c80-91fd-b812a247c07b",
+    "name": "Electronics",
+    "slug": "electronics-9c8"
   }
 ]

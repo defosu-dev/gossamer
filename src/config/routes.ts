@@ -35,7 +35,7 @@ export const ROUTES = {
   },
   updatePassword: {
     path: '/auth/update-password',
-    auth: 'public', 
+    auth: 'public',
     to: () => '/auth/update-password',
   },
   authError: {
@@ -45,6 +45,7 @@ export const ROUTES = {
   },
 
   faq: { path: '/faq', auth: 'public', to: () => '/faq' },
+  contactUs: { path:'/conctact-us', auth: 'public', to: () => '/contact-us' },
   blog: { path: '/blog', auth: 'public', to: () => '/blog' },
   blogPost: { path: '/blog/[slug]', auth: 'public', to: (slug: string) => `/blog/${slug}` },
 } as const;
@@ -66,6 +67,7 @@ export const to = {
   authError: ROUTES.authError.to,
 
   faq: ROUTES.faq.to,
+  contactUs: ROUTES.contactUs.to,
   blog: ROUTES.blog.to,
   blogPost: ROUTES.blogPost.to,
 } as const;

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import { cn } from '@/lib/utils/cn';
+import { to } from '@/config/routes';
 
 /**
  * Footer navigation section containing two link groups: "About" and "Support".
@@ -20,7 +21,7 @@ export function List() {
         <ul className={cn('space-y-2')}>
           <li>
             <Link
-              href="/blog"
+              href={to.blog()}
               className={cn(
                 'text-zinc-500 transition-colors duration-200',
                 'hover:text-zinc-900 focus-visible:text-zinc-900 focus-visible:outline-none'
@@ -42,7 +43,7 @@ export function List() {
           </li>
           <li>
             <Link
-              href="/contact"
+              href={to.contactUs()}
               className={cn(
                 'text-zinc-500 transition-colors duration-200',
                 'hover:text-zinc-900 focus-visible:text-zinc-900 focus-visible:outline-none'
@@ -62,7 +63,7 @@ export function List() {
         <ul className={cn('space-y-2')}>
           <li>
             <Link
-              href="/contact"
+              href={to.contactUs()}
               className={cn(
                 'text-zinc-500 transition-colors duration-200',
                 'hover:text-zinc-900 focus-visible:text-zinc-900 focus-visible:outline-none'
@@ -73,7 +74,7 @@ export function List() {
           </li>
           <li>
             <Link
-              href="/shipping"
+              href={to.faq()}
               className={cn(
                 'text-zinc-500 transition-colors duration-200',
                 'hover:text-zinc-900 focus-visible:text-zinc-900 focus-visible:outline-none'
@@ -95,7 +96,7 @@ export function List() {
           </li>
           <li>
             <Link
-              href="/faq"
+              href={to.faq()}
               className={cn(
                 'text-zinc-500 transition-colors duration-200',
                 'hover:text-zinc-900 focus-visible:text-zinc-900 focus-visible:outline-none'

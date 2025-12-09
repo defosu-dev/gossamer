@@ -6,13 +6,13 @@ import { z } from 'zod';
 import { authService } from '@/services/api/auth';
 import { cartService } from '@/services/api/cart';
 import { useStore } from '@/store';
-import { loginSchema, registerSchema, forgotPasswordSchema, updatePasswordSchema } from '@/lib/validator/auth';
+import {signInSchema, registerSchema, forgotPasswordSchema, updatePasswordSchema } from '@/lib/validator/auth';
 import { queryKeys } from '@/config/queryKeys';
 import { to } from '@/config/routes';
 import { getErrorMessage } from '@/lib/utils/getErrorMessage';
 import { createBrowserClient } from '@supabase/ssr';
 
-type LoginInput = z.infer<typeof loginSchema>;
+type LoginInput = z.infer<typeof signInSchema>;
 type RegisterInput = z.infer<typeof registerSchema>;
 type ForgotPasswordInput = z.infer<typeof forgotPasswordSchema>;
 type UpdatePasswordInput = z.infer<typeof updatePasswordSchema>;

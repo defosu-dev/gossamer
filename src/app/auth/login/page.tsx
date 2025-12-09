@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import dynamic from 'next/dynamic';
-import { SignInFormSkeleton } from './_components/SignInFormSkeleton';
+import SignInFormSkeleton from './_components/SignInFormSkeleton';
 
 const SignInForm = dynamic(() => import('./_components/SignInForm').then((mod) => mod.SignInForm), {
   loading: () => <SignInFormSkeleton />,

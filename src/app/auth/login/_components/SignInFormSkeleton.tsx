@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils/cn';
 import { Loader2 } from 'lucide-react';
 
-export function SignInFormSkeleton() {
+function SignInFormSkeleton() {
   return (
     <div
       className={cn(
@@ -45,3 +45,5 @@ export function SignInFormSkeleton() {
     </div>
   );
 }
+
+export default SignInFormSkeleton;

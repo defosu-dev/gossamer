@@ -63,8 +63,8 @@ function ContactUsForm() {
       )}
       noValidate
     >
-      <h2 className={cn('text-3xl font-bold', 'mt-4')}>Welcome Back</h2>
-      <p className={cn('text-sm text-neutral-800', 'mt-2')}>Are you a returning customer?</p>
+      <h2 className={cn('text-center text-3xl font-bold', 'mt-4')}>Get in Touch</h2>
+      <p className={cn('text-center text-sm text-neutral-800', 'mt-2')}>You can reach us anytime</p>
       <div className="mt-8 flex w-full flex-col gap-4">
         <div className="flex w-full flex-col items-center gap-4 sm:flex-row">
           <form.Field name="firstName">

@@ -1,4 +1,4 @@
-import type { CartDTO } from "@/types/api";
+import type { CartDTO } from '@/types/api';
 
 export const cartService = {
   get: async (): Promise<CartDTO> => {

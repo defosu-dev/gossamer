@@ -10,7 +10,7 @@ import { useUser } from './user';
 export const useCart = () => {
   const queryClient = useQueryClient();
   const { user } = useUser();
-  
+
   // --- ZUSTAND: Отримуємо дані (Це ок) ---
   const localItems = useStore((s) => s.items);
   const localTotal = useStore((s) => s.totalPrice);
@@ -25,8 +25,8 @@ export const useCart = () => {
   const cartQuery = useQuery({
     queryKey: queryKeys.cart.all,
     queryFn: cartService.get,
-    enabled: !!user, 
-    staleTime: 1000 * 60 * 5, 
+    enabled: !!user,
+    staleTime: 1000 * 60 * 5,
   });
 
   const syncMutation = useMutation({
@@ -38,21 +38,21 @@ export const useCart = () => {
     },
     onError: () => {
       toast.error('Failed to sync cart');
-    }
+    },
   });
 
   useEffect(() => {
     if (user && localItems.length > 0) {
       syncMutation.mutate(
-        localItems.map(i => ({ variantId: i.variantId, quantity: i.quantity }))
+        localItems.map((i) => ({ variantId: i.variantId, quantity: i.quantity }))
       );
     }
-  }, [user, localItems.length]); 
-
+  }, [user, localItems.length]);
 
   const addItem = (item: LocalCartItem) => {
     if (user) {
-      return cartService.add(item.variantId, item.quantity)
+      return cartService
+        .add(item.variantId, item.quantity)
         .then(() => queryClient.invalidateQueries({ queryKey: queryKeys.cart.all }))
         .catch(() => toast.error('Error adding to cart'));
     } else {
@@ -64,7 +64,8 @@ export const useCart = () => {
 
   const removeItem = (variantId: string, itemId?: string) => {
     if (user && itemId) {
-      cartService.remove(itemId)
+      cartService
+        .remove(itemId)
         .then(() => queryClient.invalidateQueries({ queryKey: queryKeys.cart.all }));
     } else {
       localRemoveItem(variantId);
@@ -73,13 +74,14 @@ export const useCart = () => {
 
   const updateQuantity = (variantId: string, quantity: number, itemId?: string) => {
     if (user && itemId) {
-      cartService.update(itemId, quantity)
+      cartService
+        .update(itemId, quantity)
         .then(() => queryClient.invalidateQueries({ queryKey: queryKeys.cart.all }));
     } else {
       localUpdateQuantity(variantId, quantity);
     }
   };
-  
+
   const isAuthLoading = user && cartQuery.isLoading;
 
   return {
@@ -88,7 +90,7 @@ export const useCart = () => {
     totalQuantity: user ? (cartQuery.data?.totalQuantity ?? 0) : localQty,
     isLoading: isAuthLoading || syncMutation.isPending,
     isSyncing: syncMutation.isPending,
-    
+
     addItem,
     removeItem,
     updateQuantity,

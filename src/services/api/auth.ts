@@ -65,6 +65,6 @@ export const authService = {
     }
 
     const data = await res.json();
-    return data.user; 
+    return data.user;
   },
 };

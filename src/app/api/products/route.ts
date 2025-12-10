@@ -81,7 +81,7 @@ export async function GET(request: NextRequest) {
       price: firstVariant?.current_price ?? 0,
       oldPrice: firstVariant?.old_price ?? null,
       imageUrl: imageUrl,
-      defaultVariantId: firstVariant?.id, 
+      defaultVariantId: firstVariant?.id,
     };
   });
 

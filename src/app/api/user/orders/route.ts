@@ -5,15 +5,18 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
   const supabase = await supabaseServer();
-  
-  const { data: { user } } = await supabase.auth.getUser();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   if (!user) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
   const queryBuilder = supabase
     .from('orders')
-    .select(`
+    .select(
+      `
       id,
       total,
       status,
@@ -32,7 +35,8 @@ export async function GET() {
           product_images ( url, position )
         )
       )
-    `)
+    `
+    )
     .eq('user_id', user.id)
     .order('created_at', { ascending: false });
 
@@ -51,7 +55,7 @@ export async function GET() {
 
     return {
       id: order.id,
-      number: new Date(createdDate).getTime(), 
+      number: new Date(createdDate).getTime(),
       status: (order.status as OrderDTO['status']) ?? 'pending',
       total: order.total ?? 0,
       createdAt: createdDate,
@@ -63,13 +67,16 @@ export async function GET() {
       },
       items: order.order_items.map((item) => {
         const variant = item.product_variants;
-        
+
         const productData = variant?.products;
-        const productTitle = Array.isArray(productData) ? productData[0]?.title : productData?.title;
+        const productTitle = Array.isArray(productData)
+          ? productData[0]?.title
+          : productData?.title;
         const productSlug = Array.isArray(productData) ? productData[0]?.slug : productData?.slug;
 
-        const image = variant?.product_images
-          ?.sort((a, b) => (a.position ?? 0) - (b.position ?? 0))[0]?.url ?? null;
+        const image =
+          variant?.product_images?.sort((a, b) => (a.position ?? 0) - (b.position ?? 0))[0]?.url ??
+          null;
 
         return {
           id: item.id,

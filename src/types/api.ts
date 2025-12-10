@@ -26,7 +26,7 @@ export interface ProductCardDTO {
 // --- Product Detail (Full) ---
 export interface VariantAttributeDTO {
   name: string;
-  slug: string; 
+  slug: string;
   value: string;
   valueId: string;
 }
@@ -53,7 +53,7 @@ export interface ProductOptionValueDTO {
 
 export interface ProductOptionDTO {
   slug: string;
-  name: string; 
+  name: string;
   values: ProductOptionValueDTO[];
 }
 
@@ -97,7 +97,7 @@ export interface OrderItemDTO {
 
 export interface OrderDTO {
   id: string;
-  number: number; 
+  number: number;
   status: 'pending' | 'paid' | 'shipped' | 'cancelled';
   total: number;
   createdAt: string;
@@ -112,7 +112,7 @@ export interface OrderDTO {
 
 // --- Wishlist ---
 export interface WishlistItemDTO {
-  id: string; 
+  id: string;
   variantId: string;
   productId: string;
   title: string;
@@ -123,7 +123,6 @@ export interface WishlistItemDTO {
   inStock: boolean;
   addedAt: string;
 }
-
 
 export interface UserDTO {
   id: string;

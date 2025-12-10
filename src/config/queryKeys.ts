@@ -1,7 +1,7 @@
 export interface ProductListFilters {
   page?: number;
   limit?: number;
-  category?: string; 
+  category?: string;
   sort?: 'newest' | 'price_asc' | 'price_desc' | 'rating_desc';
   minPrice?: number;
   maxPrice?: number;

@@ -8,4 +8,3 @@
 export const hasDiscount = (minPrice: number | null, maxOldPrice: number | null): boolean => {
   return minPrice !== null && maxOldPrice !== null && maxOldPrice > minPrice;
 };
-

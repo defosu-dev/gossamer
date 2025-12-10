@@ -45,7 +45,7 @@ export const ROUTES = {
   },
 
   faq: { path: '/faq', auth: 'public', to: () => '/faq' },
-  contactUs: { path:'/conctact-us', auth: 'public', to: () => '/contact-us' },
+  contactUs: { path: '/conctact-us', auth: 'public', to: () => '/contact-us' },
   blog: { path: '/blog', auth: 'public', to: () => '/blog' },
   blogPost: { path: '/blog/[slug]', auth: 'public', to: (slug: string) => `/blog/${slug}` },
 } as const;
@@ -59,7 +59,7 @@ export const to = {
   payment: ROUTES.payment.to,
   profile: ROUTES.profile.to,
   wishlist: ROUTES.wishlist.to,
-  
+
   login: ROUTES.login.to,
   register: ROUTES.register.to,
   forgotPassword: ROUTES.forgotPassword.to,

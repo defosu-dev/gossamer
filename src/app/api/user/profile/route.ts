@@ -6,7 +6,9 @@ import { z } from 'zod';
 export async function PATCH(request: NextRequest) {
   const supabase = await supabaseServer();
 
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   try {
@@ -15,20 +17,19 @@ export async function PATCH(request: NextRequest) {
 
     const { error } = await supabase
       .from('users')
-      .update({ 
-        name, 
-        phone: phone || null
+      .update({
+        name,
+        phone: phone || null,
       })
       .eq('id', user.id);
 
     if (error) throw new Error(error.message);
 
     await supabase.auth.updateUser({
-      data: { full_name: name }
+      data: { full_name: name },
     });
 
     return NextResponse.json({ success: true });
-
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: error.issues }, { status: 400 });

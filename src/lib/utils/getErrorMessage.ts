@@ -1,31 +1,24 @@
+function hasMessage(error: unknown): error is { message: string } {
+  return (
+    typeof error === 'object' &&
+    error !== null &&
+    'message' in error &&
+    typeof (error as any).message === 'string'
+  );
+}
+
 export function getErrorMessage(error: unknown): string {
-  if (typeof error === 'object' && error !== null && 'error' in error) {
-    const errData = (error as { error: unknown }).error;
-
-    if (Array.isArray(errData)) {
-      const firstError = errData[0];
-      
-      if (typeof firstError === 'object' && firstError !== null && 'message' in firstError) {
-        return String((firstError as { message: unknown }).message);
-      }
-      
-      if (typeof firstError === 'string') {
-        return firstError;
-      }
-
-      return 'Validation error';
-    }
-
-    if (typeof errData === 'string') {
-      return errData;
-    }
-
-    return String(errData);
-  }
-
   if (error instanceof Error) {
     return error.message;
   }
-
-  return 'An unexpected error occurred';
+  if (Array.isArray(error) && error.length > 0) {
+    return getErrorMessage(error[0]);
+  }
+  if (hasMessage(error)) {
+    return error.message;
+  }
+  if (typeof error === 'string') {
+    return error;
+  }
+  return 'Unknown error';
 }

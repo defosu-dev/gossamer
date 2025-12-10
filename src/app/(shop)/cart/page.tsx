@@ -17,7 +17,7 @@ import CartItemsList from './_components/CartItemsList';
  * - Breadcrumbs for navigation.
  * - Sticky summary on larger screens.
  */
-export function CartPage() {
+function CartPage() {
   const breadcrumbs = [
     { label: 'Home', href: '/' },
     { label: 'Cart', href: '/cart' },

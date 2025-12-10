@@ -95,7 +95,7 @@ export async function GET() {
         stock: variant.stock ?? 0,
         imageUrl: image,
         attributesDescription: attributesDesc,
-        defaultVariantId: firstVariant?.id, 
+        defaultVariantId: firstVariant?.id,
       };
     });
 
@@ -126,7 +126,7 @@ export async function POST(request: NextRequest) {
 
     // 1. Знаходимо або створюємо кошик
     let cartId: string;
-    
+
     // maybeSingle безпечніший
     const { data: cart } = await supabase
       .from('carts')
@@ -167,14 +167,14 @@ export async function POST(request: NextRequest) {
         .from('cart_items')
         .update({ quantity: currentQty + quantity })
         .eq('id', existingItem.id);
-        
+
       if (error) throw new Error(`Update item error: ${error.message}`);
     } else {
       // Додаємо новий
       const { error } = await supabase
         .from('cart_items')
         .insert({ cart_id: cartId, variant_id: variantId, quantity });
-        
+
       if (error) throw new Error(`Insert item error: ${error.message}`);
     }
 
@@ -183,11 +183,11 @@ export async function POST(request: NextRequest) {
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: error.issues }, { status: 400 });
     }
-    
+
     // 👇 ЛОГУВАННЯ ПОМИЛКИ В ТЕРМІНАЛ
     // Це допоможе вам побачити реальну причину 500 помилки
     console.error('POST /api/cart Error:', error);
-    
+
     return NextResponse.json({ error: 'Failed to add item' }, { status: 500 });
   }
 }

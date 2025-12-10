@@ -1,13 +1,13 @@
-import { z } from 'zod';
 import {
-  loginSchema,
-  registerSchema,
   forgotPasswordSchema,
+  registerSchema,
+  signInSchema,
   updatePasswordSchema,
 } from '@/lib/validator/auth';
 import type { UserDTO } from '@/types/api';
+import { z } from 'zod';
 
-type LoginInput = z.infer<typeof loginSchema>;
+type LoginInput = z.infer<typeof signInSchema>;
 type RegisterInput = z.infer<typeof registerSchema>;
 type ForgotInput = z.infer<typeof forgotPasswordSchema>;
 type UpdatePassInput = z.infer<typeof updatePasswordSchema>;
@@ -65,6 +65,6 @@ export const authService = {
     }
 
     const data = await res.json();
-    return data.user; 
+    return data.user;
   },
 };

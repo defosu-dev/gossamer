@@ -19,52 +19,66 @@ export const createCartSlice: StateCreator<
   totalQuantity: 0,
 
   addItem: (newItem) => {
-    set((state: Store) => {
-      const existingItemIndex = state.items.findIndex((i: LocalCartItem) => i.variantId === newItem.variantId);
-      
-      let updatedItems;
+    set(
+      (state: Store) => {
+        const existingItemIndex = state.items.findIndex(
+          (i: LocalCartItem) => i.variantId === newItem.variantId
+        );
 
-      if (existingItemIndex > -1) {
-        updatedItems = [...state.items];
-        const item = updatedItems[existingItemIndex];
-        updatedItems[existingItemIndex] = {
-          ...item,
-          quantity: item.quantity + newItem.quantity,
+        let updatedItems;
+
+        if (existingItemIndex > -1) {
+          updatedItems = [...state.items];
+          const item = updatedItems[existingItemIndex];
+          updatedItems[existingItemIndex] = {
+            ...item,
+            quantity: item.quantity + newItem.quantity,
+          };
+        } else {
+          updatedItems = [...state.items, newItem];
+        }
+
+        return {
+          items: updatedItems,
+          ...calculateTotals(updatedItems),
         };
-      } else {
-        updatedItems = [...state.items, newItem];
-      }
-
-      return {
-        items: updatedItems,
-        ...calculateTotals(updatedItems),
-      };
-    }, false, 'cart/addItem');
+      },
+      false,
+      'cart/addItem'
+    );
   },
 
   removeItem: (variantId) => {
-    set((state: Store) => {
-      const updatedItems = state.items.filter((i: LocalCartItem) => i.variantId !== variantId);
-      return {
-        items: updatedItems,
-        ...calculateTotals(updatedItems),
-      };
-    }, false, 'cart/removeItem');
+    set(
+      (state: Store) => {
+        const updatedItems = state.items.filter((i: LocalCartItem) => i.variantId !== variantId);
+        return {
+          items: updatedItems,
+          ...calculateTotals(updatedItems),
+        };
+      },
+      false,
+      'cart/removeItem'
+    );
   },
 
   updateQuantity: (variantId, quantity) => {
-    set((state: Store) => {
-      if (quantity <= 0) return state;
+    set(
+      (state: Store) => {
+        if (quantity <= 0) return state;
 
-      const updatedItems = state.items.map((item: LocalCartItem) =>
-        item.variantId === variantId ? { ...item, quantity } : item
-      );
+        const updatedItems = state.items.map((item: LocalCartItem) =>
+          item.variantId === variantId ? { ...item, quantity } : item
+        );
 
-      return {
-        items: updatedItems,
-        ...calculateTotals(updatedItems),
-      };
-    }, false, 'cart/updateQuantity');
+        return {
+          items: updatedItems,
+          ...calculateTotals(updatedItems),
+        };
+      },
+      false,
+      'cart/updateQuantity'
+    );
   },
 
   clearCart: () => {

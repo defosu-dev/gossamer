@@ -3,7 +3,7 @@ import { devtools, persist } from 'zustand/middleware';
 import { createCartSlice } from './slices/cartSlice';
 import type { CartSlice } from '@/types/store';
 
-export type Store = CartSlice; 
+export type Store = CartSlice;
 
 export const useStore = create<Store>()(
   devtools(
@@ -16,7 +16,7 @@ export const useStore = create<Store>()(
         partialize: (state) => ({
           items: state.items,
           totalPrice: state.totalPrice,
-          totalQuantity: state.totalQuantity
+          totalQuantity: state.totalQuantity,
         }),
       }
     ),

@@ -22,14 +22,7 @@ const VARIANTS_MAX = 3;
 const IMAGES_PER_VARIANT_MIN = 1;
 const IMAGES_PER_VARIANT_MAX = 3;
 
-const ATTRIBUTES = [
-  'Color',
-  'Size',
-  'Storage',
-  'RAM',
-  'Material',
-  'Screen Size'
-] as const;
+const ATTRIBUTES = ['Color', 'Size', 'Storage', 'RAM', 'Material', 'Screen Size'] as const;
 
 // ---------------------------------------------------------------------------
 // HELPERS
@@ -104,12 +97,12 @@ function generateData() {
   // 3. Attribute Values
   const attribute_values: any[] = [];
   const attrMap: Record<string, string[]> = {
-    'color': ['Black', 'White', 'Midnight Blue', 'Space Gray', 'Silver', 'Gold', 'Red'],
-    'size': ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-    'storage': ['64GB', '128GB', '256GB', '512GB', '1TB'],
-    'ram': ['8GB', '16GB', '32GB', '64GB'],
-    'material': ['Cotton', 'Polyester', 'Leather', 'Metal', 'Plastic'],
-    'screen-size': ['13"', '14"', '15"', '16"', '24"', '27"']
+    color: ['Black', 'White', 'Midnight Blue', 'Space Gray', 'Silver', 'Gold', 'Red'],
+    size: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    storage: ['64GB', '128GB', '256GB', '512GB', '1TB'],
+    ram: ['8GB', '16GB', '32GB', '64GB'],
+    material: ['Cotton', 'Polyester', 'Leather', 'Metal', 'Plastic'],
+    'screen-size': ['13"', '14"', '15"', '16"', '24"', '27"'],
   };
 
   for (const attr of attributes) {
@@ -184,7 +177,7 @@ function generateData() {
   for (const v of product_variants) {
     const randomAttrs = faker.helpers.arrayElements(attributes, { min: 1, max: 3 });
     for (const attr of randomAttrs) {
-      const possibleValues = attribute_values.filter(av => av.attribute_id === attr.id);
+      const possibleValues = attribute_values.filter((av) => av.attribute_id === attr.id);
       if (possibleValues.length > 0) {
         const chosenValue = faker.helpers.arrayElement(possibleValues);
         product_variant_attributes.push({
@@ -206,18 +199,18 @@ function generateData() {
       value: 15,
       active: true,
       starts_at: new Date().toISOString(),
-      ends_at: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString()
-    }
+      ends_at: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString(),
+    },
   ];
   saveJson('discounts', discounts);
 
   // 9. Discount Products
   const discount_products: any[] = [];
   const onSaleProducts = faker.helpers.arrayElements(products, 10);
-  onSaleProducts.forEach(p => {
+  onSaleProducts.forEach((p) => {
     discount_products.push({
       discount_id: discounts[0].id,
-      product_id: p.id
+      product_id: p.id,
     });
   });
   saveJson('discount_products', discount_products);
@@ -256,7 +249,7 @@ function createSeedSql() {
   // Зберігаємо як supabase/data/seed.sql
   const seedPath = path.join(DATA_DIR, 'seed.sql');
   fs.writeFileSync(seedPath, fullSql);
-  
+
   console.log(`🎉 Seed SQL created at: ${seedPath}`);
 }
 

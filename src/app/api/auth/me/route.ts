@@ -5,7 +5,10 @@ import { type QueryData } from '@supabase/supabase-js';
 export async function GET() {
   const supabase = await supabaseServer();
 
-  const { data: { user }, error: authError } = await supabase.auth.getUser();
+  const {
+    data: { user },
+    error: authError,
+  } = await supabase.auth.getUser();
 
   if (authError || !user) {
     return NextResponse.json({ user: null });

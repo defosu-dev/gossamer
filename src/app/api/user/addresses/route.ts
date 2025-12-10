@@ -7,7 +7,9 @@ import { z } from 'zod';
 
 export async function GET() {
   const supabase = await supabaseServer();
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const queryBuilder = supabase
@@ -18,14 +20,14 @@ export async function GET() {
     .order('created_at', { ascending: false });
 
   type AddressResponse = QueryData<typeof queryBuilder>;
-  
+
   const { data, error } = await queryBuilder;
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
   const addressesRaw = data as AddressResponse;
 
-  const addresses: AddressDTO[] = addressesRaw.map(addr => ({
+  const addresses: AddressDTO[] = addressesRaw.map((addr) => ({
     id: addr.id,
     title: addr.title,
     addressLine1: addr.address_line1,
@@ -43,7 +45,9 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   const supabase = await supabaseServer();
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   try {
@@ -51,13 +55,13 @@ export async function POST(request: NextRequest) {
     const validatedData = addressSchema.parse(body);
 
     if (validatedData.isDefault) {
-      await supabase
-        .from('user_addresses')
-        .update({ is_default: false })
-        .eq('user_id', user.id);
+      await supabase.from('user_addresses').update({ is_default: false }).eq('user_id', user.id);
     } else {
-        const { count } = await supabase.from('user_addresses').select('*', { count: 'exact', head: true }).eq('user_id', user.id);
-        if (count === 0) validatedData.isDefault = true;
+      const { count } = await supabase
+        .from('user_addresses')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', user.id);
+      if (count === 0) validatedData.isDefault = true;
     }
 
     const { error } = await supabase.from('user_addresses').insert({
@@ -70,13 +74,12 @@ export async function POST(request: NextRequest) {
       zip_code: validatedData.zipCode,
       country: validatedData.country,
       phone: validatedData.phone || null,
-      is_default: validatedData.isDefault
+      is_default: validatedData.isDefault,
     });
 
     if (error) throw new Error(error.message);
 
     return NextResponse.json({ success: true });
-
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: error.issues }, { status: 400 });

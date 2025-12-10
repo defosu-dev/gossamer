@@ -6,7 +6,12 @@ import { z } from 'zod';
 import { authService } from '@/services/api/auth';
 import { cartService } from '@/services/api/cart';
 import { useStore } from '@/store';
-import {signInSchema, registerSchema, forgotPasswordSchema, updatePasswordSchema } from '@/lib/validator/auth';
+import {
+  signInSchema,
+  registerSchema,
+  forgotPasswordSchema,
+  updatePasswordSchema,
+} from '@/lib/validator/auth';
 import { queryKeys } from '@/config/queryKeys';
 import { to } from '@/config/routes';
 import { getErrorMessage } from '@/lib/utils/getErrorMessage';
@@ -20,7 +25,7 @@ type UpdatePasswordInput = z.infer<typeof updatePasswordSchema>;
 export const useLogin = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
-  
+
   const getLocalItems = () => useStore.getState().items;
   const clearLocalCart = useStore.getState().clearCart;
 
@@ -40,7 +45,7 @@ export const useLogin = () => {
           }));
 
           await cartService.sync(itemsToSync);
-          
+
           clearLocalCart();
           toast.success('Cart synced!', { id: toastId });
         } catch (syncError) {
@@ -53,8 +58,8 @@ export const useLogin = () => {
 
       await queryClient.invalidateQueries({ queryKey: queryKeys.cart.all });
 
-      router.push(to.home()); 
-      router.refresh(); 
+      router.push(to.home());
+      router.refresh();
     },
     onError: (error) => {
       toast.error(getErrorMessage(error));
@@ -83,8 +88,8 @@ export const useLogout = () => {
     mutationFn: authService.logout,
     onSuccess: () => {
       queryClient.clear();
-      clearLocalCart(); 
-      
+      clearLocalCart();
+
       toast.success('Logged out successfully');
       router.push(to.login());
       router.refresh();
@@ -121,7 +126,6 @@ export const useUpdatePassword = () => {
     },
   });
 };
-
 
 export const useGoogleLogin = () => {
   return useMutation<void, unknown, void>({

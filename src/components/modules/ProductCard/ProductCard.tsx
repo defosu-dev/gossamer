@@ -14,7 +14,7 @@ import ProductPrice from './ProductPrice';
 import ProductActions from './ProductActions';
 
 interface ProductCardProps {
-  product: ProductCardDTO;
+  product?: ProductCardDTO;
   isLoading?: boolean;
   priority?: boolean;
   className?: string;

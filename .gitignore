@@ -45,6 +45,7 @@ supabase/.temp/
 supabase/.branches/
 supabase/config.toml
 supabase/*.lock
+supabase/data/*.json
 
 # Supabase — КОММИТИМ только миграции!
 !supabase/migrations/

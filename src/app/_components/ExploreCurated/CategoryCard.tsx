@@ -1,25 +1,27 @@
-import ImageWithFallback, { type ImageWithFallbackProps } from '@/components/ui/ImageWithFallback';
+'use client';
 
-/**
- *
- */
-export interface CategoryCardProps extends Pick<ImageWithFallbackProps, 'src' | 'alt'> {}
+import Link from 'next/link';
+import ImageWithFallback from '@/components/ui/ImageWithFallback';
+import { to } from '@/config/routes';
+import type { CategoryDTO } from '@/types/api';
 
-/**
- * Category card with background image and overlay label.
- *
- * @remarks
- * Pure presentational component used in horizontal scrollable lists
- * or grids. Supports hover states via Tailwind group classes.
- */
-export function CategoryCard({ src, alt }: CategoryCardProps) {
+interface CategoryCardProps {
+  category: CategoryDTO;
+}
+
+export function CategoryCard({ category }: CategoryCardProps) {
   return (
-    <div className="group relative h-110 w-120 flex-shrink-0 cursor-pointer overflow-hidden rounded-xl border shadow-md">
-      <ImageWithFallback src={src} alt={alt} iconSize={10} />
+    <Link
+      href={to.products() + `?category=${category.slug}`}
+      className="group relative h-110 w-120 flex-shrink-0 cursor-pointer overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-sm transition-all hover:shadow-md"
+    >
+      <ImageWithFallback src={category.imageUrl ?? ''} alt={category.name} iconSize={10} />
       <div className="absolute bottom-3 left-3">
-        <span className="rounded-full bg-white px-3 py-1 text-sm font-medium shadow">{alt}</span>
+        <span className="rounded-full bg-white px-3 py-1 text-sm font-medium shadow">
+          {category.name}
+        </span>
       </div>
-    </div>
+    </Link>
   );
 }
 

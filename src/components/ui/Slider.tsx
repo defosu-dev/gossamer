@@ -3,40 +3,27 @@
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { useRef } from 'react';
 
+import { CategoryCard } from '@/app/_components/ExploreCurated/CategoryCard';
 import { cn } from '@/lib/utils/cn';
-import {
-  CategoryCard,
-  type CategoryCardProps,
-} from '@/app/_components/ExploreCurated/CategoryCard';
+import type { CategoryDTO } from '@/types/api';
 
 interface CategorySliderProps {
-  /** Array of categories to display */
-  categories: CategoryCardProps[];
+  categories: CategoryDTO[];
 }
 
-/**
- * Slider.
- *
- * Horizontal scrollable slider for category cards with left/right controls.
- *
- * @remarks
- * - Uses `ref` to scroll container smoothly.
- * - Arrow buttons scroll by fixed card width.
- * - Fully responsive flex layout.
- * - Supports any number of categories.
- */
 function Slider({ categories }: CategorySliderProps) {
   const sliderRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: 'left' | 'right') => {
     if (sliderRef.current) {
-      const cardWidth = 300;
+      const scrollAmount = 504;
       sliderRef.current.scrollBy({
-        left: direction === 'left' ? -cardWidth : cardWidth,
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
         behavior: 'smooth',
       });
     }
   };
+  if (!categories || categories.length === 0) return null;
 
   return (
     <div>
@@ -65,9 +52,13 @@ function Slider({ categories }: CategorySliderProps) {
       </div>
 
       {/* Cards */}
-      <div ref={sliderRef} className={cn('flex gap-6 overflow-x-hidden scroll-smooth')}>
-        {categories.map((cat, idx) => (
-          <CategoryCard key={idx} {...cat} />
+      <div
+        ref={sliderRef}
+        className={cn('flex gap-6 overflow-x-auto scroll-smooth')}
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+      >
+        {categories.map((cat) => (
+          <CategoryCard key={cat.id} category={cat} />
         ))}
       </div>
     </div>

@@ -5,7 +5,6 @@ import { faker } from '@faker-js/faker';
 // ---------------------------------------------------------------------------
 // PATHS
 // ---------------------------------------------------------------------------
-// Зберігаємо все (і JSON, і SQL) в папці data
 const DATA_DIR = path.join(process.cwd(), 'supabase', 'data');
 
 if (!fs.existsSync(DATA_DIR)) {
@@ -37,7 +36,6 @@ function slugify(text: string): string {
 function saveJson(table: string, rows: unknown[]) {
   const file = path.join(DATA_DIR, `${table}.json`);
   fs.writeFileSync(file, JSON.stringify(rows, null, 2));
-  // console.log(`✅ Saved ${rows.length} rows to ${table}.json`);
 }
 
 function jsonToSql(tableName: string, rows: unknown[]): string {
@@ -75,12 +73,16 @@ function generateData() {
   console.log('🚀 Generating data...');
 
   // 1. Categories
-  const categories = Array.from({ length: CATEGORY_COUNT }).map(() => {
+  const categories = Array.from({ length: CATEGORY_COUNT }).map((_, index) => {
     const name = faker.commerce.department();
     return {
       id: faker.string.uuid(),
       name,
       slug: slugify(name) + '-' + faker.string.alphanumeric(3),
+      // 🆕 NEW FIELDS FOR SLIDER
+      image_url: `https://picsum.photos/seed/cat-${index}/600/800`,
+      is_featured: index < 5, // Перші 5 категорій будуть у слайдері
+      sort_order: index,
     };
   });
   saveJson('categories', categories);
@@ -126,9 +128,11 @@ function generateData() {
       title,
       description: faker.commerce.productDescription(),
       category_id: faker.helpers.arrayElement(categories).id,
-      slug: slugify(title) + '-' + faker.string.alphanumeric(4),
+      slug: null, // Тригер згенерує це сам
       average_rating: faker.number.float({ min: 3.5, max: 5.0, fractionDigits: 2 }),
       reviews_count: faker.number.int({ min: 5, max: 500 }),
+      // 🆕 NEW FIELD FOR "RECOMMENDED" SLIDER
+      is_featured: faker.datatype.boolean(0.2), // 20% шанс бути рекомендованим
     };
   });
   saveJson('products', products);

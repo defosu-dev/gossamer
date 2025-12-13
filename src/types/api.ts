@@ -3,6 +3,7 @@ export interface CategoryDTO {
   id: string;
   name: string;
   slug: string;
+  imageUrl: string | null;
 }
 
 // --- Products List (Card) ---

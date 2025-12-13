@@ -11,6 +11,7 @@ export async function GET(request: NextRequest) {
   const limit = Math.max(1, parseInt(searchParams.get('limit') || '12'));
   const categorySlug = searchParams.get('category');
   const sort = searchParams.get('sort');
+  const isFeatured = searchParams.get('featured') === 'true';
 
   const from = (page - 1) * limit;
   const to = from + limit - 1;
@@ -26,7 +27,8 @@ export async function GET(request: NextRequest) {
         current_price, old_price, stock,
         product_images ( url, position )
       )
-    `
+    `, 
+    { count: 'exact' }
     )
     .is('deleted_at', null);
 
@@ -34,6 +36,10 @@ export async function GET(request: NextRequest) {
 
   if (categorySlug) {
     queryBuilder.eq('categories.slug', categorySlug);
+  }
+
+  if (isFeatured) {
+    queryBuilder.eq('is_featured', true);
   }
 
   switch (sort) {

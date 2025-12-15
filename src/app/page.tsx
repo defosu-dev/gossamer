@@ -35,7 +35,7 @@ async function HomePage() {
     <div className="flex w-full flex-col gap-10 pb-16">
       <SearchBar className={cn('mt-5')} />
 
-      <HomeProducts products={products.data} categories={categories} meta={products.meta} />
+      <HomeProducts products={products} categories={categories} />
 
       {/* New Arrival Section */}
       <NewArrival {...testdatanewarrival} />

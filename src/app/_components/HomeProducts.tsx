@@ -1,39 +1,46 @@
 'use client';
-import { ProductGrid } from '@/components/modules/ProductGrid/ProductGrid';
-import type { CategoryDTO, ProductCardDTO } from '@/types/api';
 import CategoryBar from '@/components/modules/CategoryBar/CategoryBar';
+import { ProductGrid } from '@/components/modules/ProductGrid/ProductGrid';
+import { useProducts } from '@/hooks/useProducts';
+import type { CategoryDTO, ProductListResponse } from '@/types/api';
 import { useState } from 'react';
 
 interface HomeProductsProps {
   categories: CategoryDTO[];
-  products: ProductCardDTO[];
-  meta?: {
-    page: number;
-    limit: number;
-    total: number;
-    totalPages: number;
-  };
+  products: ProductListResponse;
 }
 
-function HomeProducts({ categories, products }: HomeProductsProps) {
-  const [productsArray, setProductsArray] = useState(products);
-  const [categoriesArray, setCategoriesArray] = useState(categories);
-
-  const handleCategories = (item: CategoryDTO | null) => {
-    if (item === null) {
-      console.log('All');
-      return;
+function HomeProducts({ categories, products: initialProducts }: HomeProductsProps) {
+  const [activeCategorySlug, setActiveCategorySlug] = useState<string | undefined>(undefined);
+  const { data, isFetching } = useProducts(
+    {
+      page: 1,
+      limit: 12,
+      category: activeCategorySlug,
+    },
+    {
+      initialData: activeCategorySlug === undefined ? initialProducts : undefined,
     }
-    console.log(item);
+  );
+
+  const handleCategorySelect = (category: CategoryDTO | null) => {
+    setActiveCategorySlug(category?.slug);
   };
+
+  const productList = data?.data ?? [];
 
   return (
     <>
-      <CategoryBar categories={categoriesArray} onSelect={(item) => handleCategories(item)} />
+      <CategoryBar categories={categories} onSelect={handleCategorySelect} />
 
-      {/* Product Grid */}
       <section className="container mx-auto max-w-7xl p-1 px-6">
-        <ProductGrid productList={productsArray} />
+        <div
+          className={
+            isFetching ? 'opacity-50 transition-opacity' : 'opacity-100 transition-opacity'
+          }
+        >
+          <ProductGrid productList={productList} />
+        </div>
       </section>
     </>
   );

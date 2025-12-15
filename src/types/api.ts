@@ -21,7 +21,26 @@ export interface ProductCardDTO {
   price: number;
   oldPrice: number | null;
   imageUrl: string | null;
-  defaultVariantId?: string;
+  defaultVariantId?: string; 
+}
+
+export interface ProductListParams {
+  page?: number;
+  limit?: number;
+  category?: string; 
+  sort?: 'newest' | 'rating_desc' | 'title_asc';
+  featured?: boolean;
+  q?: string; 
+}
+
+export interface ProductListResponse {
+  data: ProductCardDTO[];
+  meta: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  };
 }
 
 // --- Product Detail (Full) ---
@@ -66,7 +85,7 @@ export interface ProductDetailDTO extends Omit<ProductCardDTO, 'imageUrl' | 'pri
 // --- Cart ---
 
 export interface CartItemDTO {
-  id: string; // ID запису в таблиці cart_items
+  id: string;
   variantId: string;
   productId: string;
   title: string;
@@ -99,7 +118,7 @@ export interface OrderItemDTO {
 export interface OrderDTO {
   id: string;
   number: number;
-  status: 'pending' | 'paid' | 'shipped' | 'cancelled';
+  status: 'pending' | 'processing' | 'paid' | 'shipped' | 'delivered' | 'cancelled' | 'refunded';
   total: number;
   createdAt: string;
   shipping: {

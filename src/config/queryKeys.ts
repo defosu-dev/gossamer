@@ -1,11 +1,4 @@
-export interface ProductListFilters {
-  page?: number;
-  limit?: number;
-  category?: string;
-  sort?: 'newest' | 'price_asc' | 'price_desc' | 'rating_desc';
-  minPrice?: number;
-  maxPrice?: number;
-}
+import type { ProductListParams } from '@/types/api';
 
 export interface ProductSearchParams {
   q: string;
@@ -24,13 +17,14 @@ export const queryKeys = {
   products: {
     all: ['products'] as const,
 
-    list: (filters: ProductListFilters) => ['products', 'list', filters] as const,
+    list: (params: ProductListParams) => ['products', 'list', params] as const,
 
     detail: (slug: string) => ['products', 'detail', slug] as const,
 
     search: (params: ProductSearchParams) => ['products', 'search', params] as const,
 
-    categories: () => ['products', 'categories'] as const,
+    categories: (featured: boolean = false) => 
+      ['products', 'categories', { featured }] as const,
 
     reviews: (productId: string) => ['products', 'reviews', productId] as const,
   },

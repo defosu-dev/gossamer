@@ -9,18 +9,22 @@ import type { CategoryDTO } from '@/types/api';
 
 interface CategoryBarProps {
   categories: CategoryDTO[];
-  onSelect?: (item: CategoryDTO) => void;
+  onSelect?: (item: CategoryDTO | null) => void;
   className?: string;
 }
 
 export default function CategoryBar({ categories, onSelect, className }: CategoryBarProps) {
   const router = useRouter();
-  const [activeCategory, setActiveCategory] = useState('all');
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
-  const handleSelect = (slug: string) => {
+  const handleSelect = (slug: string | null) => {
     setActiveCategory(slug);
 
-    if (!onSelect || slug === 'all') return;
+    if (!onSelect) return;
+    if (slug == null) {
+      onSelect(null);
+      return;
+    }
 
     const selected = categories.find((item) => item.slug === slug);
     selected && onSelect(selected);
@@ -36,8 +40,8 @@ export default function CategoryBar({ categories, onSelect, className }: Categor
     >
       <div className={cn('flex flex-wrap gap-3')}>
         <Button
-          variant={activeCategory === 'all' ? 'primary' : 'secondary'}
-          onClick={() => handleSelect('all')}
+          variant={activeCategory === null ? 'primary' : 'secondary'}
+          onClick={() => handleSelect(null)}
         >
           All
         </Button>

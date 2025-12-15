@@ -1,3 +1,4 @@
+'use client';
 import type { ProductCardDTO } from '@/types/api';
 import ProductCard from '@/components/modules/ProductCard/ProductCard';
 import ProductGridEmpty from './ProductGridEmpty';

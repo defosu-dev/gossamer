@@ -5,32 +5,54 @@ import { cn } from '@/lib/utils/cn';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { to } from '@/config/routes';
+import type { CategoryDTO } from '@/types/api';
 
 interface CategoryBarProps {
+  categories: CategoryDTO[];
+  onSelect?: (item: CategoryDTO) => void;
   className?: string;
 }
 
-export default function CategoryBar({ className }: CategoryBarProps) {
-  const categories = ['All', 'Home', 'Music', 'Phone', 'Storage', 'Other'];
+export default function CategoryBar({ categories, onSelect, className }: CategoryBarProps) {
   const router = useRouter();
-  const [activeCategory, setActiveCategory] = useState('All');
+  const [activeCategory, setActiveCategory] = useState('all');
+
+  const handleSelect = (slug: string) => {
+    setActiveCategory(slug);
+
+    if (!onSelect || slug === 'all') return;
+
+    const selected = categories.find((item) => item.slug === slug);
+    selected && onSelect(selected);
+  };
+
+  const handleSeeAll = () => {
+    router.push(to.products());
+  };
+
   return (
     <Container
       className={cn('flex w-full flex-wrap items-center justify-between gap-4', className)}
     >
       <div className={cn('flex flex-wrap gap-3')}>
+        <Button
+          variant={activeCategory === 'all' ? 'primary' : 'secondary'}
+          onClick={() => handleSelect('all')}
+        >
+          All
+        </Button>
         {categories.map((cat) => (
           <Button
-            key={cat}
-            variant={activeCategory === cat ? 'primary' : 'secondary'}
-            onClick={() => setActiveCategory(cat)}
+            key={cat.slug}
+            variant={activeCategory === cat.slug ? 'primary' : 'secondary'}
+            onClick={() => handleSelect(cat.slug)}
           >
-            {cat}
+            {cat.name}
           </Button>
         ))}
       </div>
 
-      <Button variant="secondary" onClick={() => router.push(to.products())}>
+      <Button variant="secondary" onClick={() => handleSeeAll()}>
         See All Products
       </Button>
     </Container>

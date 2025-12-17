@@ -1,36 +1,30 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import type { WishlistItemDTO } from '@/types/api';
-import { queryKeys } from '@/config/queryKeys';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { wishlistService } from '@/services/api/wishlist';
+import { queryKeys } from '@/config/queryKeys';
+import { useUser } from '@/hooks/user';
+import toast from 'react-hot-toast';
+import type { ProductCardDTO } from '@/types/api';
 
-// 1. Хук отримання списку
 export const useWishlist = () => {
-  return useQuery<WishlistItemDTO[], Error>({
+  const { user } = useUser();
+
+  return useQuery<ProductCardDTO[], Error>({
     queryKey: queryKeys.wishlist.all,
     queryFn: wishlistService.getAll,
-    staleTime: 1000 * 60 * 5, // Кешуємо на 5 хвилин
-    retry: false, // Не повторювати запит, якщо 401 (юзер не залогінений)
+    enabled: !!user, 
+    staleTime: 1000 * 60 * 5,
   });
 };
 
-// 2. Хук для зміни (Toggle)
 export const useToggleWishlist = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: wishlistService.toggle,
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.wishlist.all });
+      toast.success('Wishlist updated'); 
     },
+    onError: () => toast.error('Failed to update wishlist'),
   });
-};
-
-// 3. Хук-помічник: Перевірка наявності товару (для UI кнопки)
-export const useCheckInWishlist = (variantId: string) => {
-  const { data: wishlistItems } = useWishlist();
-
-  // Повертаємо boolean: чи є цей variantId у списку
-  const isInWishlist = wishlistItems?.some((item) => item.variantId === variantId) ?? false;
-
-  return isInWishlist;
 };

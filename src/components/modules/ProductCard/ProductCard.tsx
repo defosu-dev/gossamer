@@ -1,10 +1,14 @@
 'use client';
 
 import Link from 'next/link';
-import { Star } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { Heart, Star } from 'lucide-react';
+import { useMemo } from 'react';
 
 import { cn } from '@/lib/utils/cn';
 import { useCart } from '@/hooks/useCart';
+import { useToggleWishlist, useWishlist } from '@/hooks/useWishlist';
+import { useUser } from '@/hooks/user';
 import { to } from '@/config/routes';
 import type { ProductCardDTO } from '@/types/api';
 
@@ -26,9 +30,18 @@ export function ProductCard({
   isLoading = false,
   className,
 }: ProductCardProps) {
+  const router = useRouter();
+  const { user } = useUser();
   const { addItem } = useCart();
 
-  // 1. Skeleton State
+  const { mutate: toggleWishlist, isPending: isToggling } = useToggleWishlist();
+  const { data: wishlistItems } = useWishlist();
+  const targetVariantId = product?.defaultVariantId;
+  const isInWishlist = useMemo(() => {
+    if (!user || !wishlistItems || !targetVariantId) return false;
+    return wishlistItems.some((item) => item.defaultVariantId === targetVariantId);
+  }, [wishlistItems, targetVariantId, user]);
+
   if (isLoading || !product) {
     return (
       <div
@@ -55,17 +68,14 @@ export function ProductCard({
     );
   }
 
-  // 2. Logic
   const handleAddToCart = () => {
-    const variantIdToAdd = product.defaultVariantId;
-
-    if (!variantIdToAdd) {
+    if (!targetVariantId) {
       console.error('No variant ID found for product:', product.title);
       return;
     }
     addItem({
-      id: variantIdToAdd,
-      variantId: variantIdToAdd,
+      id: targetVariantId,
+      variantId: targetVariantId,
       productId: product.id,
       title: product.title,
       slug: product.slug,
@@ -77,6 +87,20 @@ export function ProductCard({
     });
   };
 
+  const handleToggleWishlist = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!user) {
+      router.push(to.login());
+      return;
+    }
+
+    if (targetVariantId) {
+      toggleWishlist(targetVariantId);
+    }
+  };
+
   return (
     <div
       className={cn(
@@ -84,12 +108,26 @@ export function ProductCard({
         className
       )}
     >
-      {/* Upper Part: Image & Badges (Link to Details) */}
       <div className="relative block">
         <Link href={to.product(product.slug)}>
           <ProductImage src={product.imageUrl ?? ''} alt={product.title} priority={priority} />
         </Link>
         {product.category && <ProductCategoryBadge>{product.category.name}</ProductCategoryBadge>}
+
+        {/* Wishlist Button */}
+        <button
+          onClick={handleToggleWishlist}
+          disabled={!!user && (isToggling || !targetVariantId)}
+          className={cn(
+            'absolute top-2 left-2 z-10 rounded-full bg-white p-2 shadow-sm transition-all hover:scale-110 disabled:opacity-50',
+            isInWishlist
+              ? 'text-red-500 hover:bg-red-50'
+              : 'text-neutral-400 hover:bg-white hover:text-red-500'
+          )}
+          aria-label={isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
+        >
+          <Heart className={cn('size-4 transition-colors', isInWishlist && 'fill-current')} />
+        </button>
       </div>
 
       {/* Body */}

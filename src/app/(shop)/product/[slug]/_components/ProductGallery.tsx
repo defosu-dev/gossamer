@@ -25,7 +25,7 @@ export default function ProductGallery({ images, category }: ProductGalleryProps
 
   if (!images || images.length === 0) {
     return (
-      <div className="flex aspect-square w-full items-center justify-center rounded-2xl bg-neutral-100 text-neutral-400">
+      <div className="flex aspect-square w-full items-center justify-center rounded-2xl bg-neutral-200 text-neutral-400 shadow-sm">
         No images
       </div>
     );
@@ -34,7 +34,7 @@ export default function ProductGallery({ images, category }: ProductGalleryProps
   return (
     <div className="flex w-full flex-col gap-4">
       {/* Main Image Stage */}
-      <div className="relative aspect-square w-full overflow-hidden rounded-2xl border border-neutral-100 bg-white">
+      <div className="relative aspect-square w-full overflow-hidden rounded-2xl border border-gray-200 shadow-sm">
         {selectedImage && (
           <ImageWithFallback
             src={selectedImage.url}
@@ -83,7 +83,6 @@ export default function ProductGallery({ images, category }: ProductGalleryProps
           </div>
         </div>
       )}
-      ;
     </div>
   );
 }

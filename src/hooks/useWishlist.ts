@@ -28,3 +28,13 @@ export const useToggleWishlist = () => {
     onError: () => toast.error('Failed to update wishlist'),
   });
 };
+
+export const useCheckInWishlist = (variantId?: string) => {
+  const { data: wishlistItems } = useWishlist();
+
+  if (!wishlistItems || !variantId) {
+    return false;
+  }
+
+  return wishlistItems.some((item) => item.defaultVariantId === variantId);
+};

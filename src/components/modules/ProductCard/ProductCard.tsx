@@ -7,7 +7,7 @@ import { useMemo } from 'react';
 
 import { cn } from '@/lib/utils/cn';
 import { useCart } from '@/hooks/useCart';
-import { useToggleWishlist, useWishlist } from '@/hooks/useWishlist';
+import { useCheckInWishlist, useToggleWishlist, useWishlist } from '@/hooks/useWishlist';
 import { useUser } from '@/hooks/user';
 import { to } from '@/config/routes';
 import type { ProductCardDTO } from '@/types/api';
@@ -38,10 +38,7 @@ export function ProductCard({
   const { mutate: toggleWishlist, isPending: isToggling } = useToggleWishlist();
   const { data: wishlistItems } = useWishlist();
   const targetVariantId = product?.defaultVariantId;
-  const isInWishlist = useMemo(() => {
-    if (!user || !wishlistItems || !targetVariantId) return false;
-    return wishlistItems.some((item) => item.defaultVariantId === targetVariantId);
-  }, [wishlistItems, targetVariantId, user]);
+  const isFavorite = useCheckInWishlist(product?.defaultVariantId);
 
   if (isLoading || !product) {
     return <ProductLoading />;
@@ -99,13 +96,13 @@ export function ProductCard({
           disabled={!!user && (isToggling || !targetVariantId)}
           className={cn(
             'absolute top-2 left-2 z-10 rounded-full bg-white p-2 shadow-sm transition-all hover:scale-110 disabled:opacity-50',
-            isInWishlist
+            isFavorite
               ? 'text-red-500 hover:bg-red-50'
               : 'text-neutral-400 hover:bg-white hover:text-red-500'
           )}
-          aria-label={isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
+          aria-label={isFavorite ? 'Remove from wishlist' : 'Add to wishlist'}
         >
-          <Heart className={cn('size-4 transition-colors', isInWishlist && 'fill-current')} />
+          <Heart className={cn('size-4 transition-colors', isFavorite && 'fill-current')} />
         </button>
       </div>
 

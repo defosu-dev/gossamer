@@ -15,9 +15,9 @@ export const ROUTES = {
   home: { path: '/', auth: 'public', to: () => '/' },
   products: { path: '/products', auth: 'public', to: () => '/products' },
   product: {
-    path: '/product/[id]',
+    path: '/product/[slug]',
     auth: 'public',
-    to: (id: string | number) => `/product/${id}`,
+    to: (slug: string | number) => `/product/${slug}`,
   },
   cart: { path: '/cart', auth: 'public', to: () => '/cart' },
   checkout: { path: '/checkout', auth: 'public', to: () => '/checkout' },

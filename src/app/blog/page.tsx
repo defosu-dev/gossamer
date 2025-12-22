@@ -9,9 +9,5 @@ import { ProductFilterBar } from '@/components/modules/product-filters/ProductFi
  * Client-side route for /blog.
  */
 export default function Page() {
-  return (
-    <div>
-      <ProductFilterBar />
-    </div>
-  );
+  return <div>Blog Page</div>;
 }

@@ -32,8 +32,8 @@ async function HomePage() {
   }).then((res) => res.json());
 
   return (
-    <div className="flex w-full flex-col gap-10 pb-16">
-      <SearchBar className={cn('mt-5')} />
+    <div className="flex w-full flex-col gap-6 pt-5 pb-16">
+      <SearchBar />
 
       <HomeProducts products={products} categories={categories} />
 

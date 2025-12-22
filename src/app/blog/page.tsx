@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { ProductFilterBar } from '@/components/modules/product-filters/ProductFilterBar';
+
 /**
  * Blog page placeholder.
  *
@@ -7,5 +9,9 @@ import React from 'react';
  * Client-side route for /blog.
  */
 export default function Page() {
-  return <div>Blog page</div>;
+  return (
+    <div>
+      <ProductFilterBar />
+    </div>
+  );
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { cn } from '@/lib/utils/cn';
 
 interface PaginationProps {
   currentPage: number;
@@ -34,19 +35,19 @@ export function Pagination({ currentPage, totalPages, onPageChange }: Pagination
   };
 
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-center gap-2 select-none sm:gap-4">
       {/* Previous */}
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="flex items-center gap-2 text-sm text-gray-600 transition-colors hover:text-black disabled:opacity-40"
+        className="flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-100 hover:text-black disabled:opacity-30 disabled:hover:bg-transparent"
       >
         <ChevronLeft className="size-4" />
-        Previous
+        <span className="hidden sm:inline">Previous</span>
       </button>
 
       {/* Pages */}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1">
         {getPages().map((page, index) =>
           page === 'dots' ? (
             <span key={`dots-${index}`} className="px-2 text-gray-400">
@@ -56,11 +57,12 @@ export function Pagination({ currentPage, totalPages, onPageChange }: Pagination
             <button
               key={`page-${page}`}
               onClick={() => onPageChange(page)}
-              className={`h-8 w-8 rounded-md text-sm font-medium transition-colors ${
+              className={cn(
+                'flex h-9 w-9 items-center justify-center rounded-lg text-sm font-medium transition-all',
                 page === currentPage
-                  ? 'bg-gray-400 text-white shadow-md'
+                  ? 'bg-neutral-900 text-white shadow-md'
                   : 'text-gray-600 hover:bg-gray-100 hover:text-black'
-              }`}
+              )}
             >
               {page}
             </button>
@@ -68,12 +70,13 @@ export function Pagination({ currentPage, totalPages, onPageChange }: Pagination
         )}
       </div>
 
+      {/* Next */}
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="flex items-center gap-2 text-sm text-gray-600 transition-colors hover:text-black disabled:opacity-40"
+        className="flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-100 hover:text-black disabled:opacity-30 disabled:hover:bg-transparent"
       >
-        Next
+        <span className="hidden sm:inline">Next</span>
         <ChevronRight className="size-4" />
       </button>
     </div>

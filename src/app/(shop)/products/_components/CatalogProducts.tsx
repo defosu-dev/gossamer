@@ -1,45 +1,67 @@
 'use client';
-import { Pagination } from '@/components/modules/product-filters/Pagination';
-import { ProductFilterBar } from '@/components/modules/product-filters/ProductFilterBar';
-import { ProductGrid } from '@/components/modules/ProductGrid/ProductGrid';
-import Container from '@/components/ui/Container';
+
 import { useProducts } from '@/hooks/useProducts';
 import type { ProductListResponse } from '@/types/api';
 import { useState } from 'react';
 
+import { Pagination } from '@/components/modules/product-filters/Pagination';
+import { ProductFilterBar } from '@/components/modules/product-filters/ProductFilterBar';
+import { ProductGrid } from '@/components/modules/ProductGrid/ProductGrid';
+import Container from '@/components/ui/Container';
+
 interface CatalogProductsProps {
-  products: ProductListResponse;
+  initialData: ProductListResponse;
 }
 
-function CatalogProducts({ products: initialProducts }: CatalogProductsProps) {
+function CatalogProducts({ initialData }: CatalogProductsProps) {
   const [page, setPage] = useState(1);
+
   const { data, isFetching } = useProducts(
     {
-      page: 1,
+      page: page,
       limit: 12,
     },
     {
-      initialData: initialProducts,
+      initialData: page === 1 ? initialData : undefined,
     }
   );
 
   const productList = data?.data ?? [];
+  const meta = data?.meta;
+
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
     <Container xCenter className="flex h-full w-full flex-col">
-      <div className="grid h-full w-full grid-cols-4 gap-4">
-        <div className="col-span-1">
+      <div className="grid h-full w-full gap-4 lg:grid-cols-4">
+        {/* Sidebar Filters */}
+        <div className="hidden lg:col-span-1 lg:block">
           <ProductFilterBar />
         </div>
-        <div className="col-span-3 flex w-full flex-col justify-center gap-6">
+
+        {/* Main Content */}
+        <div className="col-span-4 flex w-full flex-col justify-between gap-8 lg:col-span-3">
           <div
-            className={
-              isFetching ? 'opacity-50 transition-opacity' : 'opacity-100 transition-opacity'
-            }
+            className={`min-h-[400px] transition-opacity duration-300 ${
+              isFetching ? 'opacity-50' : 'opacity-100'
+            }`}
           >
             <ProductGrid productList={productList} className="xl:grid-cols-3" />
           </div>
-          <Pagination currentPage={page} totalPages={10} onPageChange={setPage} />
+
+          {/* Pagination */}
+          {meta && meta.totalPages > 1 && (
+            <div className="mt-auto py-4">
+              <Pagination
+                currentPage={page}
+                totalPages={meta.totalPages}
+                onPageChange={handlePageChange}
+              />
+            </div>
+          )}
         </div>
       </div>
     </Container>

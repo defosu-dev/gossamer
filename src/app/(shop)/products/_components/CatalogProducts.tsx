@@ -19,7 +19,7 @@ function CatalogProducts({ initialData }: CatalogProductsProps) {
   const { data, isFetching } = useProducts(
     {
       page: page,
-      limit: 12,
+      limit: initialData?.meta.limit || 12,
     },
     {
       initialData: page === 1 ? initialData : undefined,

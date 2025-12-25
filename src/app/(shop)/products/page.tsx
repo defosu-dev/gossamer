@@ -1,30 +1,34 @@
+import dynamic from 'next/dynamic';
 import { ProductGridLoading } from '@/components/modules/ProductGrid/ProductGridLoading';
 import { SearchBar } from '@/components/modules/SearchBar/SearchBar';
-import Container from '@/components/ui/Container';
-import dynamic from 'next/dynamic';
+import type { ProductListResponse } from '@/types/api';
 
 const CatalogProducts = dynamic(() => import('./_components/CatalogProducts'), {
   loading: () => <ProductGridLoading />,
 });
-/**
- * Catalog page placeholder.
- *
- * @remarks
- */
 async function CatalogPage() {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+
+  let initialData: ProductListResponse | null = null;
 
   const res = await fetch(`${baseUrl}/api/products?page=1&limit=12`, {
     cache: 'no-store',
   });
 
-  const { data } = await res.json();
+  if (res.ok) {
+    initialData = await res.json();
+  }
+
+  const safeData: ProductListResponse = initialData || {
+    data: [],
+    meta: { page: 1, limit: 12, total: 0, totalPages: 0 },
+  };
 
   return (
     <div className="flex w-full flex-col gap-6 pt-5 pb-16">
       <SearchBar />
 
-      <CatalogProducts products={data} />
+      <CatalogProducts initialData={safeData} />
     </div>
   );
 }

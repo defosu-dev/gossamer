@@ -64,8 +64,6 @@ export async function GET() {
       items: order.order_items.map((item) => {
         const variant = item.product_variants!;
 
-        // Безпечне отримання назви продукту (обробка масиву або об'єкта)
-        // @ts-ignore - Supabase типи іноді повертають масив для products
         const productData = variant.products;
         const productTitle = Array.isArray(productData)
           ? productData[0]?.title
@@ -80,7 +78,6 @@ export async function GET() {
           productTitle: productTitle ?? 'Unknown Product',
           variantName: variant.name,
           price: item.price ?? 0,
-          // 👇 Захист від null для кількості
           quantity: item.quantity ?? 1,
           imageUrl: image,
         };

@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { Loader2, Package, ChevronRight, Calendar, Clock } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
 import { useOrders } from '@/hooks/user';
@@ -109,10 +110,13 @@ export default function PaymentHistory() {
                 )}
               </div>
 
-              <button className="flex items-center gap-1 text-sm font-semibold text-neutral-900 transition-colors hover:text-neutral-600">
+              <Link
+                href={`/order/${order.id}`}
+                className="flex items-center gap-1 text-sm font-semibold text-neutral-900 transition-colors hover:text-neutral-600 hover:underline"
+              >
                 View Details
                 <ChevronRight className="size-4" />
-              </button>
+              </Link>
             </div>
           </div>
         ))}

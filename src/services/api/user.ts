@@ -70,8 +70,10 @@ export const userService = {
     return res.json();
   },
 
-  getOrderById: async (id: string): Promise<OrderDTO> => {
-    const res = await fetch(`/api/user/orders/${id}`);
+  getOrderById: async (id: string, email?: string): Promise<OrderDTO> => {
+    const params = new URLSearchParams();
+    if (email) params.append('email', email);
+    const res = await fetch(`/api/user/orders/${id}?${params.toString()}`);
     if (!res.ok) throw new Error('Failed to fetch order');
     return res.json();
   },

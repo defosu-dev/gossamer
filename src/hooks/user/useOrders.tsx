@@ -11,10 +11,11 @@ export const useOrders = () => {
   });
 };
 
-export const useOrderDetail = (id: string) => {
+export const useOrderDetail = (id: string, email?: string) => {
   return useQuery<OrderDTO, Error>({
     queryKey: queryKeys.orders.detail(id),
-    queryFn: () => userService.getOrderById(id),
+    queryFn: () => userService.getOrderById(id, email),
     enabled: !!id,
+    retry: 1,
   });
 };

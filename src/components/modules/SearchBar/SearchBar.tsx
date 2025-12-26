@@ -32,7 +32,7 @@ export function SearchBar({ className }: SearchBarProps) {
 
       <div
         className={cn(
-          'flex h-10 w-full items-center overflow-hidden rounded-full border border-neutral-300 shadow-sm md:w-[360px]'
+          'flex h-11 w-full items-center overflow-hidden rounded-full border border-neutral-300 p-0.5 shadow-sm md:w-[360px]'
         )}
       >
         <Search className={cn('ml-4 h-5 w-5 text-neutral-500')} />
@@ -46,6 +46,7 @@ export function SearchBar({ className }: SearchBarProps) {
         <Button
           variant="primary"
           onClick={() => router.push(`/search?q=${encodeURIComponent(query)}`)}
+          className="flex h-full items-center"
         >
           Search
         </Button>

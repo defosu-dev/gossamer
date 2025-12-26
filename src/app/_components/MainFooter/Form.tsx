@@ -25,9 +25,9 @@ export function Form({ placeholder = 'Enter your email', buttonText = 'Subscribe
   return (
     <div
       className={cn(
-        'flex h-12 w-full items-center overflow-hidden rounded-full',
-        'border border-zinc-300 bg-white shadow-sm transition-shadow',
-        'focus-within:border-zinc-400 focus-within:shadow-md',
+        'flex h-12 w-full items-center overflow-hidden rounded-full p-0.5',
+        'bg-white shadow-sm transition-shadow',
+        'duration-200 focus-within:shadow-md focus-within:shadow-neutral-100/20',
         'md:w-96'
       )}
     >
@@ -41,7 +41,7 @@ export function Form({ placeholder = 'Enter your email', buttonText = 'Subscribe
         aria-label="Email address"
       />
 
-      <Button variant="primary" className="h-full rounded-l-none rounded-r-full px-6">
+      <Button variant="primary" className="h-full rounded-r-full px-6">
         {buttonText}
       </Button>
     </div>

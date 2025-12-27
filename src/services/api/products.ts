@@ -1,18 +1,4 @@
-export const searchProducts = async (query: string, category?: string) => {
-  const params = new URLSearchParams({ q: query });
-  if (category) params.append('category', category);
-
-  const res = await fetch(`/api/search?${params.toString()}`);
-
-  if (!res.ok) {
-    throw new Error('Search failed');
-  }
-
-  return res.json();
-};
-
-
-import type { ProductListParams, ProductListResponse } from '@/types/api';
+import type { ProductListParams, ProductListResponse, SearchResponse } from '@/types/api';
 
 export const productsService = {
 
@@ -39,4 +25,22 @@ export const productsService = {
 
     return res.json();
   },
+
+  search: async (query: string, category?: string, limit: number = 5): Promise<SearchResponse> => {
+    const params = new URLSearchParams({ 
+      q: query,
+      limit: limit.toString()
+    });
+    
+    if (category) params.append('category', category);
+
+    const res = await fetch(`/api/search?${params.toString()}`);
+
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => ({}));
+      throw new Error(errorData.error || 'Search failed');
+    }
+
+    return res.json();
+  }
 };

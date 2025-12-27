@@ -1,9 +1,8 @@
-import { Search } from 'lucide-react';
-
 import { cn } from '@/lib/utils/cn';
 
 import User from './User';
 import Cart from '@/components/modules/Cart';
+import Search from '@/components/modules/Search/Search';
 
 /**
  * Header utility bar with search trigger, cart, and user profile links.
@@ -17,19 +16,7 @@ import Cart from '@/components/modules/Cart';
 export function SideBar() {
   return (
     <div className={cn('flex items-center gap-5')}>
-      <button
-        type="button"
-        aria-label="Open search"
-        className={cn(
-          'flex h-10 w-10 items-center justify-center rounded-full',
-          'border border-zinc-300 bg-white text-zinc-700 transition-all',
-          'hover:border-zinc-400 hover:text-zinc-900 hover:shadow-sm',
-          'focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:outline-none'
-        )}
-      >
-        <Search size={20} strokeWidth={2} />
-      </button>
-
+      <Search />
       <Cart />
       <User />
     </div>

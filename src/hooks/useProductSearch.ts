@@ -1,11 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import { searchProducts } from '@/services/api/products';
 import { queryKeys } from '@/config/queryKeys';
+import { productsService } from '@/services/api/products';
 
-export const useProductSearch = (q: string, category?: string) => {
+export const useProductSearch = (q: string, limit: number = 6, category?: string) => {
   return useQuery({
-    queryKey: queryKeys.products.search({ q, category }),
-    queryFn: () => searchProducts(q, category),
-    enabled: !!q,
+    queryKey: queryKeys.products.search({ q, category, page: limit }), 
+    queryFn: () => productsService.search(q, category, limit),
+    enabled: !!q && q.length > 2,
+    staleTime: 1000 * 60, 
   });
 };

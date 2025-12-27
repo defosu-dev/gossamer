@@ -169,3 +169,25 @@ export interface AddressDTO {
   phone: string | null;
   isDefault: boolean;
 }
+
+// ==========================================
+// 🔎 SEARCH
+// ==========================================
+
+export interface SearchResultItemDTO {
+  id: string;
+  title: string;
+  slug: string;
+  average_rating: number;
+  reviews_count: number;
+  current_price: number;
+  image_url: string | null;
+}
+
+export interface SearchResponse {
+  data: SearchResultItemDTO[];
+  meta: {
+    page: number;
+    limit: number;
+  };
+}

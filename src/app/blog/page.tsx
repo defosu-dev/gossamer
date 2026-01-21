@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ProductFilterBar } from '@/components/modules/product-filters/ProductFilterBar';
+import { LatestBlogGrid } from './BlogCard/LatestGrid';
 
 /**
  * Blog page placeholder.
@@ -9,5 +9,12 @@ import { ProductFilterBar } from '@/components/modules/product-filters/ProductFi
  * Client-side route for /blog.
  */
 export default function Page() {
-  return <div>Blog Page</div>;
+  return (
+    <div>
+      Top Blogs 
+      <LatestBlogGrid />
+      Latest Blog
+      <LatestBlogGrid />
+    </div>
+  );
 }

@@ -1,6 +1,9 @@
 import React from 'react';
 
+import { SearchBar } from '@/components/modules/SearchBar/SearchBar';
+
 import { LatestBlogGrid } from './BlogCard/LatestGrid';
+import TopBlogGrid from './BlogCard/TopBlogGrid';
 
 /**
  * Blog page placeholder.
@@ -10,10 +13,10 @@ import { LatestBlogGrid } from './BlogCard/LatestGrid';
  */
 export default function Page() {
   return (
-    <div>
-      Top Blogs 
-      <LatestBlogGrid />
-      Latest Blog
+    <div className="flex w-full flex-col gap-6 pt-5 pb-16">
+      <SearchBar title="Blogs on Gossamer " />
+
+      <TopBlogGrid />
       <LatestBlogGrid />
     </div>
   );

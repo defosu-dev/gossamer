@@ -9,15 +9,18 @@ import Container from '@/components/ui/Container';
 import Button from '@/components/ui/Button';
 
 interface SearchBarProps {
+  /** Заголовок слева */
+  title?: string;
   className?: string;
 }
 
 /**
  * @remarks
- * Renders a search bar.
- * - Supports query input and navigation to search results.
+ * Universal search bar component.
+ * - Supports custom title
+ * - Supports query input and navigation to search results
  */
-export function SearchBar({ className }: SearchBarProps) {
+export function SearchBar({ title = 'Give All You Need', className }: SearchBarProps) {
   const [query, setQuery] = useState('');
   const router = useRouter();
 
@@ -28,21 +31,19 @@ export function SearchBar({ className }: SearchBarProps) {
         className
       )}
     >
-      <h2 className={cn('text-3xl font-bold tracking-tight')}>Give All You Need</h2>
+      <h2 className="text-3xl font-bold tracking-tight">{title}</h2>
 
-      <div
-        className={cn(
-          'flex h-11 w-full items-center overflow-hidden rounded-full border border-neutral-300 p-0.5 shadow-sm md:w-[360px]'
-        )}
-      >
-        <Search className={cn('ml-4 h-5 w-5 text-neutral-500')} />
+      <div className="flex h-11 w-full items-center overflow-hidden rounded-full border border-neutral-300 p-0.5 shadow-sm md:w-[360px]">
+        <Search className="ml-4 h-5 w-5 text-neutral-500" />
+
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           type="text"
           placeholder="Search on Gossamer"
-          className={cn('flex-1 px-3 text-sm outline-none placeholder:text-neutral-400')}
+          className="flex-1 px-3 text-sm outline-none placeholder:text-neutral-400"
         />
+
         <Button
           variant="primary"
           onClick={() => router.push(`/search?q=${encodeURIComponent(query)}`)}

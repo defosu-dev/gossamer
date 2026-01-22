@@ -13,6 +13,7 @@ interface BlogCardProps {
   readTime: number;
   authorName: string;
   authorAvatar: string;
+  variant?: 'default' | 'big' | 'compact';
   priority?: boolean;
   className?: string;
 }
@@ -25,6 +26,7 @@ export function BlogCard({
   readTime,
   authorName,
   authorAvatar,
+  variant = 'default',
   priority = false,
   className,
 }: BlogCardProps) {
@@ -32,37 +34,75 @@ export function BlogCard({
     <Link
       href={href}
       className={cn(
-        // размеры + временная обводка
-        'group flex h-[430px] w-full max-w-[360px] flex-col rounded-2xl border border-gray-300 p-1',
+        'group rounded-2xl border border-gray-300 p-1 transition-colors',
+        {
+          // BIG — широкая карточка слева
+          'flex h-full flex-col gap-4 lg:flex-row': variant === 'big',
+
+          // DEFAULT — обычная вертикальная
+          'flex flex-col gap-4': variant === 'default',
+
+          // COMPACT — маленькие справа
+          'flex h-[230px] flex-row gap-4': variant === 'compact',
+        },
         className
       )}
     >
       {/* Image */}
-      <div className="relative aspect-square w-full overflow-hidden rounded-lg">
+      <div
+        className={cn('relative overflow-hidden rounded-lg', {
+          // big: широкая картинка
+          'aspect-[16/9] w-full lg:w-[55%]': variant === 'big',
+
+          // default
+          'aspect-[4/3] w-full': variant === 'default',
+
+          // compact
+          'h-full w-[45%]': variant === 'compact',
+        })}
+      >
         <ImageWithFallback
           src={image}
           alt={title}
-          sizes="(max-width: 400px) 100vw, (max-width: 700px) 50vw, 282px"
           priority={priority}
           iconSize={6}
+          className="object-cover"
         />
       </div>
 
       {/* Content */}
-      <div className="flex flex-1 flex-col gap-2 px-1">
+      <div
+        className={cn(
+          'flex flex-1 flex-col gap-2 px-1',
+          variant === 'compact' && 'justify-between'
+        )}
+      >
         {/* Read time */}
-        <span className="text-xs font-light">{readTime} Min</span>
+        <span className="text-muted-foreground text-xs font-light">{readTime} Min</span>
 
         {/* Title */}
-        <h3 className="group-hover:text-primary line-clamp-2 text-lg leading-snug font-bold transition-colors">
+        <h3
+          className={cn(
+            'group-hover:text-primary font-bold transition-colors',
+            variant === 'big' ? 'text-2xl leading-tight' : 'text-lg leading-snug',
+            'line-clamp-2'
+          )}
+        >
           {title}
         </h3>
 
         {/* Excerpt */}
-        <p className="text-muted-foreground line-clamp-2 text-sm">{excerpt}</p>
+        <p
+          className={cn(
+            'text-muted-foreground',
+            variant === 'big' ? 'line-clamp-3 text-base' : 'line-clamp-2 text-sm'
+          )}
+        >
+          {excerpt}
+        </p>
 
         {/* Author */}
-        <div className="mt-auto flex items-center gap-3">
+        <div className="mt-auto flex items-center gap-3 pt-2">
           <ImageWithFallback
             src={authorAvatar}
             alt={authorName}

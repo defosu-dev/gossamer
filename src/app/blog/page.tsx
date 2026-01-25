@@ -2,8 +2,9 @@ import React from 'react';
 
 import { SearchBar } from '@/components/modules/SearchBar/SearchBar';
 
-import { LatestBlogGrid } from './BlogCard/LatestGrid';
-import TopBlogGrid from './BlogCard/TopBlogGrid';
+import { LatestBlogGrid } from './_components/LatestGrid';
+import TopBlogGrid from './_components/TopBlogGrid';
+import { Pagination } from '@/components/modules/product-filters/Pagination';
 
 /**
  * Blog page placeholder.
@@ -18,6 +19,9 @@ export default function Page() {
 
       <TopBlogGrid />
       <LatestBlogGrid />
+      <div className="mt-auto py-4">
+        <Pagination currentPage={1} totalPages={5} />
+      </div>
     </div>
   );
 }

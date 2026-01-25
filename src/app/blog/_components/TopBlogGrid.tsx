@@ -4,7 +4,7 @@ import BlogCard from './BlogCard';
 
 export default function TopBlogGrid() {
   return (
-    <section className="w-full">
+    <section className="w-ful container mx-auto max-w-7xl p-1 px-6">
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-[2fr_1fr]">
         {/* BIG CARD */}
         <BlogCard
@@ -12,7 +12,7 @@ export default function TopBlogGrid() {
           href="/blog/1"
           title="Tech Marvels for Your Home"
           excerpt="Discover the cutting-edge technologies that are reshaping homes."
-          image="/images/blog-1.jpg"
+          image=""
           readTime={10}
           authorName="Arlene McCoy"
           authorAvatar="/images/avatar-1.jpg"
@@ -27,7 +27,7 @@ export default function TopBlogGrid() {
             href="/blog/2"
             title="Crafting Your Own Home Decor"
             excerpt="Get creative with DIY home decor ideas."
-            image="/images/blog-2.jpg"
+            image=""
             readTime={3}
             authorName="Jane Cooper"
             authorAvatar="/images/avatar-2.jpg"
@@ -38,7 +38,7 @@ export default function TopBlogGrid() {
             href="/blog/3"
             title="Essential Kitchen Gadgets"
             excerpt="Every home chef needs these tools."
-            image="/images/blog-3.jpg"
+            image=""
             readTime={15}
             authorName="Robert Fox"
             authorAvatar="/images/avatar-3.jpg"

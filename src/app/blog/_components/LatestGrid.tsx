@@ -10,7 +10,7 @@ interface LatestBlogGridProps {
 
 export function LatestBlogGrid({ className }: LatestBlogGridProps) {
   return (
-    <>
+        <section className="w-ful container mx-auto max-w-7xl p-1 px-6">
       <h2 className="text-2xl font-semibold">Latest Blogs</h2>
       <div className={cn('grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3', className)}>
         {Array.from({ length: 6 }).map((_, index) => (
@@ -26,7 +26,7 @@ export function LatestBlogGrid({ className }: LatestBlogGridProps) {
           />
         ))}
       </div>
-    </>
+    </section>
   );
 }
 

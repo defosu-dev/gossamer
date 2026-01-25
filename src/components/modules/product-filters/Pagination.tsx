@@ -6,10 +6,10 @@ import { cn } from '@/lib/utils/cn';
 interface PaginationProps {
   currentPage: number;
   totalPages: number;
-  onPageChange: (page: number) => void;
+  onPageChange?: (page: number) => void;
 }
 
-export function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
+export function Pagination({ currentPage, totalPages, onPageChange = () => {} }: PaginationProps) {
   const getPages = () => {
     const pages: (number | 'dots')[] = [];
 
